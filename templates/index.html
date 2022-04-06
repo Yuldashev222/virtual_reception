@@ -1,0 +1,475 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'style/normalize.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <header class="header">
+
+      <div class="header__left">
+        <a href="https://tstu.uz" class="logo">
+          <img src="{% static 'img/logo.png' %}" width="220" alt="logotype">
+        </a>
+      </div>
+
+      <div class="header__right">
+        <nav class="nav">
+          <ul class="nav__list">
+            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
+              <a href="#" class="nav__link">Bosh sahifa</a>
+              <ul class="dropdown__list">
+                <li class="dropdown__item">
+                  <a href="https://tstu.uz/?page_id=2876" class="dropdown__link">Universitet tarixi</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Universitet nizomi</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Foto va videolar</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Universitet muzeyi</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">O'quv poligoni</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">TSTU OAV nigohida</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Biz haqimizda</a>
+                </li>
+              </ul>
+            </li>
+            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()"  class="nav__item">
+              <a href="#" class="nav__link">Universitet tuzilmasi</a>
+              <ul class="dropdown__list">
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Rektorat</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Kredit va moodle tizimi</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Korrupsiyaga qarshi kurash</a>
+                </li>
+              </ul>
+            </li>
+            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
+              <a href="#" class="nav__link">Faoliyat</a>
+              <ul class="dropdown__list">
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">xalqaro aloqalar</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Ilmiy faoliyat</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Moliyaviy faoliyat</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Talabalarning o'zini o'zi boshqaruv kengashi</a>
+                </li>
+              </ul>
+            </li>
+            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
+              <a href="#" class="nav__link">Talaba</a>
+              <ul class="dropdown__list">
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Ko'rsatmalar</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Davlat imtixonlari</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Kutubxona</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Stipendiyalar</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Dars jadvali</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">To'garaklar</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Talabalar shaharchasi</a>
+                </li>
+              </ul>
+            </li>
+            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
+              <a href="#" class="nav__link">Abiturient</a>
+              <ul class="dropdown__list">
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Bakalavriat</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Qo'shma diplom</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Sirtqi</a>
+                </li>
+                <li class="dropdown__item">
+                  <a href="#" class="dropdown__link">Magistratura</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+    </header>
+
+    <div class="content content__inn" id="content">
+
+      <div class="sidebar">
+        <h2 class="statistics__title form__header sidebar__title ">So'nggi yangiliklar</h2>
+
+        <div class="swiper">
+          <!-- Additional required wrapper -->
+           <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide swiper__image-block">
+              <a href="#" class="swiper__link">
+                <img src="{% static '/img/prezident.jpg' %}" alt="" class="slider_image">
+                <h3 class="swiper__title">
+                  BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
+                </h3>
+                <!-- <p class="swiper__text">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
+                </p> -->
+              </a>
+            </div>
+            <div class="swiper-slide swiper__image-block">
+              <a href="#">
+                <img src="{% static '/img/bus.jpg' %}" alt="" class="slider_image">
+                <h3 class="swiper__title">
+                  BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
+                </h3>
+                <!-- <p class="swiper__text">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
+                </p> -->
+              </a>
+            </div>
+            <div class="swiper-slide swiper__image-block">
+              <a href="#">
+                <img src="{% static '/img/kimdir.jpg' %}" alt="" class="slider_image">
+                <h3 class="swiper__title">
+                  BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
+                </h3>
+                <!-- <p class="swiper__text">
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
+                </p> -->
+              </a>
+            </div>
+            ...
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="main">
+        <div class="main__block">
+  
+          <div class="main__sidebar">
+            <div class="main__sidebar_img">
+              <img src="{% static 'img/rektor.jpg' %}" alt="rektor-photo" width="100%" height="250px">
+            </div>
+            <p class="rektor_position">Toshkent davlat transport universiteti rektori</p>
+            <div class="main__sidebar_content">
+              <ul class="rektor__info__list">
+                <li class="rektor__info__item">
+                  <span class="rektor__info__item_span">F.I.O</span>
+                  <p class="rektor__info__item_desc">Abduraxmanov Odil</p>
+                  <p class="rektor__info__item_desc">Qalandarovich</p>
+                </li>
+                <li class="rektor__info__item">
+                  <span class="rektor__info__item_span">Ilmiy daraja va unvoni:</span>
+                  <p class="rektor__info__item_desc">Iqtisodiyot fanlari</p>
+                  <p class="rektor__info__item_desc">doktori</p>
+                </li>
+                <li class="rektor__info__item">
+                  <span class="rektor__info__item_span">Qabul vaqti:</span>
+                  <p class="rektor__info__item_desc">Shanba (10:00 – 12:00)</p>
+                </li>
+                <li class="rektor__info__item">
+                  <span class="rektor__info__item_span">Telefon:</span>
+                  <a href="tel:+998712990001" class="rektor__info__item_desc rektor_tell">+998 71 299 00 01</a>
+                </li>
+                <li class="rektor__info__item">
+                  <span class="rektor__info__item_span">Elektron manzil:</span>
+                  <a href="mailto:rektorat@tstu.uz" class="rektor__info__item_desc rektor_email">rektorat@tstu.uz</a>
+                </li>
+              </ul>
+              <div class="social">
+                <span class="rektor__info__item_span">Ijtimoy tarmoqlar:</span>
+                <ul class="social__list">
+                  <li class="social__item">
+                    <a href="#" class="social__link">
+                      <img src="{% static 'img/facebook-icon.png' %}" width="25" alt="facebook-icon">
+                    </a>
+                  </li>
+                  <li class="social__item">
+                    <a href="#" class="social__link">
+                      <img src="{% static 'img/instagram-icon.png' %}" width="25" alt="instagram-icon">
+                    </a>
+                  </li>
+                  <li class="social__item">
+                    <a href="#" class="social__link">
+                      <img src="{% static 'img/telegram-icon.png' %}" width="25" alt="telegram-icon">
+                    </a>
+                  </li>
+                  <li class="social__item">
+                    <a href="#" class="social__link">
+                      <img src="{% static 'img/twitter-icon.png' %}" width="25" alt="twitter-icon">
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div> 
+          
+          <div class="main__content">
+            <div class="main__content_header">
+  
+            </div>
+            
+            <div class="main__content_inner">
+              <div class="main__content_form">
+                <div class="form__header">Murojaat</div>
+  
+                <div class="progress_bar">
+                  <div class="step">
+                    <p class="step__name">Murojaat turi</p>
+                    <div class="bullet">
+                      <span class="bullet__span">1</span>
+                    </div>
+                    <div class="fas fa-check check"></div>
+                  </div>
+                  <div class="step">
+                    <p class="step__name">ma'lumot</p>
+                    <div class="bullet">
+                      <span class="bullet__span">2</span>
+                    </div>
+                    <div class="fas fa-check check"></div>
+                  </div>
+                  <div class="step">
+                    <p class="step__name">Murojaat mazmuni</p>
+                    <div class="bullet">
+                      <span class="bullet__span">3</span>
+                    </div>
+                    <div class="fas fa-check check"></div>
+                  </div>
+                </div>
+  
+                <div class="form__outher">
+                  <form action="#" class="form">
+  
+                    <div class="form__page slidepage selects">
+                      <div class="form__field">
+                        <div class="select_container">
+                          <select class="form__select">
+                            <option class="form__select_option" selected>Murojaat</option>
+                            <option class="form__select_option">Shikoyat</option>
+                            <option class="form__select_option">Talabnoma</option>
+                            <option class="form__select_option">Sayt ma'muriyatiga murojaat</option>
+                            <option class="form__select_option">boshqa</option>
+                          </select>
+                          <div class="form__label">Murojaat turi</div>
+                        </div>
+                      </div>
+                      <div class="form__field">
+                        <div class="select_container">
+                          <select class="form__select">
+                            <option class="form__select_option"></option>
+                            <option class="form__select_option">O'quv jarayoni bilan bog'liq</option>
+                            <option class="form__select_option">Ilmiy ishlar bo'yicha</option>
+                            <option class="form__select_option">Moliyaviy masalalar bo'yicha</option>
+                            <option class="form__select_option">Ma'naviy ma'rifiy masalalar bo'yicha</option>
+                            <option class="form__select_option">Xalqaro masalalar bo'yicha</option>
+                          </select>
+                          <div class="form__label">Murojaat yo'nalishi</div>
+                        </div>
+                      </div>
+                      <div class="form__field form__category">
+                        <div class="select_container">
+                          <select class="form__select">
+                            <option class="form__select_option" selected>Talaba</option>
+                            <option class="form__select_option">O'qituvchi</option>
+                            <option class="form__select_option">Ota ona</option>
+                            <option class="form__select_option">Tashkilot</option>
+                            <option class="form__select_option">boshqa</option>
+                          </select>
+                          <div class="form__label">Kim tomonidan</div>
+                        </div>
+                      </div>
+                      <div class="form__field btns next_btn btn_first">
+                        <button class="btn">keyingi</button>
+                      </div>
+                    </div>
+  
+                    <div class="form__page">
+                      <div class="form__field">
+                        <input type="name" class="form__input">
+                        <div class="form__label">F.I.O</div>
+                      </div>
+                      <div class="form__field">
+                        <input class="form__input">
+                        <div class="form__label">Telefon raqam:</div>
+                      </div>
+                      <div class="form__field">
+                        <input class="form__input">
+                        <div class="form__label">Passport seriya va raqami</div>
+                      </div>
+                      <div class="form__field">
+                        <input type="email" class="form__input">
+                        <div class="form__label">Elektron pochta</div>
+                      </div>
+                      <div class="form__field btns btn_second">
+                        <button class="btn prev_1 prev">ortga</button>
+                        <button class="btn next_1 next">keyingi</button>
+                      </div>
+                    </div>
+  
+                    <div class="form__page last__page">
+                      <div class="form__field">
+                        <input type="text" class="form__input">
+                        <div class="form__label">Murojaat mavzusi</div>
+                      </div>
+                      <div class="form__field form__field_textarea">
+                        <textarea name="" id="" rows="10" class="form__input textarea"></textarea>
+                        <div class="form__label">Murojaat matni</div>
+                      </div>
+                      <div class="form__field form__file">
+                        <input type="file" class="form__input" id="form__file">
+                        <div class="form__label">Fayl ko'rinishi</div>
+                        <label for="form__file" class="form__file_label">Faylni tanlang</label>
+                      </div>
+                      <div class="accept_block">
+                        <p class="accept_desc"><span class="warning">Diqqat!!!</span> Jo'natish tugmasini bosish orqali siz Virtual qabulxona xizmat ko'rsatish <a href="#" class="rules"><span class="consent">shartlariga</span></a> rozilik bildirasiz</p>
+                      </div>
+                      <div class="form__field  btn_third">
+                        <button class="btn prev_2 prev">ortga</button>
+                        <button class="btn submit">Jo'natish</button>
+                      </div>
+                    </div>
+  
+                  </form>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+      </div>
+
+      <div class="statistics">
+        <div class="statistics__inner">
+
+          <div class="statistics__top">
+            <h2 class="form__header statistics__title">Murojaatlar statistikasi</h2>
+            <ul class="statistics__list">
+              <li class="rektor__info__item_span statistics__item">
+                <p>Yangi</p>
+                <span class="statistics__count">50</span>
+              </li>
+              <li class="rektor__info__item_span statistics__item">
+                <p>Ko'rib chiqilmoqda</p>
+                <span class="statistics__count">13</span>
+              </li>
+              <li class="rektor__info__item_span statistics__item">
+                <p>Rad etilgan</p>
+                <span class="statistics__count">6</span>
+              </li>
+              <li class="rektor__info__item_span statistics__item">
+                <p>Bajarilgan</p>
+                <span class="statistics__count">3</span>
+              </li>
+              <li class="rektor__info__item_span statistics__item">
+                <p>Umumiy</p>
+                <span class="statistics__count">72</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="statistics__bottom">
+            <h2 class="form__header statistics__title">Murojaat holatini tekshirish</h2>
+            <div class="statistics__result">
+              <p>Murojaat yuborilganda olingan parolni kiriting</p>
+              <form class="statistics__form">
+                <label for="st__input"></label>
+                <input id="st__input" type="number" class="statistics__input" placeholder="parol">
+                <button class="statistics__btn">Tekshirish</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="modal">
+      <div class="modal__consent">
+        <ul class="modal__consent_list">
+          <li class="modal__consent_item">Hurmatli foydalanuvchi!</li>
+          <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy maqomga ega ekanligini ham eslatib qo'ymoqchimiz.</li>
+          
+          <li class="modal__consent_item"><span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
+          
+          <li class="modal__consent_item"><span>1.</span> Alohida e'tibor bering! Tuhmat, haqorat so'zlar ishlatilgan va yolg'on xabar beruvchi murojaatlarni taqdim etish mumkin emas.</li>
+          
+          <li class="modal__consent_item"><span>2.</span> Shuningdek, quyidagi holatlarda murojaatlaringiz rad etilishi mumkinligini eslatib o'tmoqchimiz:</li>
+          
+          <li class="modal__consent_item">
+            <p>odobsizlik mazmunidagi murojaatlar (uyatsiz yoxud haqoratli iboralar, tahdidlar, mantiqsiz takliflar va shunga o'xshash murojaatlar);</p>
+            <p>murojaat matnida tushunarsiz qisqartirishlar yoki reklama materiallari mavjud bo'lgan, tarkibida aniq arizalar, shikoyatlar yoki takliflar bo'lmagan murojaatlar</p>
+          </li>
+          <li class="modal__consent_item"><span>3.</span> Shuningdek, foydalanuvchining bir necha bor bitta masala bo'yicha javob berilgan murojaati qayta yuborilganda, agar unda yangi vajlar yoki holatlar keltirilmagan bo'lsa, ko'rib chiqilmaydi. Mazkur shartlarning barchasi O'zbekiston Respublikasining amaldagi qonunchiligidan kelib chiqqan holda belgilangan.</li>
+        </ul>
+        <div class="modal__consent_close"></div>
+      </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script type="module">
+        import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js'
+      
+        const swiper = new Swiper('.swiper', {
+            direction: 'vertical',
+            loop: true,
+            slidesPerView: 3,
+            spaceBetween: -70,
+            centeredSlides: true,
+            effect: "coverflow",
+            grabCursor: false,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: true,
+                 },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+          })
+        </script>
+  </body>
+</html>
