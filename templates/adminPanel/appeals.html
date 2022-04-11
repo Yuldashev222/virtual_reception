@@ -7,11 +7,6 @@
 {% block style %}
     <link rel="stylesheet" href="{% static 'css/appeals.css' %}">
     <style>
-        .modal-answer-textarea {
-            height: 300px !important;
-            max-height: 300px;
-        }
-        
         #in_site {
             display: none;
         }
@@ -21,7 +16,7 @@
         #in_site_and_email {
             display: none;
         }
-
+        
         #in_site:checked + label {
             color: green;
         }
@@ -30,44 +25,43 @@
         }
         #in_site_and_email:checked + label {
             color: green;
-        }    
-
+        }
+        
         #in_site + label {
             margin-left: 35px;
         }
-
+        
         #in_email + label {
             margin-left: 35px;
         }
         #in_site_and_email + label {
             margin-left: 35px;
-        }    
-
+        }
+        
         #send_answer {
             display: none;
         }
         #save_answer {
             display: none;
         }
-
+        
         #send_answer:checked + label {
             color: green;
         }
         #save_answer:checked + label {
             color: #bbbb05;
-        }    
-
+        }
+        
         #send_answer + label {
             margin-left: 35px;
         }
         #save_answer + label {
             margin-left: 35px;
-        }    
-
+        }
+        
         label:hover {
             cursor: pointer;
         }
-
     </style>
 {% endblock style %}
 
@@ -124,7 +118,7 @@
                     <i class="fas fa-comments"></i>Chat</a>
             </li>
             <li>
-                <a href="form.html">
+                <a href="{% url 'applicants-view' %}">
                     <i class="fas fa-book"></i>Murojaatchilar paneli</a>
             </li>
         </ul>
@@ -600,7 +594,7 @@
                         </li>
                         <li style="padding: 5px 0;">
                             <hr>
-                            <h4 style="margin-bottom: 20px">Javob tur:</h4>
+                            <h4 style="margin-bottom: 20px">Javob turi:</h4>
                             <input type="radio" name="type__answer" id="accepted" checked>
                             <label for="accepted">
                                 <i class="fas fa-check"></i>

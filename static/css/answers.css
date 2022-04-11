@@ -1,15 +1,3 @@
-.position-icons {
-  color: inherit;
-}
-.position-icons:hover {
-  color: green;
-}
-.position-icons:nth-child(2) {
-  margin-left: 20px;
-}
-.position-icons:nth-child(2):hover {
-  color: red;
-}
 .navbar-sidebar .navbar__list .noti__item i {
   font-size: 20px;
   color: inherit;
@@ -59,7 +47,7 @@ body {
 }
 
 .table-responsive {
-  padding-top: 76px;
+  padding-top: 77px;
 }
 
 thead {
@@ -117,7 +105,7 @@ td:nth-child(5) {
   padding-right: 0 !important;
 }
 th:last-child {
-  padding: 0 85px !important;
+  padding: 0 118px !important;
 }
 td:nth-child(3) {
   padding-left: 10px !important;
@@ -133,30 +121,3 @@ th:nth-child(3) {
   padding-left: 0 !important;
   padding-right: 20px !important;
 }
-.modal-answer-textarea {
-  padding: 10px;
-}
-#accepted {
-  display: none;
-}
-#accepted + label {
-  margin-left: 30px;
-}
-#rejected {
-  display: none;
-}
-#rejected + label {
-  margin-left: 30px;
-}
-#accepted:checked + label {
-  color: green;
-}
-#rejected:checked + label {
-  color: red;
-}
-
-.modal-answer-textarea {
-  height: 300px !important;
-  max-height: 300px;
-}
-

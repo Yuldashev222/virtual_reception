@@ -1,0 +1,101 @@
+{% extends 'adminPanel/base.html' %}
+{% load static %}
+
+{% block title %}<title>Murojaatchilar paneli</title>{% endblock title %}
+{% block style %}
+    <style>
+        body {
+            overflow: unset;
+        }
+        .menu-sidebar {
+            overflow: hidden;
+        }
+        .navbar-sidebar .navbar__list .noti__item i {
+            font-size: 20px ;
+            color: inherit;
+        }
+        .navbar-sidebar .navbar__list .noti__item .quantity {
+            left: 11px;
+            top: 11px;
+            right: unset;
+        }
+        .header-wrap {
+            justify-content: end;
+        }
+    </style>
+{% endblock style %}
+{% block header_mobile_nav %}
+    <nav class="navbar-mobile">
+        <div class="container-fluid">
+            <ul class="navbar-mobile__list list-unstyled">
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-chart-bar"></i>Statistika</a>
+                </li>
+                <li>
+                    <a href="{% url 'appeals' %}">
+                        <i class="fas fa-envelope"></i>Murojaatlar</a>
+                </li>
+                <li>
+                    <a href="{% url 'answers' %}">
+                        <i class="fas fa-reply"></i>Javoblar</a>
+                </li>
+                <li>
+                    <a href="form.html">
+                        <i class="far fa-comments"></i>Chat</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock header_mobile_nav %}
+{% block aside_nav %}
+    <nav class="navbar-sidebar">
+        <ul class="list-unstyled navbar__list">
+            <li class="">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-chart-bar"></i>Statistika</a>
+            </li>
+            <li class="noti__item">
+                <a href="{% url 'appeals' %}">
+                    <i class="fas fa-envelope"></i>
+                    <span class="quantity">1</span>
+                    Murojaatlar
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'answers' %}">
+                    <i class="fas fa-reply"></i>Javoblar</a>
+            </li>
+            <li>
+                <a href="form.html">
+                    <i class="fas fa-comments"></i>Chat</a>
+            </li>
+            <li class="active has-sub">
+                <a href="#">
+                    <i class="fas fa-book"></i>Murojaatchilar paneli</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock aside_nav %}
+{% block content %}
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="overview-wrap">
+                            <h2 class="title-1">Murojaatchilar paneli</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT-->
+{% endblock content %}

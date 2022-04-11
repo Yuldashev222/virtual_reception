@@ -46,3 +46,13 @@ def appeals(request):
 def answers(request):
             
     return render(request, 'adminPanel/answers.html')
+
+
+def applicants_view(request):
+            
+    return render(request, 'adminPanel/applicants_panel.html')
+
+
+def chat(request):
+            
+    return render(request, 'adminPanel/chat.html')

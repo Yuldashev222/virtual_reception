@@ -1,42 +1,8 @@
+{% extends 'adminPanel/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <!-- Required meta tags-->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
-    <meta name="author" content="Hau Nguyen">
-    <meta name="keywords" content="au theme template">
-
-    <!-- Title Page-->
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-    <!-- Fontfaces CSS-->
-    <link href="{% static 'css/font-face.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/font-awesome-5/css/fontawesome-all.min.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet" media="all">
-
-    <!-- Bootstrap CSS-->
-    <link href="{% static 'vendor/bootstrap-4.1/bootstrap.min.css' %}" rel="stylesheet" media="all">
-
-    <!-- Vendor CSS-->
-    <link href="{% static 'vendor/animsition/animsition.min.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/wow/animate.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/slick/slick.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}" rel="stylesheet" media="all">
-    <link href="{% static 'vendor/vector-map/jqvmap.min.css' %}" rel="stylesheet" media="all">
-
-
-    <!-- Main CSS-->
-    <link href="{% static 'css/theme.css' %}" rel="stylesheet" media="all">
-
+{% block title %}<title>Statistika</title>{% endblock title %}
+{% block style %}
     <style>
         body {
             overflow: unset;
@@ -53,500 +19,348 @@
             top: 11px;
             right: unset;
         }
+        .header-wrap {
+            justify-content: end;
+        }
     </style>
-
-</head>
-
-<body class="animsition">
-    <div class="page-wrapper">
-        <!-- HEADER MOBILE-->
-        <header class="header-mobile d-block d-lg-none">
-            <div class="header-mobile__bar">
-                <div class="container-fluid">
-                    <div class="header-mobile-inner">
-                        <a class="logo" href="#">
-                            <img src="{% static 'images/blue-logo.png' %}" alt="CoolAdmin" />
-                        </a>
-                        <button class="hamburger hamburger--slider" type="button">
-                            <span class="hamburger-box">
-                                <span class="hamburger-inner"></span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <nav class="navbar-mobile">
-                <div class="container-fluid">
-                    <ul class="navbar-mobile__list list-unstyled">
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-chart-bar"></i>Statistika</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'appeals' %}">
-                                <i class="fas fa-envelope"></i>Murojaatlar</a>
-                        </li>
-                        <li>
-                            <a href="{% url 'answers' %}">
-                                <i class="fas fa-reply"></i>Javoblar</a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="far fa-comments"></i>Chat</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- END HEADER MOBILE-->
-
-        <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a href="#">
-                    <img src="{% static 'images/blue-logo.png' %}" alt="Cool Admin" />
-                </a>
-            </div>
-            <div class="menu-sidebar__content js-scrollbar1">
-                <nav class="navbar-sidebar">
-                    <ul class="list-unstyled navbar__list">
-                        <li class="active has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-chart-bar"></i>Statistika</a>
-                        </li>
-                        <li class="noti__item">
-                            <a href="{% url 'appeals' %}">
-                                <i class="fas fa-envelope"></i>
-                                <span class="quantity">1</span>
-                                Murojaatlar
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'answers' %}">
-                                <i class="fas fa-reply"></i>Javoblar</a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="fas fa-comments"></i>Chat</a>
-                        </li>
-                        <li>
-                            <a href="form.html">
-                                <i class="fas fa-book"></i>Murojaatchilar paneli</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-        <!-- END MENU SIDEBAR-->
-
-        <!-- PAGE CONTAINER-->
-        <div class="page-container">
-            <!-- HEADER DESKTOP-->
-            <header class="header-desktop">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="header-wrap justify-content-end">
-                            <div class="header-button">
-                                <div class="noti-wrap">
-                                    <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-comment-more"></i>
-                                        <span class="quantity">1</span>
-                                        <div class="mess-dropdown js-dropdown">
-                                            <div class="mess__title">
-                                                <p>Sizda 2 ta yangi xabar bor</p>
-                                            </div>
-                                            <div class="mess__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="{% static 'images/icon/avatar-06.jpg' %}" alt="Michelle Moreno" />
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Michelle Moreno</h6>
-                                                    <p>Have sent a photo</p>
-                                                    <span class="time">3 min ago</span>
-                                                </div>
-                                            </div>
-                                            <div class="mess__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="{% static 'images/icon/avatar-04.jpg' %}" alt="Diane Myers" />
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Diane Myers</h6>
-                                                    <p>You are now connected on message</p>
-                                                    <span class="time">Yesterday</span>
-                                                </div>
-                                            </div>
-                                            <div class="mess__footer">
-                                                <a href="#">Barcha xabarlarni ko'rish</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="account-wrap">
-                                    <div class="account-item clearfix js-item-menu">
-                                        <div class="image">
-                                            <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="John Doe" />
-                                        </div>
-                                        <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
-                                        </div>
-                                        <div class="account-dropdown js-dropdown">
-                                            <div class="info clearfix">
-                                                <div class="image">
-                                                    <a href="#">
-                                                        <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="John Doe" />
-                                                    </a>
-                                                </div>
-                                                <div class="content">
-                                                    <h5 class="name">
-                                                        <a href="#">john doe</a>
-                                                    </h5>
-                                                    <span class="email">johndoe@example.com</span>
-                                                </div>
-                                            </div>
-                                            <div class="account-dropdown__body">
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-account"></i>profile</a>
-                                                </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-account-add"></i>Admin qo'shish</a>
-                                                </div>
-                                            </div>
-                                            <div class="account-dropdown__footer">
-                                                <a href="#">
-                                                    <i class="zmdi zmdi-power"></i>Chiqish</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- HEADER DESKTOP-->
-
-            <!-- MAIN CONTENT-->
-            <div class="main-content">
-                <div class="section__content section__content--p30">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="overview-wrap">
-                                    <h2 class="title-1">Statistika</h2>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- MAP DATA-->
-                                <div class="map-data m-b-40">
-                                    <h3 class="title-3 m-b-30">
-                                        <i class="zmdi zmdi-map"></i>Viloyatlar bo'yicha murojaatlar</h3>
-                                    <div class="filters">
-                                        <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
-                                            <select class="js-select2" name="property">
-                                                <option selected="selected">Umumiy</option>
-                                                <option value="">Yuridik shaxslar</option>
-                                                <option value="">Jismoniy shaxslar</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                        <div class="rs-select2--dark rs-select2--sm rs-select2--border">
-                                            <select class="js-select2 au-select-dark" name="time">
-                                                <option selected="selected">Barchasi</option>
-                                                <option value="">Shu yilda</option>
-                                                <option value="">Shu oyda</option>
-                                                <option value="">Shu hafta</option>
-                                                <option value="">Bugun</option>
-                                            </select>
-                                            <div class="dropDownSelect2"></div>
-                                        </div>
-                                    </div>
-                                    <div class="map-wrap m-t-45 m-b-20">
-                                        <div id="vmap" style="height: 284px;">
-                                            {% comment %} uzb map {% endcomment %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END MAP DATA-->
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="card">
-									<div class="card-header">
-										<h4>Murojaat turlari</h4>
-									</div>
-									<div class="card-body">
-										{% comment %} <p class="muted">
-
-                                        </p> {% endcomment %}
-										<div class="progress mb-2">
-											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
-											 aria-valuemin="0" aria-valuemax="100">Ariza 25%</div>
-										</div>
-										<div class="progress mb-2">
-											<div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
-											 aria-valuemin="0" aria-valuemax="100">Taklif 50%</div>
-										</div>
-										<div class="progress mb-2">
-                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%" aria-valuenow="90"
-                                            aria-valuemin="0" aria-valuemax="100">Shikoyat 90%</div>
-										</div>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
-                                             aria-valuemin="0" aria-valuemax="100">boshqa 75%</div>
-                                        </div>
-									</div>
-								</div>
-								<!-- /# card -->
-                                <div class="card">
-									<div class="card-header">
-										<h4>Murojatchi turi</h4>
-									</div>
-									<div class="card-body">
-										{% comment %} <p class="muted">
-
-                                        </p> {% endcomment %}
-										<div class="progress mb-2">
-											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
-											 aria-valuemin="0" aria-valuemax="100">Yuridik shaxs 25%</div>
-										</div>
-										<div class="progress mb-2">
-											<div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
-											 aria-valuemin="0" aria-valuemax="100">Jismoniy shaxs 50%</div>
-										</div>
-									</div>
-								</div>
-								<!-- /# card -->
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="au-card chart-percent-card">
-                                    <div class="au-card-inner">
-                                        <h3 class="title-2 tm-b-5">Murojaatlar holati</h3>
-                                        <div class="row no-gutters">
-                                            <div class="col-xl-6">
-                                                <div class="chart-note-wrap">
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--blue"></span>
-                                                        <span>Yangi</span>
-                                                    </div>
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--green"></span>
-                                                        <span>Bajarilgan</span>
-                                                    </div>
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--blue"></span>
-                                                        <span>ko'rib chiqilmoqda</span>
-                                                    </div>
-                                                    <div class="chart-note mr-0 d-block">
-                                                        <span class="dot dot--red"></span>
-                                                        <span>Rad etilgan</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6">
-                                                <div class="percent-chart">
-                                                    <canvas id="percent-chart"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-7">
-                                <div class="card">
-									<div class="card-header">
-										<h4>Kim tomonidan</h4>
-									</div>
-									<div class="card-body">
-										<div class="progress mb-2">
-											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
-											 aria-valuemin="0" aria-valuemax="100">Talaba 25%</div>
-										</div>
-										<div class="progress mb-2">
-											<div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
-											 aria-valuemin="0" aria-valuemax="100">O'qituvchi 50%</div>
-										</div>
-										<div class="progress mb-2">
-                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%" aria-valuenow="90"
-                                            aria-valuemin="0" aria-valuemax="100">Ota ona 90%</div>
-										</div>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
-                                             aria-valuemin="0" aria-valuemax="100">boshqa 75%</div>
-                                        </div>
-									</div>
-								</div>
-                                <div class="card">
-									<div class="card-header">
-										<h4>Qaysi admin javob berdi</h4>
-									</div>
-									<div class="card-body">
-										<div class="progress mb-2">
-											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
-											 aria-valuemin="0" aria-valuemax="100">Admin1 25%</div>
-										</div>
-										<div class="progress mb-2">
-											<div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
-											 aria-valuemin="0" aria-valuemax="100">Admin2 50%</div>
-										</div>
-                                        <div class="progress mb-2">
-                                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
-                                             aria-valuemin="0" aria-valuemax="100">Admin3 75%</div>
-                                        </div>
-									</div>
-								</div>
-                            </div>
-                            <div class="col-lg-5">
-                                <div class="card">
-									<div class="card-header">
-										<h4>Murojaat yo'nalishi</h4>
-									</div>
-									<div class="card-body">
-                                        1. Diplom olish masalalari
-                                        <div class="progress mb-2" style="height: 5px;">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        2. Ishga joylash, ishdagi tortishuv, oylik maoshi
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        3. Kontrakt to'lovi to'g'risida
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        4. Magistratura masalalari
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        5. Fuqarolar murojaatlari to'g'risida
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        6. Moliyaviy masalalar
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        7. Talaba ustidan shikoyat
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        8. Rahbar faoliyatidan norozilik arizasi
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        9. Stipendiya masalalari
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        10. O'qishga kirish to'g'risida
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        11. O'qishni ko'chirish to'g'risida
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        12. O'qishni tiklash to'g'risida
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        13. Ijodiy imtihondan norozilik to'g'risida
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        14. Diplom xaqqoniyligini tasdiqlab berish to'g'risida
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        15. Nafaqa masalalari
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        16. Arxiv ma'lumotlarini olish to'grisida
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        17. Ikkinchi mutaxasislik
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        18. Kitob nashr qilish
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        19. Ixtiro qilish taklifi
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        20. Taklif va minnatdorchilik
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        21. Sirtqi o'qish masalalari
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        22. Yotoqxona masalalari bo'yicha
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        23. Olimpiada masalasi bo'yicha
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-                                        24. Boshqa savollar
-										<div class="progress mb-2" style="height: 5px;">
-											<div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-									</div>
-								</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- END MAIN CONTENT-->
-            <!-- END PAGE CONTAINER-->
+{% endblock style %}
+{% block header_mobile_nav %}
+    <nav class="navbar-mobile">
+        <div class="container-fluid">
+            <ul class="navbar-mobile__list list-unstyled">
+                <li class="has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-chart-bar"></i>Statistika</a>
+                </li>
+                <li>
+                    <a href="{% url 'appeals' %}">
+                        <i class="fas fa-envelope"></i>Murojaatlar</a>
+                </li>
+                <li>
+                    <a href="{% url 'answers' %}">
+                        <i class="fas fa-reply"></i>Javoblar</a>
+                </li>
+                <li>
+                    <a href="form.html">
+                        <i class="far fa-comments"></i>Chat</a>
+                </li>
+            </ul>
         </div>
+    </nav>
+{% endblock header_mobile_nav %}
+{% block aside_nav %}
+    <nav class="navbar-sidebar">
+        <ul class="list-unstyled navbar__list">
+            <li class="active has-sub">
+                <a class="js-arrow" href="#">
+                    <i class="fas fa-chart-bar"></i>Statistika</a>
+            </li>
+            <li class="noti__item">
+                <a href="{% url 'appeals' %}">
+                    <i class="fas fa-envelope"></i>
+                    <span class="quantity">1</span>
+                    Murojaatlar
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'answers' %}">
+                    <i class="fas fa-reply"></i>Javoblar</a>
+            </li>
+            <li>
+                <a href="form.html">
+                    <i class="fas fa-comments"></i>Chat</a>
+            </li>
+            <li>
+                <a href="{% url 'applicants-view' %}">
+                    <i class="fas fa-book"></i>Murojaatchilar paneli</a>
+            </li>
+        </ul>
+    </nav>
+{% endblock aside_nav %}
+{% block content %}
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="overview-wrap">
+                            <h2 class="title-1">Statistika</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- MAP DATA-->
+                        <div class="map-data m-b-40">
+                            <h3 class="title-3 m-b-30">
+                                <i class="zmdi zmdi-map"></i>Viloyatlar bo'yicha murojaatlar</h3>
+                            <div class="filters">
+                                <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
+                                    <select class="js-select2" name="property">
+                                        <option selected="selected">Umumiy</option>
+                                        <option value="">Yuridik shaxslar</option>
+                                        <option value="">Jismoniy shaxslar</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <div class="rs-select2--dark rs-select2--sm rs-select2--border">
+                                    <select class="js-select2 au-select-dark" name="time">
+                                        <option selected="selected">Barchasi</option>
+                                        <option value="">Shu yilda</option>
+                                        <option value="">Shu oyda</option>
+                                        <option value="">Shu hafta</option>
+                                        <option value="">Bugun</option>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                            </div>
+                            <div class="map-wrap m-t-45 m-b-20">
+                                <div id="vmap" style="height: 284px;">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END MAP DATA-->
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Murojaat turlari</h4>
+                            </div>
+                            <div class="card-body">
+                                {% comment %} <p class="muted">
 
+                                </p> {% endcomment %}
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                     aria-valuemin="0" aria-valuemax="100">Ariza 25%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                     aria-valuemin="0" aria-valuemax="100">Taklif 50%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%" aria-valuenow="90"
+                                    aria-valuemin="0" aria-valuemax="100">Shikoyat 90%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
+                                     aria-valuemin="0" aria-valuemax="100">boshqa 75%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Murojatchi turi</h4>
+                            </div>
+                            <div class="card-body">
+                                {% comment %} <p class="muted">
+
+                                </p> {% endcomment %}
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                     aria-valuemin="0" aria-valuemax="100">Yuridik shaxs 25%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                     aria-valuemin="0" aria-valuemax="100">Jismoniy shaxs 50%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /# card -->
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="au-card chart-percent-card">
+                            <div class="au-card-inner">
+                                <h3 class="title-2 tm-b-5">Murojaatlar holati</h3>
+                                <div class="row no-gutters">
+                                    <div class="col-xl-6">
+                                        <div class="chart-note-wrap">
+                                            <div class="chart-note mr-0 d-block">
+                                                <span class="dot dot--blue"></span>
+                                                <span>Yangi</span>
+                                            </div>
+                                            <div class="chart-note mr-0 d-block">
+                                                <span class="dot dot--green"></span>
+                                                <span>Bajarilgan</span>
+                                            </div>
+                                            <div class="chart-note mr-0 d-block">
+                                                <span class="dot dot--blue"></span>
+                                                <span>ko'rib chiqilmoqda</span>
+                                            </div>
+                                            <div class="chart-note mr-0 d-block">
+                                                <span class="dot dot--red"></span>
+                                                <span>Rad etilgan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="percent-chart">
+                                            <canvas id="percent-chart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Kim tomonidan</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                     aria-valuemin="0" aria-valuemax="100">Talaba 25%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                     aria-valuemin="0" aria-valuemax="100">O'qituvchi 50%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%" aria-valuenow="90"
+                                    aria-valuemin="0" aria-valuemax="100">Ota ona 90%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
+                                     aria-valuemin="0" aria-valuemax="100">boshqa 75%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Qaysi admin javob berdi</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
+                                     aria-valuemin="0" aria-valuemax="100">Admin1 25%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
+                                     aria-valuemin="0" aria-valuemax="100">Admin2 50%</div>
+                                </div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
+                                     aria-valuemin="0" aria-valuemax="100">Admin3 75%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Murojaat yo'nalishi</h4>
+                            </div>
+                            <div class="card-body">
+                                1. Diplom olish masalalari
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                2. Ishga joylash, ishdagi tortishuv, oylik maoshi
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                3. Kontrakt to'lovi to'g'risida
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                4. Magistratura masalalari
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                5. Fuqarolar murojaatlari to'g'risida
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                6. Moliyaviy masalalar
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                7. Talaba ustidan shikoyat
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                8. Rahbar faoliyatidan norozilik arizasi
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                9. Stipendiya masalalari
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                10. O'qishga kirish to'g'risida
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                11. O'qishni ko'chirish to'g'risida
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                12. O'qishni tiklash to'g'risida
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                13. Ijodiy imtihondan norozilik to'g'risida
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                14. Diplom xaqqoniyligini tasdiqlab berish to'g'risida
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                15. Nafaqa masalalari
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                16. Arxiv ma'lumotlarini olish to'grisida
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                17. Ikkinchi mutaxasislik
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                18. Kitob nashr qilish
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                19. Ixtiro qilish taklifi
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                20. Taklif va minnatdorchilik
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                21. Sirtqi o'qish masalalari
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                22. Yotoqxona masalalari bo'yicha
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                23. Olimpiada masalasi bo'yicha
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                24. Boshqa savollar
+                                <div class="progress mb-2" style="height: 5px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Jquery JS-->
-    <script src="{% static 'vendor/jquery-3.2.1.min.js' %}"></script>
-    <!-- Bootstrap JS-->
-    <script src="{% static 'vendor/bootstrap-4.1/popper.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap-4.1/bootstrap.min.js' %}"></script>
-    <!-- Vendor JS       -->
-    <script src="{% static 'vendor/slick/slick.min.js' %}">
-    </script>
-    <script src="{% static 'vendor/wow/wow.min.js' %}"></script>
-    <script src="{% static 'vendor/animsition/animsition.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap-progressbar/bootstrap-progressbar.min.js' %}">
-    </script>
-    <script src="{% static 'vendor/counter-up/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'vendor/counter-up/jquery.counterup.min.js' %}">
-    </script>
-    <script src="{% static 'vendor/circle-progress/circle-progress.min.js' %}"></script>
-    <script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
-    <script src="{% static 'vendor/chartjs/Chart.bundle.min.js' %}"></script>
-    <script src="{% static 'vendor/select2/select2.min.js' %}">
-    </script>
-
-    <script src="{% static 'vendor/vector-map/jquery.vmap.js' %}"></script>
-    <script src="{% static 'vendor/vector-map/jquery.vmap.min.js' %}"></script>
-    <script src="{% static 'vendor/vector-map/jquery.vmap.sampledata.js' %}"></script>
-    <script src="{% static 'vendor/vector-map/jquery.vmap.world.js' %}"></script>
-
-    <!-- Main JS-->
-    <script src="{% static 'js/main.js' %}"></script>
-
-</body>
-
-</html>
-<!-- end document-->
+    <!-- END MAIN CONTENT-->
+{% endblock content %}

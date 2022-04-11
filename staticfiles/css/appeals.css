@@ -135,7 +135,6 @@ th:nth-child(3) {
 }
 .modal-answer-textarea {
   padding: 10px;
-  height: 300px;
 }
 #accepted {
   display: none;
@@ -154,4 +153,65 @@ th:nth-child(3) {
 }
 #rejected:checked + label {
   color: red;
+}
+
+.modal-answer-textarea {
+  height: 300px !important;
+  max-height: 300px;
+}
+
+#in_site {
+  display: none;
+}
+#in_email {
+  display: none;
+}
+#in_site_and_email {
+  display: none;
+}
+
+#in_site:checked + label {
+  color: green;
+}
+#in_email:checked + label {
+  color: green;
+}
+#in_site_and_email:checked + label {
+  color: green;
+}
+
+#in_site + label {
+  margin-left: 35px;
+}
+
+#in_email + label {
+  margin-left: 35px;
+}
+#in_site_and_email + label {
+  margin-left: 35px;
+}
+
+#send_answer {
+  display: none;
+}
+#save_answer {
+  display: none;
+}
+
+#send_answer:checked + label {
+  color: green;
+}
+#save_answer:checked + label {
+  color: #bbbb05;
+}
+
+#send_answer + label {
+  margin-left: 35px;
+}
+#save_answer + label {
+  margin-left: 35px;
+}
+
+label:hover {
+  cursor: pointer;
 }
