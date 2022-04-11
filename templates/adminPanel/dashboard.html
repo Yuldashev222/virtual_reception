@@ -12,7 +12,8 @@
 
     <!-- Title Page-->
     <title>Dashboard</title>
-
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <!-- Fontfaces CSS-->
     <link href="{% static 'css/font-face.css' %}" rel="stylesheet" media="all">
     <link href="{% static 'vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all">
@@ -35,6 +36,24 @@
 
     <!-- Main CSS-->
     <link href="{% static 'css/theme.css' %}" rel="stylesheet" media="all">
+
+    <style>
+        body {
+            overflow: unset;
+        }
+        .menu-sidebar {
+            overflow: hidden;
+        }
+        .navbar-sidebar .navbar__list .noti__item i {
+            font-size: 20px ;
+            color: inherit;
+        }
+        .navbar-sidebar .navbar__list .noti__item .quantity {
+            left: 11px;
+            top: 11px;
+            right: unset;
+        }
+    </style>
 
 </head>
 
@@ -68,7 +87,7 @@
                                 <i class="fas fa-envelope"></i>Murojaatlar</a>
                         </li>
                         <li>
-                            <a href="table.html">
+                            <a href="{% url 'answers' %}">
                                 <i class="fas fa-reply"></i>Javoblar</a>
                         </li>
                         <li>
@@ -95,17 +114,24 @@
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-chart-bar"></i>Statistika</a>
                         </li>
-                        <li>
+                        <li class="noti__item">
                             <a href="{% url 'appeals' %}">
-                                <i class="fas fa-envelope"></i>Murojaatlar</a>
+                                <i class="fas fa-envelope"></i>
+                                <span class="quantity">1</span>
+                                Murojaatlar
+                            </a>
                         </li>
                         <li>
-                            <a href="table.html">
+                            <a href="{% url 'answers' %}">
                                 <i class="fas fa-reply"></i>Javoblar</a>
                         </li>
                         <li>
                             <a href="form.html">
                                 <i class="fas fa-comments"></i>Chat</a>
+                        </li>
+                        <li>
+                            <a href="form.html">
+                                <i class="fas fa-book"></i>Murojaatchilar paneli</a>
                         </li>
                     </ul>
                 </nav>
@@ -119,13 +145,7 @@
             <header class="header-desktop">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                                <button class="au-btn--submit" type="submit">
-                                    <i class="zmdi zmdi-search"></i>
-                                </button>
-                            </form>
+                        <div class="header-wrap justify-content-end">
                             <div class="header-button">
                                 <div class="noti-wrap">
                                     <div class="noti__item js-item-menu">
@@ -238,6 +258,7 @@
                                                 <option selected="selected">Barchasi</option>
                                                 <option value="">Shu yilda</option>
                                                 <option value="">Shu oyda</option>
+                                                <option value="">Shu hafta</option>
                                                 <option value="">Bugun</option>
                                             </select>
                                             <div class="dropDownSelect2"></div>
@@ -245,6 +266,7 @@
                                     </div>
                                     <div class="map-wrap m-t-45 m-b-20">
                                         <div id="vmap" style="height: 284px;">
+                                            {% comment %} uzb map {% endcomment %}
                                         </div>
                                     </div>
                                 </div>
@@ -336,90 +358,51 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-9">
-                                <h2 class="title-1 m-b-25">Earnings By Items</h2>
-                                <div class="table-responsive table--no-card m-b-40">
-                                    <table class="table table-borderless table-striped table-earning">
-                                        <thead>
-                                            <tr>
-                                                <th>date</th>
-                                                <th>order ID</th>
-                                                <th>name</th>
-                                                <th class="text-right">price</th>
-                                                <th class="text-right">quantity</th>
-                                                <th class="text-right">total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>2018-09-29 05:57</td>
-                                                <td>100398</td>
-                                                <td>iPhone X 64Gb Grey</td>
-                                                <td class="text-right">$999.00</td>
-                                                <td class="text-right">1</td>
-                                                <td class="text-right">$999.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-28 01:22</td>
-                                                <td>100397</td>
-                                                <td>Samsung S8 Black</td>
-                                                <td class="text-right">$756.00</td>
-                                                <td class="text-right">1</td>
-                                                <td class="text-right">$756.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-27 02:12</td>
-                                                <td>100396</td>
-                                                <td>Game Console Controller</td>
-                                                <td class="text-right">$22.00</td>
-                                                <td class="text-right">2</td>
-                                                <td class="text-right">$44.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-26 23:06</td>
-                                                <td>100395</td>
-                                                <td>iPhone X 256Gb Black</td>
-                                                <td class="text-right">$1199.00</td>
-                                                <td class="text-right">1</td>
-                                                <td class="text-right">$1199.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-25 19:03</td>
-                                                <td>100393</td>
-                                                <td>USB 3.0 Cable</td>
-                                                <td class="text-right">$10.00</td>
-                                                <td class="text-right">3</td>
-                                                <td class="text-right">$30.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-29 05:57</td>
-                                                <td>100392</td>
-                                                <td>Smartwatch 4.0 LTE Wifi</td>
-                                                <td class="text-right">$199.00</td>
-                                                <td class="text-right">6</td>
-                                                <td class="text-right">$1494.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-24 19:10</td>
-                                                <td>100391</td>
-                                                <td>Camera C430W 4k</td>
-                                                <td class="text-right">$699.00</td>
-                                                <td class="text-right">1</td>
-                                                <td class="text-right">$699.00</td>
-                                            </tr>
-                                            <tr>
-                                                <td>2018-09-22 00:43</td>
-                                                <td>100393</td>
-                                                <td>USB 3.0 Cable</td>
-                                                <td class="text-right">$10.00</td>
-                                                <td class="text-right">3</td>
-                                                <td class="text-right">$30.00</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="col-lg-7">
+                                <div class="card">
+									<div class="card-header">
+										<h4>Kim tomonidan</h4>
+									</div>
+									<div class="card-body">
+										<div class="progress mb-2">
+											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
+											 aria-valuemin="0" aria-valuemax="100">Talaba 25%</div>
+										</div>
+										<div class="progress mb-2">
+											<div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
+											 aria-valuemin="0" aria-valuemax="100">O'qituvchi 50%</div>
+										</div>
+										<div class="progress mb-2">
+                                            <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%" aria-valuenow="90"
+                                            aria-valuemin="0" aria-valuemax="100">Ota ona 90%</div>
+										</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
+                                             aria-valuemin="0" aria-valuemax="100">boshqa 75%</div>
+                                        </div>
+									</div>
+								</div>
+                                <div class="card">
+									<div class="card-header">
+										<h4>Qaysi admin javob berdi</h4>
+									</div>
+									<div class="card-body">
+										<div class="progress mb-2">
+											<div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
+											 aria-valuemin="0" aria-valuemax="100">Admin1 25%</div>
+										</div>
+										<div class="progress mb-2">
+											<div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
+											 aria-valuemin="0" aria-valuemax="100">Admin2 50%</div>
+										</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
+                                             aria-valuemin="0" aria-valuemax="100">Admin3 75%</div>
+                                        </div>
+									</div>
+								</div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-5">
                                 <div class="card">
 									<div class="card-header">
 										<h4>Murojaat yo'nalishi</h4>

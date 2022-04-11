@@ -41,3 +41,8 @@ def dashboard(request, username):
 def appeals(request):
             
     return render(request, 'adminPanel/appeals.html')
+
+
+def answers(request):
+            
+    return render(request, 'adminPanel/answers.html')

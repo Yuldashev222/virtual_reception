@@ -1,0 +1,717 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="au theme template">
+    <meta name="author" content="Hau Nguyen">
+    <meta name="keywords" content="au theme template">
+
+    <!-- Title Page-->
+    <title>Javoblar</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <!-- Fontfaces CSS-->
+    <link href="{% static 'css/font-face.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/font-awesome-5/css/fontawesome-all.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="{% static 'vendor/bootstrap-4.1/bootstrap.min.css' %}" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="{% static 'vendor/animsition/animsition.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/wow/animate.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/slick/slick.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/vector-map/jqvmap.min.css' %}" rel="stylesheet" media="all">
+
+
+    <!-- Main CSS-->
+    <link href="{% static 'css/theme.css' %}" rel="stylesheet" media="all">
+
+    <style>
+        .navbar-sidebar .navbar__list .noti__item i {
+            font-size: 20px ;
+            color: inherit;
+        }
+        .navbar-sidebar .navbar__list .noti__item .quantity {
+            left: 11px;
+            top: 11px;
+            right: unset;
+        }
+        .modal::before {
+            content: none;
+        }
+        body {
+            overflow: hidden;
+        }
+        .appeal__filter {
+            position: fixed;
+            left: 320px;
+            top: 120px;
+            background-color: #fff;
+
+            width: 250px;
+            padding: 20px;
+        }
+        .appeal__filter_in_date {
+            left: unset;
+            right: 20px;
+        }
+        .appeal__filter ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        .appeal__filter h4 {
+            margin-bottom: 10px;
+        }
+        .appeal__filter label:hover {
+            color: #4272d7;
+            cursor: pointer;
+        }
+        .appeal__filter select:hover,
+        .appeal__filter input[type=radio]:hover {
+            cursor: pointer;
+        }
+        .table-responsive {
+            max-height: 700px;
+        }
+
+        .table-responsive {
+            padding-top: 76px;
+        }
+
+        thead {
+            position: fixed;
+            top: 177px;
+        }
+        tr {
+            height: 76px;
+        }
+        td,
+        th {
+            padding: 0 !important;
+            text-align: center;
+            vertical-align: middle !important;
+            padding: 0 10px !important;
+        }
+        td {
+            padding: 0 30px !important;
+        }
+        th:first-child,
+        td:first-child {
+            width: 50px;
+            padding: 0 !important;
+        }
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 130px;
+        }
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 75px;
+        }
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 85px;
+        }
+        th:last-child,
+        td:last-child {
+            padding-right: 35px !important;
+        }
+
+        th:nth-child(2) {
+            padding: 0 160px !important;
+            padding-right: 144px !important;
+        }
+        td:nth-child(2) {
+            padding: 0 !important;
+        }
+        th:nth-child(5) {
+            padding: 0 45px !important;
+            padding-right: 25px !important;
+            padding-left: 50px !important;
+        }
+        td:nth-child(5) {
+            padding-right: 0 !important;
+        }
+        th:last-child {
+            padding: 0 118px !important;
+        }
+        td:nth-child(3) {
+            padding-left: 10px !important;
+        }
+        td:nth-child(4) {
+            padding-right: 10px !important;
+        }
+        th:nth-child(4) {
+            padding-right: 0 !important;
+            padding-left: 20px !important;
+        }
+        th:nth-child(3) {
+            padding-left: 0 !important;
+            padding-right: 20px !important;
+        }
+    </style>
+</head>
+
+<body class="animsition">
+    <div class="page-wrapper">
+        <!-- HEADER MOBILE-->
+        <header class="header-mobile d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <a class="logo" href="{% url 'dashboard' request.user.username %}">
+                            <img src="{% static 'images/blue-logo.png' %}" alt="CoolAdmin" />
+                        </a>
+                        <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar-mobile">
+                <div class="container-fluid">
+                    <ul class="navbar-mobile__list list-unstyled">
+                        <li>
+                            <a class="" href="{% url 'dashboard' request.user.username %}">
+                                <i class="fas fa-chart-bar"></i>Statistika</a>
+                        </li>
+                        <li class=" noti__item">
+                            <a href="{% url 'appeals' %}">
+                                <i class="fas fa-envelope"></i>
+                                <span class="quantity">1</span>
+                                Murojaatlar
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fas fa-reply"></i>Javoblar</a>
+                        </li>
+                        <li>
+                            <a href="form.html">
+                                <i class="far fa-comments"></i>Chat</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- END HEADER MOBILE-->
+
+        <!-- MENU SIDEBAR-->
+        <aside class="menu-sidebar d-none d-lg-block">
+            <div class="logo">
+                <a href="{% url 'dashboard' request.user.username %}">
+                    <img src="{% static 'images/blue-logo.png' %}" alt="Cool Admin" />
+                </a>
+            </div>
+            <div class="menu-sidebar__content js-scrollbar1">
+                <nav class="navbar-sidebar">
+                    <ul class="list-unstyled navbar__list">
+                        <li>
+                            <a class="js-arrow" href="{% url 'dashboard' request.user.username %}">
+                                <i class="fas fa-chart-bar"></i>Statistika</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'appeals' %}">
+                                <i class="fas fa-envelope"></i>Murojaatlar</a>
+                        </li>
+                        <li class="active has-sub">
+                            <a href="#">
+                                <i class="fas fa-reply"></i>Javoblar</a>
+                        </li>
+                        <li>
+                            <a href="form.html">
+                                <i class="fas fa-comments"></i>Chat</a>
+                        </li>
+                        <li>
+                            <a href="form.html">
+                                <i class="fas fa-book"></i>Murojaatchilar paneli</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <!-- END MENU SIDEBAR-->
+
+        <!-- PAGE CONTAINER-->
+        <div class="page-container">
+            <!-- HEADER DESKTOP-->
+            <header class="header-desktop">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="header-wrap">
+                            <form class="form-header" action="" method="POST">
+                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Murojaatni qidirish..." />
+                                <button class="au-btn--submit" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                            <div class="header-button">
+                                <div class="noti-wrap">
+                                    <div class="noti__item js-item-menu">
+                                        <i class="zmdi zmdi-comment-more"></i>
+                                        <span class="quantity">1</span>
+                                        <div class="mess-dropdown js-dropdown">
+                                            <div class="mess__title">
+                                                <p>Sizda 2 ta yangi xabar bor</p>
+                                            </div>
+                                            <div class="mess__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="{% static 'images/icon/avatar-06.jpg' %}" alt="Michelle Moreno" />
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Michelle Moreno</h6>
+                                                    <p>Have sent a photo</p>
+                                                    <span class="time">3 min ago</span>
+                                                </div>
+                                            </div>
+                                            <div class="mess__item">
+                                                <div class="image img-cir img-40">
+                                                    <img src="{% static 'images/icon/avatar-04.jpg' %}" alt="Diane Myers" />
+                                                </div>
+                                                <div class="content">
+                                                    <h6>Diane Myers</h6>
+                                                    <p>You are now connected on message</p>
+                                                    <span class="time">Yesterday</span>
+                                                </div>
+                                            </div>
+                                            <div class="mess__footer">
+                                                <a href="#">Barcha xabarlarni ko'rish</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="account-wrap">
+                                    <div class="account-item clearfix js-item-menu">
+                                        <div class="image">
+                                            <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="John Doe" />
+                                        </div>
+                                        <div class="content">
+                                            <a class="js-acc-btn" href="#">john doe</a>
+                                        </div>
+                                        <div class="account-dropdown js-dropdown">
+                                            <div class="info clearfix">
+                                                <div class="image">
+                                                    <a href="#">
+                                                        <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="John Doe" />
+                                                    </a>
+                                                </div>
+                                                <div class="content">
+                                                    <h5 class="name">
+                                                        <a href="#">john doe</a>
+                                                    </h5>
+                                                    <span class="email">johndoe@example.com</span>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__body">
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-account"></i>profile</a>
+                                                </div>
+                                                <div class="account-dropdown__item">
+                                                    <a href="#">
+                                                        <i class="zmdi zmdi-account-add"></i>Admin qo'shish</a>
+                                                </div>
+                                            </div>
+                                            <div class="account-dropdown__footer">
+                                                <a href="#">
+                                                    <i class="zmdi zmdi-power"></i>Chiqish</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- HEADER DESKTOP-->
+
+            <!-- MAIN CONTENT-->
+            <div class="main-content">
+                <div class="section__content section__content--p30">
+                    <div class="container-fluid">
+                        <div class="appeal__filter">
+                            <h4>Viloyat</h4>
+                            <select class="w-100 p-1">
+                                <option>umumiy</option>
+                                <option>Toshkent</option>
+                                <option>Samarqand</option>
+                                <option>Andijon</option>
+                                <option>Fargona</option>
+                                <option>Namangan</option>
+                                <option>Qashqadaryo</option>
+                                <option>Surxondaryo</option>
+                                <option>Buxoro</option>
+                                <option>Navoiy</option>
+                                <option>Xorazm</option>
+                                <option>Sirdaryo</option>
+                                <option>Jizzax</option>
+                                <option>Qoraqalpog'iston Respublikasi</option>
+                            </select>
+                            <hr>
+                            <h4>Murojaat yo'nalishi</h4>
+                            <select class="w-100 p-1">
+                                <option class="">umumiy</option>
+                                <option class="">Diplom olish masalalari</option>
+                                <option class="">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
+                                <option class="">Kontrakt to'lovi to'g'risida</option>
+                                <option class="">Magistratura masalalari</option>
+                                <option class="">Fuqarolar murojaatlari to'g'risida</option>
+                                <option class="">Moliyaviy masalalar</option>
+                                <option class="">Talaba ustidan shikoyat</option>
+                                <option class="">Rahbar faoliyatidan norozilik arizasi</option>
+                                <option class="">Stipendiya masalalari</option>
+                                <option class="">O'qishga kirish to'g'risida</option>
+                                <option class="">O'qishni ko'chirish to'g'risida</option>
+                                <option class="">O'qishni tiklash to'g'risida</option>
+                                <option class="">Ijodiy imtihondan norozilik to'g'risida</option>
+                                <option class="">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
+                                <option class="">Nafaqa masalalari</option>
+                                <option class="">Arxiv ma'lumotlarini olish to'grisida</option>
+                                <option class="">Ikkinchi mutaxasislik</option>
+                                <option class="">Kitob nashr qilish</option>
+                                <option class="">Ixtiro qilish taklifi</option>
+                                <option class="">Taklif va minnatdorchilik</option>
+                                <option class="">Sirtqi o'qish masalalari</option>
+                                <option class="">Yotoqxona masalalari bo'yicha</option>
+                                <option class="">Olimpiada masalasi bo'yicha</option>
+                                <option class="">Boshqa savollar</option>
+                            </select>
+                            <hr>
+                            <h4>Murojaat turi</h4>
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="radio" checked name="appeal_type">
+                                        Umumiy
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="appeal_type">
+                                        Ariza
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="appeal_type">
+                                        Shikoyat
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="appeal_type">
+                                        Taklif
+                                    </label>
+                                </li>
+                            </ul>
+                            <hr>
+                            <h4>Murojaatchi turi</h4>
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="radio" checked name="applicant_type">
+                                        umumiy
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="applicant_type">
+                                        Yuridik shaxs
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="applicant_type">
+                                        Jismoniy shaxs
+                                    </label>
+                                </li>
+                            </ul>
+                            <hr>
+                            <h4>Kim tomonidan</h4>
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="radio" checked name="by_whom" >
+                                        Umumiy
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="by_whom">
+                                        Talaba
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="by_whom">
+                                        O'qituvchi
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="by_whom">
+                                        Ota ona
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="appeal__filter appeal__filter_in_date">
+                            <h4>Murojaat holati</h4>
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="radio" checked name="condition" >
+                                        Umumiy
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="condition">
+                                        yangi
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="condition">
+                                        Ko'rib chiqilmoqda
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="condition">
+                                        Bajarilgan
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="condition">
+                                        Rad etilgan
+                                    </label>
+                                </li>
+                            </ul>
+                            <hr>
+                            <h4>Sana</h4>
+                            <ul>
+                                <li>
+                                    <label>
+                                        <input type="radio" checked name="date" >
+                                        Umumiy
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="date">
+                                        bugun
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="date">
+                                        oxirgi xafta
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="date">
+                                        oxirgi oy
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="date">
+                                        Oxirgi yil
+                                    </label>
+                                </li>
+                            </ul>
+                            <hr>
+                            <h4>Sana bo'yicha qidirish</h4>
+                            <form action="" method="POST">
+                                <input class="au-input" type="text" name="search" placeholder="DD-MM-YYYY" />{% csrf_token %}
+                                <button class="au-btn--submit p-3 float-right mt-1" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 mx-auto">
+                                <h2 class="title-1 m-b-25">Javoblar</h2>
+                                <div class="table-responsive table--no-card m-b-40">
+                                    <table class="table table-borderless table-striped table-earning">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Murojaat</th>
+                                                <th>Admin</th>
+                                                <th>Javob turi</th>
+                                                <th>file</th>
+                                                <th>Sana</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Toshmat</td>
+                                                <td>Admin2</td>
+                                                <td>email</td>
+                                                <td>index.pdf</td>
+                                                <td>15.11.2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td data-toggle="modal" data-target="#scrollmodal">Pirmatov Hikmat</td>
+                                                <td>Admin1</td>
+                                                <td>site</td>
+                                                <td>index.pdf</td>
+                                                <td>15.11.2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Toshmat</td>
+                                                <td>Admin2</td>
+                                                <td>email</td>
+                                                <td>index.pdf</td>
+                                                <td>15.11.2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td data-toggle="modal" data-target="#scrollmodal">Pirmatov Hikmat</td>
+                                                <td>Admin1</td>
+                                                <td>site</td>
+                                                <td>index.pdf</td>
+                                                <td>15.11.2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>1</td>
+                                                <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Toshmat</td>
+                                                <td>Admin2</td>
+                                                <td>email</td>
+                                                <td>index.pdf</td>
+                                                <td>15.11.2022</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td data-toggle="modal" data-target="#scrollmodal">Pirmatov Hikmat</td>
+                                                <td>Admin1</td>
+                                                <td>site</td>
+                                                <td>index.pdf</td>
+                                                <td>15.11.2022</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT-->
+            <!-- END PAGE CONTAINER-->
+        </div>
+
+    </div>
+
+    <!-- modal scroll -->
+    <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scrollmodalLabel">Eshmatov Toshmat murojaati</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Murojaat:</h5>
+                            <p style="text-decoration: underline; margin-left: 20px">Eshmatov Toshmat</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Javob aktivligi:</h5>
+                            <p style="text-decoration: underline; margin-left: 20px">Yuborilmagan</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Murojaat holati:</h5>
+                            <p style="text-decoration: underline; margin-left: 20px">Rad etilgan</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">admin:</h5>
+                            <p style="text-decoration: underline; margin-left: 20px">Admin2</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Javob turi:</h5>
+                            <p style="text-decoration: underline; margin-left: 20px">email orqali</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Javob yuborilgan sana:</h5>
+                            <p style="text-decoration: underline; margin-left: 20px">09.05.2022</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Javob fayl ko'rinishi:</h5>
+                            <p style="text-decoration: underline; margin-left: 20px">index.html</p>
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <h5 style="margin-bottom: 20px">Javob mazmuni:</h5>
+                            <p style="border: 1px solid #ccc; padding: 10px">
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut, culpa explicabo? Eveniet aut animi harum similique, iste consequuntur, molestias, aperiam aspernatur provident facilis impedit nesciunt dignissimos odit laboriosam voluptate maiores a ex unde earum. Fugiat, impedit officiis alias beatae, facilis modi aspernatur ratione, totam archs, consequuntur quis deleniti porro reprehenderit est quod ullam esse dignissimos voluptatem tempora reiciendis voluptatibus eius suscipit facere. Quasi, earum laborum dignissimos explicabo quaerat reiciendis veritatis at atque dolore, alias, voluptatum ducimus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas veniam, ab sapiente commodi excepturi voluptatibus beatae officia et sunt corporis id vero, facilis saepe porro possimus optio reiciendis? Ea corporis ut eligendi saepe minima animi nihil explicabo cupiditate perferendis? Et voluptate odit reiciendis iusto quas doloremque quo inventore suscipit impedit quasi. Distinctio corporis praesentium laborum voluptates accusamus tempora libero fugit aut omnis aliquid, excepturi veritatis porro, maiores soluta pariatur, nostrum consectetur ducimus in dolore suscipit eum quaerat et consequatur! At saepe voluptatibus illum esse blanditiis! Similique inventore voluptas sit magni! Quod eius ad vel incidunt officiis dicta iure tempora hic.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
+                    <button type="button" class="btn btn-primary">O'zgartirish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal scroll -->
+
+    <!-- Jquery JS-->
+    <script src="{% static 'vendor/jquery-3.2.1.min.js' %}"></script>
+    <!-- Bootstrap JS-->
+    <script src="{% static 'vendor/bootstrap-4.1/popper.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-4.1/bootstrap.min.js' %}"></script>
+    <!-- Vendor JS       -->
+    <script src="{% static 'vendor/slick/slick.min.js' %}">
+    </script>
+    <script src="{% static 'vendor/wow/wow.min.js' %}"></script>
+    <script src="{% static 'vendor/animsition/animsition.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap-progressbar/bootstrap-progressbar.min.js' %}">
+    </script>
+    <script src="{% static 'vendor/counter-up/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'vendor/counter-up/jquery.counterup.min.js' %}">
+    </script>
+    <script src="{% static 'vendor/circle-progress/circle-progress.min.js' %}"></script>
+    <script src="{% static 'vendor/perfect-scrollbar/perfect-scrollbar.js' %}"></script>
+    <script src="{% static 'vendor/chartjs/Chart.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/select2/select2.min.js' %}">
+    </script>
+
+    <script src="{% static 'vendor/vector-map/jquery.vmap.js' %}"></script>
+    <script src="{% static 'vendor/vector-map/jquery.vmap.min.js' %}"></script>
+    <script src="{% static 'vendor/vector-map/jquery.vmap.sampledata.js' %}"></script>
+    <script src="{% static 'vendor/vector-map/jquery.vmap.world.js' %}"></script>
+
+    <!-- Main JS-->
+    <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>
+<!-- end document-->

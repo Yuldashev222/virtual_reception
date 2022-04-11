@@ -27,8 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Libs
+    'captcha',
+    
     # apps
-    'main',
     'adminPanel',
     'appeals',
 ]

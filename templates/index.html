@@ -8,17 +8,49 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style/main.css' %}" />
-    <link rel="stylesheet" href="{% static 'style/normalize.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
       integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
       crossorigin="anonymous"
     />
-    <title>Document</title>
+    <script src="{% static 'js/fileFunction.js' %}"></script>
+    <title>TDTrU rektori virtual qabulxonasi</title>
+    <style>
+      
+      .selects .form__field:last-child {
+        margin-top: 150px !important;
+        margin-bottom: 7px;
+      }
+
+      .btn_second {
+        margin-top: 35px;
+      }
+      .form__file {
+        margin-bottom: 15px;
+      }
+
+      .security {
+        margin-left: 0;
+        margin-bottom: 15px;
+        text-align: left;
+      }
+
+      #form__file {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+        display: unset;
+      }
+
+    </style>
   </head>
-  <body>
+  <body style="background-image: url('{% static 'images/banner.jpg' %}');">
     <header class="header">
 
       <div class="header__left">
@@ -147,7 +179,7 @@
             <!-- Slides -->
             <div class="swiper-slide swiper__image-block">
               <a href="#" class="swiper__link">
-                <img src="{% static '/img/prezident.jpg' %}" alt="" class="slider_image">
+                <img src="{% static '/images/prezident.jpg' %}" alt="" class="slider_image">
                 <h3 class="swiper__title">
                   BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
                 </h3>
@@ -158,7 +190,7 @@
             </div>
             <div class="swiper-slide swiper__image-block">
               <a href="#">
-                <img src="{% static '/img/bus.jpg' %}" alt="" class="slider_image">
+                <img src="{% static '/images/bus.jpg' %}" alt="" class="slider_image">
                 <h3 class="swiper__title">
                   BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
                 </h3>
@@ -169,7 +201,7 @@
             </div>
             <div class="swiper-slide swiper__image-block">
               <a href="#">
-                <img src="{% static '/img/kimdir.jpg' %}" alt="" class="slider_image">
+                <img src="{% static '/images/kimdir.jpg' %}" alt="" class="slider_image">
                 <h3 class="swiper__title">
                   BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
                 </h3>
@@ -286,36 +318,53 @@
                       <div class="form__field">
                         <div class="select_container">
                           <select class="form__select">
-                            <option class="form__select_option" selected>Murojaat</option>
+                            <option class="form__select_option" selected>Ariza</option>
                             <option class="form__select_option">Shikoyat</option>
-                            <option class="form__select_option">Talabnoma</option>
-                            <option class="form__select_option">Sayt ma'muriyatiga murojaat</option>
+                            <option class="form__select_option">Taklif</option>
                             <option class="form__select_option">boshqa</option>
                           </select>
                           <div class="form__label">Murojaat turi</div>
                         </div>
                       </div>
-                      <div class="form__field">
+                      <div class="form__field form__category">
                         <div class="select_container">
                           <select class="form__select">
-                            <option class="form__select_option"></option>
-                            <option class="form__select_option">O'quv jarayoni bilan bog'liq</option>
-                            <option class="form__select_option">Ilmiy ishlar bo'yicha</option>
-                            <option class="form__select_option">Moliyaviy masalalar bo'yicha</option>
-                            <option class="form__select_option">Ma'naviy ma'rifiy masalalar bo'yicha</option>
-                            <option class="form__select_option">Xalqaro masalalar bo'yicha</option>
+                            <option class="form__select_option" selected>Diplom olish masalalari</option>
+                            <option class="form__select_option">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
+                            <option class="form__select_option">Kontrakt to'lovi to'g'risida</option>
+                            <option class="form__select_option">Magistratura masalalari</option>
+                            <option class="form__select_option">Fuqarolar murojaatlari to'g'risida</option>
+                            <option class="form__select_option">Moliyaviy masalalar</option>
+                            <option class="form__select_option">Talaba ustidan shikoyat</option>
+                            <option class="form__select_option">Rahbar faoliyatidan norozilik arizasi</option>
+                            <option class="form__select_option">Stipendiya masalalari</option>
+                            <option class="form__select_option">O'qishga kirish to'g'risida</option>
+                            <option class="form__select_option">O'qishni ko'chirish to'g'risida</option>
+                            <option class="form__select_option">O'qishni tiklash to'g'risida</option>
+                            <option class="form__select_option">Ijodiy imtihondan norozilik to'g'risida</option>
+                            <option class="form__select_option">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
+                            <option class="form__select_option">Nafaqa masalalari</option>
+                            <option class="form__select_option">Arxiv ma'lumotlarini olish to'grisida</option>
+                            <option class="form__select_option">Ikkinchi mutaxasislik</option>
+                            <option class="form__select_option">Kitob nashr qilish</option>
+                            <option class="form__select_option">Ixtiro qilish taklifi</option>
+                            <option class="form__select_option">Taklif va minnatdorchilik</option>
+                            <option class="form__select_option">Sirtqi o'qish masalalari</option>
+                            <option class="form__select_option">Yotoqxona masalalari bo'yicha</option>
+                            <option class="form__select_option">Olimpiada masalasi bo'yicha</option>
+                            <option class="form__select_option">Boshqa yo'nalishlar</option>
                           </select>
                           <div class="form__label">Murojaat yo'nalishi</div>
                         </div>
                       </div>
-                      <div class="form__field form__category">
+                      <div class="form__field four">
                         <div class="select_container">
                           <select class="form__select">
-                            <option class="form__select_option" selected>Talaba</option>
+                            <option class="form__select_option">Talaba</option>
                             <option class="form__select_option">O'qituvchi</option>
+                            <option class="form__select_option">Universitet xodimi</option>
                             <option class="form__select_option">Ota ona</option>
-                            <option class="form__select_option">Tashkilot</option>
-                            <option class="form__select_option">boshqa</option>
+                            <option class="form__select_option">Boshqa</option>
                           </select>
                           <div class="form__label">Kim tomonidan</div>
                         </div>
@@ -335,12 +384,37 @@
                         <div class="form__label">Telefon raqam:</div>
                       </div>
                       <div class="form__field">
-                        <input class="form__input">
-                        <div class="form__label">Passport seriya va raqami</div>
-                      </div>
-                      <div class="form__field">
                         <input type="email" class="form__input">
                         <div class="form__label">Elektron pochta</div>
+                      </div>
+                      <div class="form__field">
+                        <div class="select_container">
+                          <select class="form__select">
+                            <option class="form__select_option" selected>Jismoniy shaxs</option>
+                            <option class="form__select_option">Yuridik shaxs</option>
+                          </select>
+                          <div class="form__label">Shaxsingiz</div>
+                        </div>
+                      </div>
+                      <div class="form__field" style="margin-bottom: 30px">
+                        <div class="select_container">
+                          <select class="form__select">
+                            <option class="form__select_option">Toshkent</option>
+                            <option class="form__select_option">Samarqand</option>
+                            <option class="form__select_option">Andijon</option>
+                            <option class="form__select_option">Fargona</option>
+                            <option class="form__select_option">Namangan</option>
+                            <option class="form__select_option">Qashqadaryo</option>
+                            <option class="form__select_option">Surxondaryo</option>
+                            <option class="form__select_option">Buxoro</option>
+                            <option class="form__select_option">Navoiy</option>
+                            <option class="form__select_option">Xorazm</option>
+                            <option class="form__select_option">Sirdaryo</option>
+                            <option class="form__select_option">Jizzax</option>
+                            <option class="form__select_option">Qoraqalpog'iston Respublikasi</option>
+                          </select>
+                          <div class="form__label">Viloyat</div>
+                        </div>
                       </div>
                       <div class="form__field btns btn_second">
                         <button class="btn prev_1 prev">ortga</button>
@@ -358,9 +432,15 @@
                         <div class="form__label">Murojaat matni</div>
                       </div>
                       <div class="form__field form__file">
-                        <input type="file" class="form__input" id="form__file">
                         <div class="form__label">Fayl ko'rinishi</div>
-                        <label for="form__file" class="form__file_label">Faylni tanlang</label>
+                        <input type="file" class="inputfile" name="file" id="form__file" data-multiple-caption="{count} ta fayl tanlandi" multiple />
+                        <label for="form__file" class="form__file_label"><span>Faylni tanlang</span></label>
+                      </div>
+                      <div class="security">
+                        <label>
+                          Shaxsim sir saqlansin
+                          <input type="checkbox">
+                        </label>
                       </div>
                       <div class="accept_block">
                         <p class="accept_desc"><span class="warning">Diqqat!!!</span> Jo'natish tugmasini bosish orqali siz Virtual qabulxona xizmat ko'rsatish <a href="#" class="rules"><span class="consent">shartlariga</span></a> rozilik bildirasiz</p>
@@ -429,7 +509,7 @@
     <div class="modal">
       <div class="modal__consent">
         <ul class="modal__consent_list">
-          <li class="modal__consent_item">Hurmatli foydalanuvchi!</li>
+          <li class="modal__consent_item">Hurmatli Murojaatchi!</li>
           <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy maqomga ega ekanligini ham eslatib qo'ymoqchimiz.</li>
           
           <li class="modal__consent_item"><span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
@@ -470,6 +550,34 @@
                 el: '.swiper-pagination',
             },
           })
-        </script>
+    </script>
+    <script>
+      function ready ()
+      {
+          var inputFile = document.querySelectorAll(".inputfile");
+          Array.prototype.forEach.call(inputFile, function( input )
+          {
+              var label = input.nextElementSibling,
+              labelVal = label.innerHTML;
+
+              input.addEventListener('change', function ( e )
+              {
+                  console.log(this.files);
+                  var fileName = '';
+                  if( this.files && this.files.length > 1 )
+                      fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+                  else
+                      fileName = this.files[0].name;
+                  
+                  if( fileName )
+                      label.querySelector( 'span' ).innerHTML = fileName;
+                  else
+                      label.innerHTML = labelVal;
+              });
+          });
+      };
+
+      document.addEventListener("DOMContentLoaded", ready);
+    </script>
   </body>
 </html>
