@@ -90,37 +90,51 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="John Doe" />
+                                            {% if request.user.photo %}
+                                                <img src="{{ request.user.photo.url }}" alt="admin photo" />
+                                            {% else %}
+                                                <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="admin photo" />
+                                            {% endif %}
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                            <a class="js-acc-btn" href="#">{{ request.user.username }}</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="John Doe" />
+                                                        {% if request.user.photo %}
+                                                            <img src="{{ request.user.photo.url }}" alt="admin photo" />
+                                                        {% else %}
+                                                            <img src="{% static 'images/icon/avatar-01.jpg' %}" alt="admin photo" />
+                                                        {% endif %}
                                                     </a>
                                                 </div>
-                                                <div class="content">
+                                                <div class="content flex-column align-items-start">
                                                     <h5 class="name">
-                                                        <a href="#">john doe</a>
+                                                        <a href="#">{{ request.user.username }}</a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    {% if request.user.email %}
+                                                        <span class="email">{{ request.user.email }}</span>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
-                                                    <a href="#">
+                                                    <a href="{% url 'profile' request.user.username %}">
                                                         <i class="zmdi zmdi-account"></i>profile</a>
                                                 </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-account-add"></i>Admin qo'shish</a>
-                                                </div>
+                                                {% if request.user.username == 'admin' %}
+                                                    <div class="account-dropdown__item">
+                                                        <a href="{% url 'add-admin' %}">
+                                                            <i class="zmdi zmdi-account-add"></i>
+                                                            Admin qo'shish
+                                                        </a>
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="{% url 'logout' request.user.username %}">
                                                     <i class="zmdi zmdi-power"></i>Chiqish</a>
                                             </div>
                                         </div>

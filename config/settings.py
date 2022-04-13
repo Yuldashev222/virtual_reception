@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'captcha',
     
     # apps
+    'phonenumber_field',
     'adminPanel',
     'appeals',
 ]

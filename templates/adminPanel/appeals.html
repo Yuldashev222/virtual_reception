@@ -5,8 +5,90 @@
 {% block title %}<title>Murojaatlar</title>{% endblock title %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/appeals.css' %}">
     <style>
+        .position-icons {
+            color: inherit;
+        }
+        .position-icons:hover {
+            color: green;
+        }
+        .position-icons:nth-child(2) {
+            margin-left: 20px;
+        }
+        .position-icons:nth-child(2):hover {
+            color: red;
+        }
+          .navbar-sidebar .navbar__list .noti__item i {
+            font-size: 20px;
+            color: inherit;
+          }
+          .navbar-sidebar .navbar__list .noti__item .quantity {
+            left: 11px;
+            top: 11px;
+            right: unset;
+          }
+          .modal::before {
+            content: none;
+          }
+          body {
+            overflow: hidden;
+          }
+          .appeal__filter {
+            position: fixed;
+            left: 320px;
+            top: 120px;
+            background-color: #fff;
+          
+            width: 250px;
+            padding: 20px;
+          }
+          .appeal__filter_in_date {
+            left: unset;
+            right: 20px;
+          }
+          .appeal__filter ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+          }
+          .appeal__filter h4 {
+            margin-bottom: 10px;
+          }
+          .appeal__filter label:hover {
+            color: #4272d7;
+            cursor: pointer;
+          }
+          .appeal__filter select:hover,
+          .appeal__filter input[type="radio"]:hover {
+            cursor: pointer;
+          }
+          .modal-answer-textarea {
+            padding: 10px;
+          }
+          #accepted {
+            display: none;
+          }
+          #accepted + label {
+            margin-left: 30px;
+          }
+          #rejected {
+            display: none;
+          }
+          #rejected + label {
+            margin-left: 30px;
+          }
+          #accepted:checked + label {
+            color: green;
+          }
+          #rejected:checked + label {
+            color: red;
+          }
+          
+          .modal-answer-textarea {
+            height: 300px !important;
+            max-height: 300px;
+          }
+          
         #in_site {
             display: none;
         }
@@ -61,6 +143,22 @@
         
         label:hover {
             cursor: pointer;
+        }
+        .table-earning tbody td {
+            white-space: unset;
+            vertical-align: middle;
+        }
+        .table-responsive.table--no-card {
+            max-height: 650px;
+        }
+
+        tr th:first-child,
+        tr td:first-child {
+            padding: 22px;
+        }
+        thead {
+            position: sticky;
+            top: 0;
         }
     </style>
 {% endblock style %}
@@ -136,390 +234,246 @@
     <div class="main-content">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
-                <div class="appeal__filter">
-                    <h4>Viloyat</h4>
-                    <select class="w-100 p-1">
-                        <option>umumiy</option>
-                        <option>Toshkent</option>
-                        <option>Samarqand</option>
-                        <option>Andijon</option>
-                        <option>Fargona</option>
-                        <option>Namangan</option>
-                        <option>Qashqadaryo</option>
-                        <option>Surxondaryo</option>
-                        <option>Buxoro</option>
-                        <option>Navoiy</option>
-                        <option>Xorazm</option>
-                        <option>Sirdaryo</option>
-                        <option>Jizzax</option>
-                        <option>Qoraqalpog'iston Respublikasi</option>
-                    </select>
-                    <hr>
-                    <h4>Murojaat yo'nalishi</h4>
-                    <select class="w-100 p-1">
-                        <option class="">umumiy</option>
-                        <option class="">Diplom olish masalalari</option>
-                        <option class="">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
-                        <option class="">Kontrakt to'lovi to'g'risida</option>
-                        <option class="">Magistratura masalalari</option>
-                        <option class="">Fuqarolar murojaatlari to'g'risida</option>
-                        <option class="">Moliyaviy masalalar</option>
-                        <option class="">Talaba ustidan shikoyat</option>
-                        <option class="">Rahbar faoliyatidan norozilik arizasi</option>
-                        <option class="">Stipendiya masalalari</option>
-                        <option class="">O'qishga kirish to'g'risida</option>
-                        <option class="">O'qishni ko'chirish to'g'risida</option>
-                        <option class="">O'qishni tiklash to'g'risida</option>
-                        <option class="">Ijodiy imtihondan norozilik to'g'risida</option>
-                        <option class="">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
-                        <option class="">Nafaqa masalalari</option>
-                        <option class="">Arxiv ma'lumotlarini olish to'grisida</option>
-                        <option class="">Ikkinchi mutaxasislik</option>
-                        <option class="">Kitob nashr qilish</option>
-                        <option class="">Ixtiro qilish taklifi</option>
-                        <option class="">Taklif va minnatdorchilik</option>
-                        <option class="">Sirtqi o'qish masalalari</option>
-                        <option class="">Yotoqxona masalalari bo'yicha</option>
-                        <option class="">Olimpiada masalasi bo'yicha</option>
-                        <option class="">Boshqa savollar</option>
-                    </select>
-                    <hr>
-                    <h4>Murojaat turi</h4>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="radio" checked name="appeal_type">
-                                Umumiy
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="appeal_type">
-                                Ariza
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="appeal_type">
-                                Shikoyat
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="appeal_type">
-                                Taklif
-                            </label>
-                        </li>
-                    </ul>
-                    <hr>
-                    <h4>Murojaatchi turi</h4>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="radio" checked name="applicant_type">
-                                umumiy
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="applicant_type">
-                                Yuridik shaxs
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="applicant_type">
-                                Jismoniy shaxs
-                            </label>
-                        </li>
-                    </ul>
-                    <hr>
-                    <h4>Kim tomonidan</h4>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="radio" checked name="by_whom" >
-                                Umumiy
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="by_whom">
-                                Talaba
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="by_whom">
-                                O'qituvchi
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="by_whom">
-                                Ota ona
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-                <div class="appeal__filter appeal__filter_in_date">
-                    <h4>Murojaat holati</h4>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="radio" checked name="condition" >
-                                Umumiy
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="condition">
-                                yangi
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="condition">
-                                Ko'rib chiqilmoqda
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="condition">
-                                Bajarilgan
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="condition">
-                                Rad etilgan
-                            </label>
-                        </li>
-                    </ul>
-                    <hr>
-                    <h4>Sana</h4>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="radio" checked name="date" >
-                                Umumiy
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="date">
-                                bugun
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="date">
-                                oxirgi xafta
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="date">
-                                oxirgi oy
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="radio" name="date">
-                                Oxirgi yil
-                            </label>
-                        </li>
-                    </ul>
-                    <hr>
-                    <h4>Sana bo'yicha qidirish</h4>
-                    <form action="" method="POST">
-                        <input class="au-input" type="text" name="search" placeholder="DD-MM-YYYY" />{% csrf_token %}
-                        <button class="au-btn--submit p-3 float-right mt-1" type="submit">
-                            <i class="zmdi zmdi-search"></i>
-                        </button>
-                    </form>
-                </div>
-                <div class="row">
-                    <div class="col-md-8 mx-auto">
-                        <h2 class="title-1 m-b-25">Murojaatlar</h2>
-                        <div class="table-responsive table--no-card m-b-40">
-                            <table class="table table-borderless table-striped table-earning">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>F I O</th>
-                                        <th>Muojaat turi</th>
-                                        <th>Kim tomonidan</th>
-                                        <th>tel raqami</th>
-                                        <th>file</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td data-toggle="modal" data-target="#scrollmodal">Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Eshmatov Toshmat Hikmat o'g'li</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Eshmatov Toshmat Hikmat o'g'li</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+4653456</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>Eshmatov Toshmat Hikmat o'g'li</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Eshmatov Toshmat Hikmat o'g'li</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+4653456</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>Eshmatov Tos</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>8</td>
-                                        <td>Eshmatov Toshmat Hikmat o'g'li</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+998974068686</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                    <tr>
-                                        <td>9</td>
-                                        <td>Eshmatov Toshmat Hikmat o'g'li</td>
-                                        <td>Shikoyat</td>
-                                        <td>O'qituvchi</td>
-                                        <td>+4653456</td>
-                                        <td>index.pdf</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                {% if appeals %}
+                    <div class="appeal__filter">
+                        <h4>Viloyat</h4>
+                        <select class="w-100 p-1">
+                            <option>umumiy</option>
+                            <option>Toshkent</option>
+                            <option>Samarqand</option>
+                            <option>Andijon</option>
+                            <option>Fargona</option>
+                            <option>Namangan</option>
+                            <option>Qashqadaryo</option>
+                            <option>Surxondaryo</option>
+                            <option>Buxoro</option>
+                            <option>Navoiy</option>
+                            <option>Xorazm</option>
+                            <option>Sirdaryo</option>
+                            <option>Jizzax</option>
+                            <option>Qoraqalpog'iston Respublikasi</option>
+                        </select>
+                        <hr>
+                        <h4>Murojaat yo'nalishi</h4>
+                        <select class="w-100 p-1">
+                            <option class="">umumiy</option>
+                            <option class="">Diplom olish masalalari</option>
+                            <option class="">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
+                            <option class="">Kontrakt to'lovi to'g'risida</option>
+                            <option class="">Magistratura masalalari</option>
+                            <option class="">Fuqarolar murojaatlari to'g'risida</option>
+                            <option class="">Moliyaviy masalalar</option>
+                            <option class="">Talaba ustidan shikoyat</option>
+                            <option class="">Rahbar faoliyatidan norozilik arizasi</option>
+                            <option class="">Stipendiya masalalari</option>
+                            <option class="">O'qishga kirish to'g'risida</option>
+                            <option class="">O'qishni ko'chirish to'g'risida</option>
+                            <option class="">O'qishni tiklash to'g'risida</option>
+                            <option class="">Ijodiy imtihondan norozilik to'g'risida</option>
+                            <option class="">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
+                            <option class="">Nafaqa masalalari</option>
+                            <option class="">Arxiv ma'lumotlarini olish to'grisida</option>
+                            <option class="">Ikkinchi mutaxasislik</option>
+                            <option class="">Kitob nashr qilish</option>
+                            <option class="">Ixtiro qilish taklifi</option>
+                            <option class="">Taklif va minnatdorchilik</option>
+                            <option class="">Sirtqi o'qish masalalari</option>
+                            <option class="">Yotoqxona masalalari bo'yicha</option>
+                            <option class="">Olimpiada masalasi bo'yicha</option>
+                            <option class="">Boshqa savollar</option>
+                        </select>
+                        <hr>
+                        <h4>Murojaat turi</h4>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" checked name="appeal_type">
+                                    Umumiy
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="appeal_type">
+                                    Ariza
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="appeal_type">
+                                    Shikoyat
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="appeal_type">
+                                    Taklif
+                                </label>
+                            </li>
+                        </ul>
+                        <hr>
+                        <h4>Murojaatchi turi</h4>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" checked name="applicant_type">
+                                    umumiy
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="applicant_type">
+                                    Yuridik shaxs
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="applicant_type">
+                                    Jismoniy shaxs
+                                </label>
+                            </li>
+                        </ul>
+                        <hr>
+                        <h4>Kim tomonidan</h4>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" checked name="by_whom" >
+                                    Umumiy
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="by_whom">
+                                    Talaba
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="by_whom">
+                                    O'qituvchi
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="by_whom">
+                                    Ota ona
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="appeal__filter appeal__filter_in_date">
+                        <h4>Murojaat holati</h4>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" checked name="condition" >
+                                    Umumiy
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="condition">
+                                    yangi
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="condition">
+                                    Ko'rib chiqilmoqda
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="condition">
+                                    Bajarilgan
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="condition">
+                                    Rad etilgan
+                                </label>
+                            </li>
+                        </ul>
+                        <hr>
+                        <h4>Sana</h4>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" checked name="date" >
+                                    Umumiy
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="date">
+                                    bugun
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="date">
+                                    oxirgi xafta
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="date">
+                                    oxirgi oy
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" name="date">
+                                    Oxirgi yil
+                                </label>
+                            </li>
+                        </ul>
+                        <hr>
+                        <h4>Sana bo'yicha qidirish</h4>
+                        <form action="" method="POST">
+                            <input class="au-input" type="text" name="search" placeholder="DD-MM-YYYY" />{% csrf_token %}
+                            <button class="au-btn--submit p-3 float-right mt-1" type="submit">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <h2 class="title-1 m-b-25">Murojaatlar</h2>
+                            <div class="table-responsive table--no-card m-b-40">
+                                <table class="table table-fixed table-borderless table-striped table-earning">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th style="text-align: center">F I O</th>
+                                            <th>Muojaat turi</th>
+                                            <th>Kim tomonidan</th>
+                                            <th>file</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for appeal in appeals %}
+                                            <tr>
+                                                <th>{{ forloop.counter }}</th>
+                                                <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ appeal.applicant_name }}</td>
+                                                <td>{{ appeal.appeal_type }}</td>
+                                                <td>{{ appeal.applicant_position }}</td>
+                                                {% if appeal.appeal_file %}
+                                                    <td>{{ appeal.appeal_file }}</td>
+                                                {% else %}
+                                                    <td>-</td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
+                {% else %}
+                    <h2 class="title-1 m-b-25">Xozircha Murojaatlar yo'q</h2>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -529,7 +483,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollmodalLabel">Eshmatov Toshmat murojaati</h5>
+                    <h5 class="modal-title" id="scrollmodalLabel">{{ appeals.0.applicant_name }} murojaati</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -538,52 +492,56 @@
                     <ul>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">F I O:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">Eshmatov Toshmat</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_name }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Tel raqami:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">+998991234567</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_tel_num }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Email:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">eshmatovTosh@gmail.com</p>
+                            {% if appeals.0.applicant_email %}
+                                <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_email }}</p>
+                            {% else %}
+                                <p style="text-decoration: underline; margin-left: 20px">Ko'rsatilmagan</p>
+                            {% endif %}
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Yuborilgan sana:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">09.05.2022</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.created_date }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Viloyat:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">Qashqadaryo viloyati</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_province }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat yo'nalishi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">Rahabar faoliyatidan norozilik</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.appeal_direction }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat turi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">Ariza</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.appeal_type }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">murojaatchi turi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">Yuridik shaxs</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_type }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Kim tomonidan:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">Ota ona</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_position }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat mavzusi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">Kelishmovchilik</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.appeal_subject }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">index.pdf</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.appeal_file }}</p>
                         </li>
                         <li style="padding: 5px 0;">
                             <h5 style="margin-bottom: 20px">Murojaat mazmuni:</h5>
-                            <p style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll">
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut, culpa explicabo? Eveniet aut animi harum similique, iste consequuntur, molestias, aperiam aspernatur provident facilis impedit nesciunt dignissimos odit laboriosam voluptate maiores a ex unde earum. Fugiat, impedit officiis alias beatae, facilis modi aspernatur ratione, totam architecto illum laborum quisquam? Earum itaque, asperiores dolores inventore dolorum dolor veritatis dolorem sunt exercitationem quo corporis ut omnis dignissimos maiores mollitia, reprehenderit vero cumque vitae nulla quam dicta culpa et nostrum! Fuga nostrum sint commodi provident cupiditate sapiente iusto quia incidunt aliquid expedita porro corrupti, nesciunt aspernatur dolor vitae deleniti dolore architecto recusandae nam cum! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, placeat molestiae! Eligendi cum tenetur repudiandae! Provident nobis, hic animi modi quae quis nesciunt. Excepturi tenetur laboriosam odio. Ipsam ipsum optio reprehenderit dicta veniam repellendus in saepe, nulla quae est explicabo enim dolores. Sapiente doloremque, obcaecati inventore sed vel eligendi expedita ducimus nostrum, veniam sunt reprehenderit aliquid voluptates at laboriosam tenetur velit possimus doloribus. Quia blanditiis, tenetur aliquid sint, temporibus, consequuntur quis deleniti porro reprehenderit est quod ullam esse dignissimos voluptatem tempora reiciendis voluptatibus eius suscipit facere. Quasi, earum laborum dignissimos explicabo quaerat reiciendis veritatis at atque dolore, alias, voluptatum ducimus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas veniam, ab sapiente commodi excepturi voluptatibus beatae officia et sunt corporis id vero, facilis saepe porro possimus optio reiciendis? Ea corporis ut eligendi saepe minima animi nihil explicabo cupiditate perferendis? Et voluptate odit reiciendis iusto quas doloremque quo inventore suscipit impedit quasi. Distinctio corporis praesentium laborum voluptates accusamus tempora libero fugit aut omnis aliquid, excepturi veritatis porro, maiores soluta pariatur, nostrum consectetur ducimus in dolore suscipit eum quaerat et consequatur! At saepe voluptatibus illum esse blanditiis! Similique inventore voluptas sit magni! Quod eius ad vel incidunt officiis dicta iure tempora hic.
+                            <p style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; word-break: break-all;">
+                                {{ appeals.0.appeal_text }}
                             </p>
                         </li>
                         <li style="padding: 5px 0;">
@@ -621,7 +579,7 @@
                             </label>
                             <input type="radio" name="address__answer" id="in_site_and_email">
                             <label for="in_site_and_email">
-                                <i class='fab fa-chrome'></i> Sayt va <i class="fas fa-envelope"></i> Email
+                                <i class='fab fa-chrome'></i> Sayt va<span style="margin-left: 10px;"><i class="fas fa-envelope"></i> Email</span>
                             </label>
                         </li>
                         <li style="padding: 5px 0;">

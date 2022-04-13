@@ -48,6 +48,10 @@
         display: unset;
       }
 
+      .btn {
+        line-height: 52px;
+      }
+
     </style>
   </head>
   <body style="background-image: url('{% static 'images/banner.jpg' %}');">
@@ -312,12 +316,12 @@
                 </div>
   
                 <div class="form__outher">
-                  <form action="#" class="form">
+                  <form action="" class="form" method="post" enctype="multipart/form-data">{% csrf_token %}
   
                     <div class="form__page slidepage selects">
                       <div class="form__field">
                         <div class="select_container">
-                          <select class="form__select">
+                          <select class="form__select" name="appeal_type">
                             <option class="form__select_option" selected>Ariza</option>
                             <option class="form__select_option">Shikoyat</option>
                             <option class="form__select_option">Taklif</option>
@@ -328,7 +332,7 @@
                       </div>
                       <div class="form__field form__category">
                         <div class="select_container">
-                          <select class="form__select">
+                          <select class="form__select" name="appeal_direction">
                             <option class="form__select_option" selected>Diplom olish masalalari</option>
                             <option class="form__select_option">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
                             <option class="form__select_option">Kontrakt to'lovi to'g'risida</option>
@@ -359,7 +363,7 @@
                       </div>
                       <div class="form__field four">
                         <div class="select_container">
-                          <select class="form__select">
+                          <select class="form__select"  name="applicant_position">
                             <option class="form__select_option">Talaba</option>
                             <option class="form__select_option">O'qituvchi</option>
                             <option class="form__select_option">Universitet xodimi</option>
@@ -370,26 +374,26 @@
                         </div>
                       </div>
                       <div class="form__field btns next_btn btn_first">
-                        <button class="btn">keyingi</button>
+                        <span class="btn">keyingi</span>
                       </div>
                     </div>
   
                     <div class="form__page">
                       <div class="form__field">
-                        <input type="name" class="form__input">
+                        <input type="name" name="applicant_name" class="form__input">
                         <div class="form__label">F.I.O</div>
                       </div>
                       <div class="form__field">
-                        <input class="form__input">
+                        <input type="tel" class="form__input" name="applicant_tel_num">
                         <div class="form__label">Telefon raqam:</div>
                       </div>
                       <div class="form__field">
-                        <input type="email" class="form__input">
+                        <input type="email" name="applicant_email" class="form__input">
                         <div class="form__label">Elektron pochta</div>
                       </div>
                       <div class="form__field">
                         <div class="select_container">
-                          <select class="form__select">
+                          <select class="form__select" name="applicant_type">
                             <option class="form__select_option" selected>Jismoniy shaxs</option>
                             <option class="form__select_option">Yuridik shaxs</option>
                           </select>
@@ -398,7 +402,7 @@
                       </div>
                       <div class="form__field" style="margin-bottom: 30px">
                         <div class="select_container">
-                          <select class="form__select">
+                          <select class="form__select" name="applicant_province">
                             <option class="form__select_option">Toshkent</option>
                             <option class="form__select_option">Samarqand</option>
                             <option class="form__select_option">Andijon</option>
@@ -417,37 +421,37 @@
                         </div>
                       </div>
                       <div class="form__field btns btn_second">
-                        <button class="btn prev_1 prev">ortga</button>
-                        <button class="btn next_1 next">keyingi</button>
+                        <span class="btn prev_1 prev">ortga</span>
+                        <span class="btn next_1 next">keyingi</span>
                       </div>
                     </div>
   
                     <div class="form__page last__page">
                       <div class="form__field">
-                        <input type="text" class="form__input">
+                        <input type="text" name="appeal_subject" class="form__input">
                         <div class="form__label">Murojaat mavzusi</div>
                       </div>
                       <div class="form__field form__field_textarea">
-                        <textarea name="" id="" rows="10" class="form__input textarea"></textarea>
+                        <textarea name="appeal_text" id="" rows="10" class="form__input textarea"></textarea>
                         <div class="form__label">Murojaat matni</div>
                       </div>
                       <div class="form__field form__file">
                         <div class="form__label">Fayl ko'rinishi</div>
-                        <input type="file" class="inputfile" name="file" id="form__file" data-multiple-caption="{count} ta fayl tanlandi" multiple />
+                        <input type="file" class="inputfile" id="form__file" data-multiple-caption="{count} ta fayl tanlandi" multiple name="appeal_file" />
                         <label for="form__file" class="form__file_label"><span>Faylni tanlang</span></label>
                       </div>
                       <div class="security">
                         <label>
                           Shaxsim sir saqlansin
-                          <input type="checkbox">
+                          <input type="checkbox" name="privacy">
                         </label>
                       </div>
                       <div class="accept_block">
                         <p class="accept_desc"><span class="warning">Diqqat!!!</span> Jo'natish tugmasini bosish orqali siz Virtual qabulxona xizmat ko'rsatish <a href="#" class="rules"><span class="consent">shartlariga</span></a> rozilik bildirasiz</p>
                       </div>
                       <div class="form__field  btn_third">
-                        <button class="btn prev_2 prev">ortga</button>
-                        <button class="btn submit">Jo'natish</button>
+                        <span class="btn prev_2 prev">ortga</span>
+                        <button type="submit" class="btn submit">Jo'natish</button>
                       </div>
                     </div>
   
