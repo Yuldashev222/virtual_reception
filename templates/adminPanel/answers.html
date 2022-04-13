@@ -375,24 +375,24 @@
                             </li>
                         </ul>
                         <hr>
-                        <h4>Adminlar</h4>
+                        <h4>Javob holati</h4>
                         <ul>
                             <li>
                                 <label>
-                                    <input type="radio" checked name="answer_admin" >
+                                    <input type="radio" checked name="answer_status" >
                                     Umumiy
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="answer_admin">
-                                    Admin1
+                                    <input type="radio" name="answer_status">
+                                    Yuborilgan
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="answer_admin">
-                                    Admin2
+                                    <input type="radio" name="answer_status">
+                                    Saqlab qo'yilgan
                                 </label>
                             </li>
                         </ul>
@@ -450,8 +450,8 @@
                                             <th style="text-align: center">Murojaat</th>
                                             <th>Admin</th>
                                             <th>Javob turi</th>
-                                            <th>file</th>
                                             <th>Sana</th>
+                                            <th>file</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -460,49 +460,19 @@
                                                 <th>{{ forloop.counter }}</th>
                                                 <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ answer.appeal}}</td>
                                                 <td>{{ answer.author }}</td>
-                                                <td>{{ answer.answer_type }}</td>
+                                                {% if answer.answer_type == 'done' %}
+                                                    <td>Yuborilgan</td>
+                                                {% else %}
+                                                    <td>Saqlab qo'yilgan</td>
+                                                {% endif %}
+                                                <td>{{ answer.updated_date }}</td>
                                                 {% if answer.file %}
-                                                    <td>{{ answer.file }}</td>
+                                                    <td>
+                                                        <a href="{% url 'download-answerFile' answer.id %}" style="color: #4272d7">{{ answer.filename }}</a>
+                                                    </td>
                                                 {% else %}
                                                     <td>-</td>
                                                 {% endif %}
-                                                <td>{{ answer.updated_date }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ forloop.counter }}</th>
-                                                <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ answer.appeal}}</td>
-                                                <td>{{ answer.author }}</td>
-                                                <td>{{ answer.answer_type }}</td>
-                                                {% if answer.file %}
-                                                    <td>{{ answer.file }}</td>
-                                                {% else %}
-                                                    <td>-</td>
-                                                {% endif %}
-                                                <td>{{ answer.updated_date }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ forloop.counter }}</th>
-                                                <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ answer.appeal}}</td>
-                                                <td>{{ answer.author }}</td>
-                                                <td>{{ answer.answer_type }}</td>
-                                                {% if answer.file %}
-                                                    <td>{{ answer.file }}</td>
-                                                {% else %}
-                                                    <td>-</td>
-                                                {% endif %}
-                                                <td>{{ answer.updated_date }}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{ forloop.counter }}</th>
-                                                <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ answer.appeal}}</td>
-                                                <td>{{ answer.author }}</td>
-                                                <td>{{ answer.answer_type }}</td>
-                                                {% if answer.file %}
-                                                    <td>{{ answer.file }}</td>
-                                                {% else %}
-                                                    <td>-</td>
-                                                {% endif %}
-                                                <td>{{ answer.updated_date }}</td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>

@@ -11,5 +11,7 @@ urlpatterns = [
     path('profile/<str:username>/', profile, name='profile'),
     path('add-admin/', add_admin, name='add-admin'),
     path('logout/<str:username>/', logout_admin, name='logout'),
+    path('download-appealFile/<int:id>/', download_appealFile, name='download-appealFile'),
+    path('download-answerFile/<int:id>/', download_answerFile, name='download-answerFile'),
     path('<str:username>/', dashboard, name='dashboard'),
-] 
+]

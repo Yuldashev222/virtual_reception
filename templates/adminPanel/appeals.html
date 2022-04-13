@@ -460,7 +460,9 @@
                                                 <td>{{ appeal.appeal_type }}</td>
                                                 <td>{{ appeal.applicant_position }}</td>
                                                 {% if appeal.appeal_file %}
-                                                    <td>{{ appeal.appeal_file }}</td>
+                                                    <td>
+                                                        <a href="{% url 'download-appealFile' appeal.id %}" style="color: #4272d7">{{ appeal.filename }}</a>
+                                                    </td>
                                                 {% else %}
                                                     <td>-</td>
                                                 {% endif %}

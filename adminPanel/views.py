@@ -1,6 +1,7 @@
+from django.http import FileResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import Http404, HttpResponse
+from django.http import FileResponse, Http404, HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 
 from appeals.models import Answer, Appeal, Applicants_panel
@@ -124,4 +125,19 @@ def logout_admin(request, username):
     logout(request)
     
     return redirect('login')
+
+
+def download_appealFile(request, id):
+    appeal = Appeal.objects.get(id=id)
+    filename = appeal.appeal_file.path
+    response = FileResponse(open(filename, 'rb'))
+    return response
+
+
+def download_answerFile(request, id):
+    answer = Answer.objects.get(id=id)
+    filename = answer.file.path
+    response = FileResponse(open(filename, 'rb'))
+    return response
+    
 

@@ -1,4 +1,5 @@
-from email.policy import default
+import os
+from django.core.validators import FileExtensionValidator
 from phonenumber_field.modelfields import PhoneNumberField
 import uuid
 from django.db import models
@@ -97,7 +98,7 @@ class Appeal(models.Model):
     
     appeal_subject = models.CharField(max_length=60)
     appeal_text = models.TextField()
-    appeal_file = models.FileField(upload_to='Appeal Files/', blank=True)
+    appeal_file = models.FileField(upload_to='Appeal Files/', blank=True, validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt"])])
     appeal_type = models.CharField(max_length=10, choices=APPEAL_TYPE)
     appeal_direction = models.CharField(max_length=70, choices=APPEAL_DIRECTION)
     privacy = models.BooleanField(default=False)
@@ -115,7 +116,11 @@ class Appeal(models.Model):
 
     def __str__(self):
         return self.applicant_name
+    
+    def filename(self):
+        return os.path.basename(self.appeal_file.name)
 
+    
 
 class Answer(models.Model):
 
@@ -136,7 +141,7 @@ class Answer(models.Model):
     ]
     
     text = models.TextField()
-    file = models.FileField(upload_to='Answers/files/', blank=True)
+    file = models.FileField(upload_to='Answers/files/', blank=True, validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt"])])
     appeal = models.ForeignKey(Appeal, on_delete=models.SET_NULL, null=True)
     answer_type = models.CharField(max_length=10, choices=ANSWER_TYPE)
     answer_address = models.CharField(max_length=15, choices=ANSWER_ADDRESS)
@@ -145,4 +150,5 @@ class Answer(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     active = models.CharField(max_length=4, choices=ACTIVE)
     
-    
+    def filename(self):
+        return os.path.basename(self.file.name)
