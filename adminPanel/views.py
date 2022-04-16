@@ -5,11 +5,14 @@ from django.http import FileResponse, Http404, HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 
 from appeals.models import Answer, Appeal, Applicants_panel
-from .forms import AddUserForm
+from .forms import AddUserForm, EditUserForm
 from appeals.forms import ApplicantsPanelForm
 
 # app imports
 from .models import User
+
+appeals_cnt = Appeal.objects.filter(appeal_status='new').count()
+
 
 
 def admin_login(request):
@@ -20,7 +23,7 @@ def admin_login(request):
     if request.POST:
         username = request.POST.get('username')
         password = request.POST.get('password')
-    
+
         user = authenticate(request, username=username, password=password)
 
         if user:
@@ -30,6 +33,9 @@ def admin_login(request):
         
         else:
             messages.error(request, "Login yoki parol noto'g'ri")
+            
+            return redirect('login')
+            
                 
     return render(request, 'adminPanel/login.html')
 
@@ -39,8 +45,13 @@ def dashboard(request, username):
 
     if request.user.username != user.username:
         return HttpResponse('Error')
+
+    context = {
+        'appeals_cnt': appeals_cnt,
+        
+    }
             
-    return render(request, 'adminPanel/dashboard.html')
+    return render(request, 'adminPanel/dashboard.html', context)
 
 
 def appeals(request):
@@ -48,6 +59,7 @@ def appeals(request):
 
     context = {
         'appeals': appeals,
+        'appeals_cnt': appeals_cnt,
     }
             
     return render(request, 'adminPanel/appeals.html', context)
@@ -58,6 +70,8 @@ def answers(request):
 
     context = {
         'answers': answers,
+        'appeals_cnt': appeals_cnt,
+        
     }
             
     return render(request, 'adminPanel/answers.html', context)
@@ -80,6 +94,8 @@ def applicants_view(request):
     
     context = {
         'applicantsPanelForm': applicantsPanelForm,
+        'appeals_cnt': appeals_cnt,
+        
     }
     
             
@@ -92,8 +108,22 @@ def chat(request):
 
 
 def profile(request, username):
+    user = User.objects.get(username=username)
+    
+    edit_user = EditUserForm(instance=user, use_required_attribute=False)
+    
+    if request.POST:
+        edit_user = EditUserForm(request.POST or None, request.FILES or None, instance=user, use_required_attribute=False)
+        
+        if edit_user.is_valid():
+            edit_user.save()
+            
+            return redirect('profile', user.username)
 
     context = {
+        'appeals_cnt': appeals_cnt,
+        'user': user,
+        'edit_user': edit_user,
 
     }
 
@@ -111,9 +141,12 @@ def add_admin(request):
             admin.save()
             
             return redirect('login')
+
             
     context = {
         'addAdminForm': addAdminForm,
+        'appeals_cnt': appeals_cnt,
+        
     }
 
     return render(request, 'adminPanel/register.html', context)

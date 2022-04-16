@@ -9,7 +9,6 @@ const modalConsent = document.querySelector(".modal__consent");
 const modalConsentClose = document.querySelector(".modal__consent_close");
 const modal = document.querySelector(".modal");
 
-
 const item = document.querySelector("item");
 
 const submitBtn = document.querySelector(".submit");
@@ -61,7 +60,7 @@ submitBtn.addEventListener("click", function(){
   current += 1;
 
   setTimeout(function(){
-    alert('Succesfully');
+    alert('uykuuhaijsldjihgjytasygd');
     location.reload();
   }, 800);
 });

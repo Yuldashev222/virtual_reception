@@ -203,7 +203,7 @@
             <li class="noti__item active has-sub">
                 <a href="{% url 'appeals' %}">
                     <i class="fas fa-envelope"></i>
-                    <span class="quantity">1</span>
+                    <span class="quantity">{{ appeals_cnt }}</span>
                     Murojaatlar
                 </a>
             </li>
@@ -456,7 +456,7 @@
                                         {% for appeal in appeals %}
                                             <tr>
                                                 <th>{{ forloop.counter }}</th>
-                                                <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ appeal.applicant_name }}</td>
+                                                <td data-toggle="modal" onclick="#scrollmodal({{ appeal.id }})" style="word-break: break-all;">{{ appeal.applicant_name }}</td>
                                                 <td>{{ appeal.appeal_type }}</td>
                                                 <td>{{ appeal.applicant_position }}</td>
                                                 {% if appeal.appeal_file %}
@@ -481,11 +481,11 @@
     </div>
 {% endblock content %}
 {% block modal %}
-    <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+    <div class="modal fade" id="scrollmodal{{ appeal.pk }}" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollmodalLabel">{{ appeals.0.applicant_name }} murojaati</h5>
+                    <h5 class="modal-title" id="scrollmodalLabel">{{ appeal.applicant_name }} murojaati</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -494,56 +494,56 @@
                     <ul>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">F I O:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_name }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_name }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Tel raqami:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_tel_num }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_tel_num }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Email:</h5>
-                            {% if appeals.0.applicant_email %}
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_email }}</p>
+                            {% if appeal.applicant_email %}
+                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_email }}</p>
                             {% else %}
                                 <p style="text-decoration: underline; margin-left: 20px">Ko'rsatilmagan</p>
                             {% endif %}
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Yuborilgan sana:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.created_date }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.created_date }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Viloyat:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_province }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_province }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat yo'nalishi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.appeal_direction }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.appeal_direction }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat turi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.appeal_type }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.appeal_type }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">murojaatchi turi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_type }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_type }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Kim tomonidan:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.applicant_position }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_position }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat mavzusi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.appeal_subject }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.appeal_subject }}</p>
                         </li>
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ appeals.0.appeal_file }}</p>
+                            <p style="text-decoration: underline; margin-left: 20px">{{ appeal.filename }}</p>
                         </li>
                         <li style="padding: 5px 0;">
                             <h5 style="margin-bottom: 20px">Murojaat mazmuni:</h5>
                             <p style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; word-break: break-all;">
-                                {{ appeals.0.appeal_text }}
+                                {{ appeal.appeal_text }}
                             </p>
                         </li>
                         <li style="padding: 5px 0;">
@@ -607,4 +607,5 @@
             </div>
         </div>
     </div>
+
 {% endblock modal %}

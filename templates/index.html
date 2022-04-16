@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
@@ -17,7 +19,11 @@
       crossorigin="anonymous"
     />
     <script src="{% static 'js/fileFunction.js' %}"></script>
-    <title>TDTrU rektori virtual qabulxonasi</title>
+    {% if applicants_panel_info.sup_title %}
+      <title>{{ applicants_panel_info.sup_title }}</title>
+    {% else %}
+      <title>TDTrU rektori virtual qabulxonasi</title>
+    {% endif %}
     <style>
       
       .selects .form__field:last-child {
@@ -51,15 +57,33 @@
       .btn {
         line-height: 52px;
       }
+      .rektor__info__item_desc {
+        max-width: 200px;
+        line-height: 1.3;
+      }
 
     </style>
   </head>
-  <body style="background-image: url('{% static 'images/banner.jpg' %}');">
+  {% if applicants_panel_info.background %}
+    <body style="background-image: url('{{ applicants_panel_info.background.url }}');">
+  {% else %}
+    <body style="background-image: url('{% static 'images/banner.jpg' %}');">
+  {% endif %}
     <header class="header">
 
       <div class="header__left">
-        <a href="https://tstu.uz" class="logo">
+
+        {% if applicants_panel_info.main_site_link %}
+          <a href="{{ applicants_panel_info.main_site_link }}" class="logo">
+        {% else %}
+          <a href="https://tstu.uz" class="logo">
+        {% endif %}
+
+        {% if applicants_panel_info.logo %}
+          <img src="{{ applicants_panel_info.logo.url }}" width="220" alt="logotype">
+        {% else %}  
           <img src="{% static 'images/logo.png' %}" width="220" alt="logotype">
+        {% endif %}
         </a>
       </div>
 
@@ -67,10 +91,14 @@
         <nav class="nav">
           <ul class="nav__list">
             <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
-              <a href="#" class="nav__link">Bosh sahifa</a>
+              {% if applicants_panel_info.main_site_link %}
+                <a href="{{ main_site_link }}" class="nav__link">Bosh sahifa</a>
+              {% else %}  
+                <a href="#" class="nav__link">Bosh sahifa</a>
+              {% endif %}
               <ul class="dropdown__list">
                 <li class="dropdown__item">
-                  <a href="https://tstu.uz/?page_id=2876" class="dropdown__link">Universitet tarixi</a>
+                  <a href="#" class="dropdown__link">Universitet tarixi</a>
                 </li>
                 <li class="dropdown__item">
                   <a href="#" class="dropdown__link">Universitet nizomi</a>
@@ -171,11 +199,14 @@
       </div>
 
     </header>
-
+    
     <div class="content content__inn" id="content">
-
       <div class="sidebar">
-        <h2 class="statistics__title form__header sidebar__title ">So'nggi yangiliklar</h2>
+        {% if applicants_panel_info.aside_title %}
+          <h2 class="statistics__title form__header sidebar__title ">{{ applicants_panel_info.aside_title | title }}</h2>
+        {% else %}  
+          <h2 class="statistics__title form__header sidebar__title ">So'nggi yangiliklar</h2>
+        {% endif %}
 
         <div class="swiper">
           <!-- Additional required wrapper -->
@@ -226,57 +257,94 @@
   
           <div class="main__sidebar">
             <div class="main__sidebar_img">
-              <img src="{% static 'images/rektor.jpg' %}" alt="rektor-photo" width="100%" height="250px">
+              {% if applicants_panel_info.rector_avatar %}
+                <img src="{{ applicants_panel_info.rector_avatar.url }}" alt="rektor-photo" width="100%" height="250px">
+              {% else %}  
+                <img src="{% static 'images/rektor.jpg' %}" alt="rektor-photo" width="100%" height="250px">
+              {% endif %}
             </div>
-            <p class="rektor_position">Toshkent davlat transport universiteti rektori</p>
+            {% if applicants_panel_info.university_name %}
+              <p class="rektor_position">{{ applicants_panel_info.university_name }} rektori</p>
+            {% else %}  
+              <p class="rektor_position">Toshkent davlat transport universiteti rektori</p>
+            {% endif %}
             <div class="main__sidebar_content">
               <ul class="rektor__info__list">
                 <li class="rektor__info__item">
                   <span class="rektor__info__item_span">F.I.O</span>
-                  <p class="rektor__info__item_desc">Abduraxmanov Odil</p>
-                  <p class="rektor__info__item_desc">Qalandarovich</p>
+                  {% if applicants_panel_info.rector_name %}
+                    <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_name }}</p>
+                  {% else %}
+                    <p class="rektor__info__item_desc">Abduraxmanov Odil Qalandarovich</p>
+                  {% endif %}
                 </li>
                 <li class="rektor__info__item">
                   <span class="rektor__info__item_span">Ilmiy daraja va unvoni:</span>
-                  <p class="rektor__info__item_desc">Iqtisodiyot fanlari</p>
-                  <p class="rektor__info__item_desc">doktori</p>
+                  {% if applicants_panel_info.rector_position %}
+                    <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_position }}</p>
+                  {% else %}
+                    <p class="rektor__info__item_desc">Iqtisodiyot fanlari doktori</p>
+                  {% endif %}
                 </li>
                 <li class="rektor__info__item">
                   <span class="rektor__info__item_span">Qabul vaqti:</span>
-                  <p class="rektor__info__item_desc">Shanba (10:00 – 12:00)</p>
+                  {% if applicants_panel_info.rector_reception_time %}
+                    <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_reception_time }}</p>
+                  {% else %}
+                    <p class="rektor__info__item_desc">Shanba (10:00 – 12:00)</p>
+                  {% endif %}
                 </li>
                 <li class="rektor__info__item">
                   <span class="rektor__info__item_span">Telefon:</span>
-                  <a href="tel:+998712990001" class="rektor__info__item_desc rektor_tell">+998 71 299 00 01</a>
+                  {% if applicants_panel_info.tel %}
+                    <a href="tel:{{ applicants_panel_info.tel }}" class="rektor__info__item_desc rektor_tell">{{ applicants_panel_info.tel }}</a>
+                  {% else %}
+                    <a href="tel:+998712990001" class="rektor__info__item_desc rektor_tell">+998 71 299 00 01</a>
+                  {% endif %}
                 </li>
                 <li class="rektor__info__item">
                   <span class="rektor__info__item_span">Elektron manzil:</span>
-                  <a href="mailto:rektorat@tstu.uz" class="rektor__info__item_desc rektor_email">rektorat@tstu.uz</a>
+                  {% if applicants_panel_info.email %}
+                    <a href="mailto:{{ applicants_panel_info.email }}" class="rektor__info__item_desc rektor_email">{{ applicants_panel_info.email }}</a>
+                  {% else %}
+                    <a href="mailto:rektorat@tstu.uz" class="rektor__info__item_desc rektor_email">rektorat@tstu.uz</a>
+                  {% endif %}
                 </li>
               </ul>
               <div class="social">
                 <span class="rektor__info__item_span">Ijtimoy tarmoqlar:</span>
                 <ul class="social__list">
-                  <li class="social__item">
-                    <a href="#" class="social__link">
-                      <img src="{% static 'images/facebook-icon.png' %}" width="25" alt="facebook-icon">
-                    </a>
-                  </li>
-                  <li class="social__item">
-                    <a href="#" class="social__link">
-                      <img src="{% static 'images/instagram-icon.png' %}" width="25" alt="instagram-icon">
-                    </a>
-                  </li>
-                  <li class="social__item">
-                    <a href="#" class="social__link">
-                      <img src="{% static 'images/telegram-icon.png' %}" width="25" alt="telegram-icon">
-                    </a>
-                  </li>
-                  <li class="social__item">
-                    <a href="#" class="social__link">
-                      <img src="{% static 'images/twitter-icon.png' %}" width="25" alt="twitter-icon">
-                    </a>
-                  </li>
+                  {% if socials %}
+                    {% for social in socials %}
+                      <li class="social__item">
+                        <a href="{{ social.link }}" class="social__link">
+                          <img src="{{ social.logo.url }}" width="25" alt="{{ social.name }}-icon">
+                        </a>
+                      </li>
+                    {% endfor %}
+                  {% else %}
+                    <li class="social__item">
+                      <a href="#" class="social__link">
+                        <img src="{% static 'images/facebook-icon.png' %}" width="25" alt="facebook-icon">
+                      </a>
+                    </li>
+                    <li class="social__item">
+                      <a href="#" class="social__link">
+                        <img src="{% static 'images/instagram-icon.png' %}" width="25" alt="instagram-icon">
+                      </a>
+                    </li>
+                    <li class="social__item">
+                      <a href="#" class="social__link">
+                        <img src="{% static 'images/telegram-icon.png' %}" width="25" alt="telegram-icon">
+                      </a>
+                    </li>
+                    <li class="social__item">
+                      <a href="#" class="social__link">
+                        <img src="{% static 'images/twitter-icon.png' %}" width="25" alt="twitter-icon">
+                      </a>
+                    </li>
+                  {% endif %}
+
                 </ul>
               </div>
             </div>
@@ -289,25 +357,41 @@
             
             <div class="main__content_inner">
               <div class="main__content_form">
-                <div class="form__header">Murojaat</div>
+                {% if applicants_panel_info.title %}
+                  <div class="form__header">{{ applicants_panel_info.title | title }}</div>
+                {% else %}
+                  <div class="form__header">Murojaat</div>
+                {% endif %}
   
                 <div class="progress_bar">
                   <div class="step">
-                    <p class="step__name">Murojaat turi</p>
+                    {% if applicants_panel_info.step_title_1 %}
+                      <p class="step__name">{{ applicants_panel_info.step_title_1 }}</p>
+                    {% else %}
+                      <p class="step__name">Murojaat turi</p>
+                    {% endif %}
                     <div class="bullet">
                       <span class="bullet__span">1</span>
                     </div>
                     <div class="fas fa-check check"></div>
                   </div>
                   <div class="step">
-                    <p class="step__name">ma'lumot</p>
+                    {% if applicants_panel_info.step_title_2 %}
+                      <p class="step__name">{{ applicants_panel_info.step_title_2 }}</p>
+                    {% else %}
+                      <p class="step__name">Malumot</p>
+                    {% endif %}
                     <div class="bullet">
                       <span class="bullet__span">2</span>
                     </div>
                     <div class="fas fa-check check"></div>
                   </div>
                   <div class="step">
-                    <p class="step__name">Murojaat mazmuni</p>
+                    {% if applicants_panel_info.step_title_3 %}
+                      <p class="step__name">{{ applicants_panel_info.step_title_3 }}</p>
+                    {% else %}
+                      <p class="step__name">Murojaat mazmuni</p>
+                    {% endif %}
                     <div class="bullet">
                       <span class="bullet__span">3</span>
                     </div>
@@ -322,10 +406,10 @@
                       <div class="form__field">
                         <div class="select_container">
                           <select class="form__select" name="appeal_type">
-                            <option class="form__select_option" selected>Ariza</option>
-                            <option class="form__select_option">Shikoyat</option>
-                            <option class="form__select_option">Taklif</option>
-                            <option class="form__select_option">boshqa</option>
+                            <option class="form__select_option" value="ariza" selected>Ariza</option>
+                            <option class="form__select_option" value="shikoyat">Shikoyat</option>
+                            <option class="form__select_option" value="taklif">Taklif</option>
+                            <option class="form__select_option" value="boshqa">boshqa</option>
                           </select>
                           <div class="form__label">Murojaat turi</div>
                         </div>
@@ -333,30 +417,30 @@
                       <div class="form__field form__category">
                         <div class="select_container">
                           <select class="form__select" name="appeal_direction">
-                            <option class="form__select_option" selected>Diplom olish masalalari</option>
-                            <option class="form__select_option">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
-                            <option class="form__select_option">Kontrakt to'lovi to'g'risida</option>
-                            <option class="form__select_option">Magistratura masalalari</option>
-                            <option class="form__select_option">Fuqarolar murojaatlari to'g'risida</option>
-                            <option class="form__select_option">Moliyaviy masalalar</option>
-                            <option class="form__select_option">Talaba ustidan shikoyat</option>
-                            <option class="form__select_option">Rahbar faoliyatidan norozilik arizasi</option>
-                            <option class="form__select_option">Stipendiya masalalari</option>
-                            <option class="form__select_option">O'qishga kirish to'g'risida</option>
-                            <option class="form__select_option">O'qishni ko'chirish to'g'risida</option>
-                            <option class="form__select_option">O'qishni tiklash to'g'risida</option>
-                            <option class="form__select_option">Ijodiy imtihondan norozilik to'g'risida</option>
-                            <option class="form__select_option">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
-                            <option class="form__select_option">Nafaqa masalalari</option>
-                            <option class="form__select_option">Arxiv ma'lumotlarini olish to'grisida</option>
-                            <option class="form__select_option">Ikkinchi mutaxasislik</option>
-                            <option class="form__select_option">Kitob nashr qilish</option>
-                            <option class="form__select_option">Ixtiro qilish taklifi</option>
-                            <option class="form__select_option">Taklif va minnatdorchilik</option>
-                            <option class="form__select_option">Sirtqi o'qish masalalari</option>
-                            <option class="form__select_option">Yotoqxona masalalari bo'yicha</option>
-                            <option class="form__select_option">Olimpiada masalasi bo'yicha</option>
-                            <option class="form__select_option">Boshqa yo'nalishlar</option>
+                            <option class="form__select_option" value="diplom_olish" selected>Diplom olish masalalari</option>
+                            <option class="form__select_option" value="ishga_joylash">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
+                            <option class="form__select_option" value="kontrakt_tolovi">Kontrakt to'lovi to'g'risida</option>
+                            <option class="form__select_option" value="mag_masalalari">Magistratura masalalari</option>
+                            <option class="form__select_option" value="fuqarolar_murojaatlari">Fuqarolar murojaatlari to'g'risida</option>
+                            <option class="form__select_option" value="moliyaviy_masalalar">Moliyaviy masalalar</option>
+                            <option class="form__select_option" value="talaba_ustidan">Talaba ustidan shikoyat</option>
+                            <option class="form__select_option" value="rahbar_faoliyatidan">Rahbar faoliyatidan norozilik arizasi</option>
+                            <option class="form__select_option" value="stipendiya_masalalari">Stipendiya masalalari</option>
+                            <option class="form__select_option" value="oqishga_kirish">O'qishga kirish to'g'risida</option>
+                            <option class="form__select_option" value="oqishni_kochirish">O'qishni ko'chirish to'g'risida</option>
+                            <option class="form__select_option" value="oqishni_tiklash">O'qishni tiklash to'g'risida</option>
+                            <option class="form__select_option" value="ijodiy_imtihondan">Ijodiy imtihondan norozilik to'g'risida</option>
+                            <option class="form__select_option" value="diplom_xaqqoniyligini">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
+                            <option class="form__select_option" value="nafaqa_masalalari">Nafaqa masalalari</option>
+                            <option class="form__select_option" value="arxiv_malumotlarini">Arxiv ma'lumotlarini olish to'grisida</option>
+                            <option class="form__select_option" value="ikkinchi_mutaxasislik">Ikkinchi mutaxasislik</option>
+                            <option class="form__select_option" value="kitob_nashr">Kitob nashr qilish</option>
+                            <option class="form__select_option" value="ixtiro_qilish">Ixtiro qilish taklifi</option>
+                            <option class="form__select_option" value="taklif_va">Taklif va minnatdorchilik</option>
+                            <option class="form__select_option" value="sirtqi_oqish">Sirtqi o'qish masalalari</option>
+                            <option class="form__select_option" value="yotoqxona_masalalari">Yotoqxona masalalari bo'yicha</option>
+                            <option class="form__select_option" value="olimpiada_masalasi">Olimpiada masalasi bo'yicha</option>
+                            <option class="form__select_option" value="boshqa_yo">Boshqa yo'nalishlar</option>
                           </select>
                           <div class="form__label">Murojaat yo'nalishi</div>
                         </div>
@@ -364,11 +448,11 @@
                       <div class="form__field four">
                         <div class="select_container">
                           <select class="form__select"  name="applicant_position">
-                            <option class="form__select_option">Talaba</option>
-                            <option class="form__select_option">O'qituvchi</option>
-                            <option class="form__select_option">Universitet xodimi</option>
-                            <option class="form__select_option">Ota ona</option>
-                            <option class="form__select_option">Boshqa</option>
+                            <option class="form__select_option" value="talaba">Talaba</option>
+                            <option class="form__select_option" value="ota_ona">O'qituvchi</option>
+                            <option class="form__select_option" value="universitet_xodimi">Universitet xodimi</option>
+                            <option class="form__select_option" value="tashkilot">Ota ona</option>
+                            <option class="form__select_option" value="boshqa">Boshqa</option>
                           </select>
                           <div class="form__label">Kim tomonidan</div>
                         </div>
@@ -394,8 +478,8 @@
                       <div class="form__field">
                         <div class="select_container">
                           <select class="form__select" name="applicant_type">
-                            <option class="form__select_option" selected>Jismoniy shaxs</option>
-                            <option class="form__select_option">Yuridik shaxs</option>
+                            <option class="form__select_option" value="yuridik_shaxs" selected>Jismoniy shaxs</option>
+                            <option class="form__select_option" value="jismoniy_shaxs">Yuridik shaxs</option>
                           </select>
                           <div class="form__label">Shaxsingiz</div>
                         </div>
@@ -403,19 +487,19 @@
                       <div class="form__field" style="margin-bottom: 30px">
                         <div class="select_container">
                           <select class="form__select" name="applicant_province">
-                            <option class="form__select_option">Toshkent</option>
-                            <option class="form__select_option">Samarqand</option>
-                            <option class="form__select_option">Andijon</option>
-                            <option class="form__select_option">Fargona</option>
-                            <option class="form__select_option">Namangan</option>
-                            <option class="form__select_option">Qashqadaryo</option>
-                            <option class="form__select_option">Surxondaryo</option>
-                            <option class="form__select_option">Buxoro</option>
-                            <option class="form__select_option">Navoiy</option>
-                            <option class="form__select_option">Xorazm</option>
-                            <option class="form__select_option">Sirdaryo</option>
-                            <option class="form__select_option">Jizzax</option>
-                            <option class="form__select_option">Qoraqalpog'iston Respublikasi</option>
+                            <option class="form__select_option" value="toshkent">Toshkent</option>
+                            <option class="form__select_option" value="samarqand">Samarqand</option>
+                            <option class="form__select_option" value="andijon">Andijon</option>
+                            <option class="form__select_option" value="fargona">Fargona</option>
+                            <option class="form__select_option" value="namangan">Namangan</option>
+                            <option class="form__select_option" value="qashqadaryo">Qashqadaryo</option>
+                            <option class="form__select_option" value="surxondaryo">Surxondaryo</option>
+                            <option class="form__select_option" value="buxoro">Buxoro</option>
+                            <option class="form__select_option" value="navoiy">Navoiy</option>
+                            <option class="form__select_option" value="xorazm">Xorazm</option>
+                            <option class="form__select_option" value="sirdaryo">Sirdaryo</option>
+                            <option class="form__select_option" value="jizzax">Jizzax</option>
+                            <option class="form__select_option" value="qoraqalpoq">Qoraqalpog'iston Respublikasi</option>
                           </select>
                           <div class="form__label">Viloyat</div>
                         </div>
@@ -447,7 +531,14 @@
                         </label>
                       </div>
                       <div class="accept_block">
-                        <p class="accept_desc"><span class="warning">Diqqat!!!</span> Jo'natish tugmasini bosish orqali siz Virtual qabulxona xizmat ko'rsatish <a href="#" class="rules"><span class="consent">shartlariga</span></a> rozilik bildirasiz</p>
+                        <p class="accept_desc">
+                          <span class="warning">Diqqat!!!</span>
+                          Jo'natish tugmasini bosish orqali siz Virtual qabulxona xizmat ko'rsatish 
+                          <a href="#" class="rules">
+                            <span class="consent">shartlariga</span>
+                          </a> 
+                          rozilik bildirasiz
+                        </p>
                       </div>
                       <div class="form__field  btn_third">
                         <span class="btn prev_2 prev">ortga</span>
@@ -469,7 +560,11 @@
         <div class="statistics__inner">
 
           <div class="statistics__top">
-            <h2 class="form__header statistics__title">Murojaatlar statistikasi</h2>
+            {% if applicants_panel_info.statistics_title %}
+              <h2 class="form__header statistics__title">{{ applicants_panel_info.statistics_title }}</h2>
+            {% else %}
+              <h2 class="form__header statistics__title">Murojaatlar statistikasi</h2>
+            {% endif %}
             <ul class="statistics__list">
               <li class="rektor__info__item_span statistics__item">
                 <p>Yangi</p>
@@ -495,12 +590,16 @@
           </div>
           
           <div class="statistics__bottom">
-            <h2 class="form__header statistics__title">Murojaat holatini tekshirish</h2>
+            {% if applicants_panel_info.answer_title %}
+              <h2 class="form__header statistics__title">{{ applicants_panel_info.answer_title }}</h2>
+            {% else %}
+              <h2 class="form__header statistics__title">Murojaat holatini tekshirish</h2>
+            {% endif %}
             <div class="statistics__result">
               <p>Murojaat yuborilganda olingan parolni kiriting</p>
-              <form class="statistics__form">
+              <form class="statistics__form" method="post">{% csrf_token %}
                 <label for="st__input"></label>
-                <input id="st__input" type="number" class="statistics__input" placeholder="parol">
+                <input id="st__input" type="text" class="statistics__input" name="answer_code" placeholder="parol">
                 <button class="statistics__btn">Tekshirish</button>
               </form>
             </div>
@@ -513,20 +612,24 @@
     <div class="modal">
       <div class="modal__consent">
         <ul class="modal__consent_list">
-          <li class="modal__consent_item">Hurmatli Murojaatchi!</li>
-          <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy maqomga ega ekanligini ham eslatib qo'ymoqchimiz.</li>
-          
-          <li class="modal__consent_item"><span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
-          
-          <li class="modal__consent_item"><span>1.</span> Alohida e'tibor bering! Tuhmat, haqorat so'zlar ishlatilgan va yolg'on xabar beruvchi murojaatlarni taqdim etish mumkin emas.</li>
-          
-          <li class="modal__consent_item"><span>2.</span> Shuningdek, quyidagi holatlarda murojaatlaringiz rad etilishi mumkinligini eslatib o'tmoqchimiz:</li>
-          
-          <li class="modal__consent_item">
-            <p>odobsizlik mazmunidagi murojaatlar (uyatsiz yoxud haqoratli iboralar, tahdidlar, mantiqsiz takliflar va shunga o'xshash murojaatlar);</p>
-            <p>murojaat matnida tushunarsiz qisqartirishlar yoki reklama materiallari mavjud bo'lgan, tarkibida aniq arizalar, shikoyatlar yoki takliflar bo'lmagan murojaatlar</p>
-          </li>
-          <li class="modal__consent_item"><span>3.</span> Shuningdek, foydalanuvchining bir necha bor bitta masala bo'yicha javob berilgan murojaati qayta yuborilganda, agar unda yangi vajlar yoki holatlar keltirilmagan bo'lsa, ko'rib chiqilmaydi. Mazkur shartlarning barchasi O'zbekiston Respublikasining amaldagi qonunchiligidan kelib chiqqan holda belgilangan.</li>
+          {% if applicants_panel_info.accept_text %}
+            <h2 class="form__header statistics__title">{{ applicants_panel_info.accept_text | safe }}</h2>
+          {% else %}
+            <li class="modal__consent_item">Hurmatli Murojaatchi!</li>
+            <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy maqomga ega ekanligini ham eslatib qo'ymoqchimiz.</li>
+            
+            <li class="modal__consent_item"><span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
+            
+            <li class="modal__consent_item"><span>1.</span> Alohida e'tibor bering! Tuhmat, haqorat so'zlar ishlatilgan va yolg'on xabar beruvchi murojaatlarni taqdim etish mumkin emas.</li>
+            
+            <li class="modal__consent_item"><span>2.</span> Shuningdek, quyidagi holatlarda murojaatlaringiz rad etilishi mumkinligini eslatib o'tmoqchimiz:</li>
+            
+            <li class="modal__consent_item">
+              <p>odobsizlik mazmunidagi murojaatlar (uyatsiz yoxud haqoratli iboralar, tahdidlar, mantiqsiz takliflar va shunga o'xshash murojaatlar);</p>
+              <p>murojaat matnida tushunarsiz qisqartirishlar yoki reklama materiallari mavjud bo'lgan, tarkibida aniq arizalar, shikoyatlar yoki takliflar bo'lmagan murojaatlar</p>
+            </li>
+            <li class="modal__consent_item"><span>3.</span> Shuningdek, foydalanuvchining bir necha bor bitta masala bo'yicha javob berilgan murojaati qayta yuborilganda, agar unda yangi vajlar yoki holatlar keltirilmagan bo'lsa, ko'rib chiqilmaydi. Mazkur shartlarning barchasi O'zbekiston Respublikasining amaldagi qonunchiligidan kelib chiqqan holda belgilangan.</li>
+          {% endif %}
         </ul>
         <div class="modal__consent_close"></div>
       </div>
@@ -582,6 +685,12 @@
       };
 
       document.addEventListener("DOMContentLoaded", ready);
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+      {% for msg in messages %}
+        swal('{{ msg }}');
+      {% endfor %}
     </script>
   </body>
 </html>
