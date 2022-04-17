@@ -20,13 +20,17 @@
 <script src="{% static 'vendor/select2/select2.min.js' %}">
 </script>
 
-<script src="{% static 'vendor/vector-map/jquery.vmap.js' %}"></script>
+{% comment %} <script src="{% static 'vendor/vector-map/jquery.vmap.js' %}"></script>
 <script src="{% static 'vendor/vector-map/jquery.vmap.min.js' %}"></script>
 <script src="{% static 'vendor/vector-map/jquery.vmap.sampledata.js' %}"></script>
-<script src="{% static 'vendor/vector-map/jquery.vmap.world.js' %}"></script>
+<script src="{% static 'vendor/vector-map/jquery.vmap.world.js' %}"></script> {% endcomment %}
+
+<script src="{% static 'js/countrymap.js' %}"></script>
+<script src="{% static 'js/mapdata.js' %}"></script>
 
 <!-- Main JS-->
 <script src="{% static 'js/main.js' %}"></script>
+
 <script>
     function scrollmodal(id){
         $.ajax({

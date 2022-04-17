@@ -5,7 +5,7 @@
 <head>
     {% block title %}{% endblock title %}
     {% include 'adminPanel/head.html' %}
-
+    
 </head>
 {% block style %}{% endblock style %}
 
@@ -156,6 +156,9 @@
     {% block modal %}{% endblock modal %}
 
     {% include 'adminPanel/scripts.html' %}
+
+    <script src="{% static 'js/countrymap.js' %}"></script>
+    <script src="{% static 'js/mapdata.js' %}"></script>
 
 </body>
 
