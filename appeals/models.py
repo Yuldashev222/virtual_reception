@@ -69,6 +69,7 @@ class Appeal(models.Model):
     APPLICANT_POSITION = [
         ("talaba", "Talaba"),
         ("ota_ona", "Ota ona"),
+        ("oqituvchi", "O'qituvchi"),
         ("universitet_xodimi", "Universitet xodimi"),
         ("tashkilot", "Tashkilot"),
         ("boshqa", "Boshqa"),
@@ -105,14 +106,14 @@ class Appeal(models.Model):
         ("olimpiada_masalasi", "Olimpiada masalasi bo'yicha"),
         ("boshqa_yo", "Boshqa yo'nalishlar"),
     ]
-    
+
     APPEAL_STATUS = [
         ('new', 'Yangi'),
         ('process', 'Ko\'rib chiqilmoqda'),
         ('rejected', 'Rad etilgan'),
         ('completed', 'Bajarilgan'),
     ]
-    
+
     appeal_subject = models.CharField(max_length=60)
     appeal_text = models.TextField()
     appeal_file = models.FileField(upload_to='Appeal_Files/', blank=True, validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt"])])
@@ -159,7 +160,7 @@ class Answer(models.Model):
     
     text = models.TextField()
     file = models.FileField(upload_to='Answers/files/', blank=True, validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt"])])
-    appeal = models.ForeignKey(Appeal, on_delete=models.SET_NULL, null=True)
+    appeal = models.ForeignKey(Appeal, on_delete=models.SET_NULL, related_name='get_answers', null=True)
     answer_type = models.CharField(max_length=10, choices=ANSWER_TYPE)
     answer_address = models.CharField(max_length=15, choices=ANSWER_ADDRESS)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)

@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.urls import reverse
 
 from .forms import AppealForm
 from .models import *
@@ -17,8 +18,8 @@ def home(request):
     applicants_panel_info = Applicants_panel.objects.first()
     socials = Social.objects.all()
     appealForm = AppealForm()
-    answers = False
-    
+        
+
     context = {
         'appealForm': appealForm,
         'applicants_panel_info': applicants_panel_info,
@@ -31,30 +32,26 @@ def home(request):
         'completed_appeals_cnt': completed_appeals_cnt,
         'new_appeals_cnt': new_appeals_cnt,
     }
-
-    if request.POST:
-        if request.POST.get('answer_code'):
-
-            code = request.POST.get('answer_code')
+    
+    code = request.POST.get('answer_code')
+    if code:
+        try:
             appeal = Appeal.objects.get(code=code)
-            answers = Answer.objects.get(appeal=appeal)
-
-            # messages.success(request, f'{answers}, {answers.text}')
+            answers = Answer.objects.filter(appeal=appeal)
+            context['answers'] = answers
+        except:
             return redirect('home')
         
+    if request.POST:
         
-        else:
             appealForm = AppealForm(request.POST, request.FILES)
 
             if appealForm.is_valid():
                 obj = appealForm.save(commit=False)
                 obj.save()
 
-                # messages.success(request, f"Bu sizning javobni korish uchun parolingiz, Ishonchli joyga saqlab qoying!!!{obj.code}")
+                messages.success(request, f"{obj.code}")
                 return redirect('home')
         
     
-    if answers:
-        context['answers'] = answers
-
     return render(request, 'index.html', context)

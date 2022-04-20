@@ -1,5 +1,7 @@
-from django.http import FileResponse
+import json
+from django.http import FileResponse, JsonResponse
 from django.contrib import messages
+from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from django.http import FileResponse, Http404, HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
@@ -12,7 +14,6 @@ from appeals.forms import ApplicantsPanelForm
 from .models import User
 
 appeals_cnt = Appeal.objects.filter(appeal_status='new').count()
-
 
 
 def admin_login(request):
@@ -54,14 +55,108 @@ def dashboard(request, username):
     return render(request, 'adminPanel/dashboard.html', context)
 
 
-def appeals(request):
-    appeals = Appeal.objects.all().order_by('-created_date')
 
+def filter_appeals_or_all_appeals(request):
+    appeals = Appeal.objects.all()
+    
+    # Filter objs
+    appeal_type = request.GET.get('appeal_type')
+    province = request.GET.get('province')
+    appeal_direction = request.GET.get('appeal_direction')
+    applicant_type = request.GET.get('applicant_type')
+    appeal_status = request.GET.get('appeal_status')
+    applicant_position = request.GET.get('applicant_position')
+
+    yes_or_no_answer = request.GET.get('yes_or_no_answer')
+    date = request.GET.get('date')
+    
+    
+    if province or appeal_direction or appeal_type or applicant_type or appeal_status or applicant_position or yes_or_no_answer:
+        
+        appeals = appeals.filter(
+              Q(applicant_province=province)
+            | Q(appeal_direction=appeal_direction)
+            | Q(appeal_type=appeal_type)
+            | Q(applicant_type=applicant_type)
+            | Q(appeal_status=appeal_status)
+            | Q(applicant_position=applicant_position)
+            )
+
+
+        test = False
+        if not appeals:
+            appeals = Appeal.objects.all()
+            test = True
+
+        if yes_or_no_answer == 'yes':
+            appeals = appeals.filter( Q(appeal_status="rejected") | Q(appeal_status="completed") )
+
+        elif yes_or_no_answer == 'on':
+            appeals = appeals.filter( Q(appeal_status='new') | Q(appeal_status='process') )
+
+
+        if test:
+            messages.error(request, 'Filter bo\'yicha murojaat kelmagan')
+            appeals = Appeal.objects.all()
+
+
+    return appeals
+
+
+def appeals(request):
+    appeals = filter_appeals_or_all_appeals(request).order_by('-created_date')
+
+    search_appeal = request.GET.get('search')
+    search_date = request.GET.get('search_in_date')
+    
     context = {
         'appeals': appeals,
         'appeals_cnt': appeals_cnt,
     }
+    is_ajax = request.GET.get('optionValue')
+    
+    if is_ajax:
+        if request.method == 'GET':
+            appeals = Appeal.objects.filter(applicant_province=request.GET.get('optionValue')).values()
+            print(request.GET.get('optionValue'))
+            print(appeals)
+            print(request.GET.get('optionValue'))
+            if appeals:
+                data ={'appeals':list(appeals)}
+                return JsonResponse(data)
+        
+        
+    if search_appeal:
+        appeals = Appeal.objects.filter(Q(applicant_name__icontains=search_appeal)).order_by('-created_date')
+
+        if not appeals:
             
+            messages.error(request, "Murojaat topilmadi")
+            return redirect('appeals')
+        
+        else:
+            context['appeals'] = appeals
+            context['search_appeal'] = search_appeal
+            messages.success(request, f'{appeals.count()} ta Murojaat topildi')
+    
+    
+    elif search_date:
+        try:
+            appeals = Appeal.objects.filter(created_date__date=search_date)
+        except:
+            return redirect('appeals')
+        
+
+        if appeals:
+            context['appeals'] = appeals
+            messages.success(request, f"{search_date} sana bo'yicha {appeals.count()} ta Murojaat topildi")        
+
+        else:
+            context['search_date'] = search_date
+            messages.error(request, 'Murojaat topilmadi')
+            return redirect('appeals')
+
+
     return render(request, 'adminPanel/appeals.html', context)
 
 
@@ -174,3 +269,4 @@ def download_answerFile(request, id):
     return response
     
 
+    

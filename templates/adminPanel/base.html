@@ -9,8 +9,10 @@
 </head>
 {% block style %}{% endblock style %}
 
-<body class="animsition">
+<body class="animsition" style="overflow-x: hidden;">
+    
     <div class="page-wrapper">
+
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
             <div class="header-mobile__bar">
@@ -32,14 +34,15 @@
         <!-- END HEADER MOBILE-->
 
         <!-- MENU SIDEBAR-->
-        <aside class="menu-sidebar d-none d-lg-block">
+        <aside class="menu-sidebar d-none d-lg-block" style="overflow: hidden;">
             <div class="logo">
                 <a href="{% url 'dashboard' request.user.username %}">
                     <img src="{% static 'images/blue-logo.png' %}" alt="Cool Admin" />
                 </a>
             </div>
-            <div class="menu-sidebar__content js-scrollbar1">
+            <div class="menu-sidebar__content js-scrollbar1 d-flex flex-column justify-content-between">
                 {% block aside_nav %}{% endblock aside_nav %}
+                {% block statistics %}{% endblock statistics %}
             </div>
         </aside>
         <!-- END MENU SIDEBAR-->
@@ -146,7 +149,7 @@
                 </div>
             </header>
             <!-- HEADER DESKTOP-->
-
+            
            {% block content %}{% endblock content %}
             <!-- END PAGE CONTAINER-->
         </div>
@@ -156,9 +159,12 @@
     {% block modal %}{% endblock modal %}
 
     {% include 'adminPanel/scripts.html' %}
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
     <script src="{% static 'js/countrymap.js' %}"></script>
     <script src="{% static 'js/mapdata.js' %}"></script>
+
+    {% block scripts %}{% endblock scripts %}
 
 </body>
 

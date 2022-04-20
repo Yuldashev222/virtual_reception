@@ -609,31 +609,66 @@
 
     </div>
 
-    <div class="modal">
-      <div class="modal__consent">
-        <ul class="modal__consent_list">
-          {% if applicants_panel_info.accept_text %}
-            <h2 class="form__header statistics__title">{{ applicants_panel_info.accept_text | safe }}</h2>
-          {% else %}
-            <li class="modal__consent_item">Hurmatli Murojaatchi!</li>
-            <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy maqomga ega ekanligini ham eslatib qo'ymoqchimiz.</li>
-            
-            <li class="modal__consent_item"><span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
-            
-            <li class="modal__consent_item"><span>1.</span> Alohida e'tibor bering! Tuhmat, haqorat so'zlar ishlatilgan va yolg'on xabar beruvchi murojaatlarni taqdim etish mumkin emas.</li>
-            
-            <li class="modal__consent_item"><span>2.</span> Shuningdek, quyidagi holatlarda murojaatlaringiz rad etilishi mumkinligini eslatib o'tmoqchimiz:</li>
-            
-            <li class="modal__consent_item">
-              <p>odobsizlik mazmunidagi murojaatlar (uyatsiz yoxud haqoratli iboralar, tahdidlar, mantiqsiz takliflar va shunga o'xshash murojaatlar);</p>
-              <p>murojaat matnida tushunarsiz qisqartirishlar yoki reklama materiallari mavjud bo'lgan, tarkibida aniq arizalar, shikoyatlar yoki takliflar bo'lmagan murojaatlar</p>
-            </li>
-            <li class="modal__consent_item"><span>3.</span> Shuningdek, foydalanuvchining bir necha bor bitta masala bo'yicha javob berilgan murojaati qayta yuborilganda, agar unda yangi vajlar yoki holatlar keltirilmagan bo'lsa, ko'rib chiqilmaydi. Mazkur shartlarning barchasi O'zbekiston Respublikasining amaldagi qonunchiligidan kelib chiqqan holda belgilangan.</li>
-          {% endif %}
-        </ul>
-        <div class="modal__consent_close"></div>
+    
+
+    {% if answers %}
+      <div class="modal before">
+        <div class="modal__consent active">
+          <ul class="modal__consent_list">
+              <li class="modal__consent_item">Javob</li>
+              {% for answer in answers %}
+              <hr>
+                <li class="modal__consent_item">{{ answer.text }}</li>
+                <li class="modal__consent_item">{{ answer.file }}</li>
+                <li class="modal__consent_item">{{ answer.answer_type }}</li>
+              <hr>
+              {% endfor %}
+          </ul>
+          <div class="modal__consent_close"></div>
+        </div>
       </div>
-    </div>
+    {% elif messages %}
+      {% for message in messages %}
+        <div class="modal before">
+          <div class="modal__consent active">
+            <ul class="modal__consent_list">
+                <li class="modal__consent_item">Javobni ko'rish uchun parol</li>
+                <li class="modal__consent_item"><code>{{ message }}</code></li>
+                <li class="modal__consent_item">Ma'lumot</li>
+                <li class="modal__consent_item">Javobni ko'rish uchun, Murojaat yuborish panelidagi o'ng pastki qismda joylashgan joyga parolni kiriting.</li>
+            </ul>
+            <div class="modal__consent_close"></div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="modal">
+        <div class="modal__consent">
+          <ul class="modal__consent_list">
+            {% if applicants_panel_info.accept_text %}
+              <h2 class="form__header statistics__title">{{ applicants_panel_info.accept_text | safe }}</h2>
+            {% else %}
+              <li class="modal__consent_item">Hurmatli Murojaatchi!</li>
+              <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy maqomga ega ekanligini ham eslatib qo'ymoqchimiz.</li>
+              
+              <li class="modal__consent_item"><span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
+              
+              <li class="modal__consent_item"><span>1.</span> Alohida e'tibor bering! Tuhmat, haqorat so'zlar ishlatilgan va yolg'on xabar beruvchi murojaatlarni taqdim etish mumkin emas.</li>
+              
+              <li class="modal__consent_item"><span>2.</span> Shuningdek, quyidagi holatlarda murojaatlaringiz rad etilishi mumkinligini eslatib o'tmoqchimiz:</li>
+              
+              <li class="modal__consent_item">
+                <p>odobsizlik mazmunidagi murojaatlar (uyatsiz yoxud haqoratli iboralar, tahdidlar, mantiqsiz takliflar va shunga o'xshash murojaatlar);</p>
+                <p>murojaat matnida tushunarsiz qisqartirishlar yoki reklama materiallari mavjud bo'lgan, tarkibida aniq arizalar, shikoyatlar yoki takliflar bo'lmagan murojaatlar</p>
+              </li>
+              <li class="modal__consent_item"><span>3.</span> Shuningdek, foydalanuvchining bir necha bor bitta masala bo'yicha javob berilgan murojaati qayta yuborilganda, agar unda yangi vajlar yoki holatlar keltirilmagan bo'lsa, ko'rib chiqilmaydi. Mazkur shartlarning barchasi O'zbekiston Respublikasining amaldagi qonunchiligidan kelib chiqqan holda belgilangan.</li>
+            {% endif %}
+          </ul>
+          <div class="modal__consent_close"></div>
+        </div>
+      </div>
+    {% endif %}
+
 
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
@@ -778,12 +813,6 @@
       };
 
       document.addEventListener("DOMContentLoaded", ready);
-    </script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script>
-      {% for msg in messages %}
-        swal('{{ msg }}');
-      {% endfor %}
     </script>
   </body>
 </html>

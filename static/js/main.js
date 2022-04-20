@@ -1,4 +1,4 @@
-
+  
 (function ($) {
   // USE STRICT
   "use strict";
@@ -341,21 +341,24 @@
           datasets: [
             {
               label: "My First dataset",
-              data: [30, 50, 20],
+              data: [30, 20, 35, 15],
               backgroundColor: [
                 '#00b5e9',
+                '#00ad5f',
                 '#fa4251',
-                '#000',
+                '#ffca2c',
               ],
               hoverBackgroundColor: [
-                '#00b5e9',
-                '#fa4251',
-                '#000',
+                '#00b5e9c4',
+                '#00ad5fc4',
+                '#fa4251c4',
+                '#ffca2cc4',
               ],
               borderWidth: [
-                0, 0, 0
+                0, 0, 0, 0
               ],
               hoverBorderColor: [
+                'transparent',
                 'transparent',
                 'transparent',
                 'transparent',
@@ -366,6 +369,7 @@
             'Yangi',
             'Bajarilgan',
             'Rad etilgan',
+            'Ko\'rib chiqilmoqda',
           ]
         },
         options: {
@@ -634,25 +638,27 @@
           datasets: [
             {
               label: "My First dataset",
-              data: [30, 50, 20],
+              data: [30, 20, 35, 15],
               backgroundColor: [
                 '#00b5e9',
+                '#00ad5f',
                 '#fa4251',
-                '#000',
+                '#ffca2c',
               ],
               hoverBackgroundColor: [
-                '#00b5e9',
-                '#fa4251',
-                '#000',
-
+                '#00b5e9c4',
+                '#00ad5fc4',
+                '#fa4251c4',
+                '#ffca2cc4',
               ],
               borderWidth: [
-                0, 0, 0
+                0, 0, 0, 0
               ],
               hoverBorderColor: [
                 'transparent',
                 'transparent',
-                'transparent'
+                'transparent',
+                'transparent',
               ]
             }
           ],
@@ -660,6 +666,7 @@
             'Yangi',
             'Bajarilgan',
             'Rad etilgan',
+            'Ko\'rib chiqilmoqda',
           ]
         },
         options: {
@@ -1291,167 +1298,7 @@
   
   
   })(jQuery);
-(function ($) {
-  // USE STRICT
-  "use strict";
 
-  // Map
-  try {
-
-    var vmap = $('#vmap');
-    if(vmap[0]) {
-      vmap.vectorMap( {
-        map: 'world_en',
-        backgroundColor: null,
-        color: '#ffffff',
-        hoverOpacity: 0.7,
-        selectedColor: '#1de9b6',
-        enableZoom: true,
-        showTooltip: true,
-        values: sample_data,
-        scaleColors: [ '#1de9b6', '#03a9f5'],
-        normalizeFunction: 'polynomial'
-      });
-    }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  // Europe Map
-  try {
-    
-    var vmap1 = $('#vmap1');
-    if(vmap1[0]) {
-      vmap1.vectorMap( {
-        map: 'europe_en',
-        color: '#007BFF',
-        borderColor: '#fff',
-        backgroundColor: '#fff',
-        enableZoom: true,
-        showTooltip: true
-      });
-    }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  // USA Map
-  try {
-    
-    var vmap2 = $('#vmap2');
-
-    if(vmap2[0]) {
-      vmap2.vectorMap( {
-        map: 'usa_en',
-        color: '#007BFF',
-        borderColor: '#fff',
-        backgroundColor: '#fff',
-        enableZoom: true,
-        showTooltip: true,
-        selectedColor: null,
-        hoverColor: null,
-        colors: {
-            mo: '#001BFF',
-            fl: '#001BFF',
-            or: '#001BFF'
-        },
-        onRegionClick: function ( event, code, region ) {
-            event.preventDefault();
-        }
-      });
-    }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  // Germany Map
-  try {
-    
-    var vmap3 = $('#vmap3');
-    if(vmap3[0]) {
-      vmap3.vectorMap( {
-        map: 'germany_en',
-        color: '#007BFF',
-        borderColor: '#fff',
-        backgroundColor: '#fff',
-        onRegionClick: function ( element, code, region ) {
-            var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
-
-            alert( message );
-        }
-      });
-    }
-    
-  } catch (error) {
-    console.log(error);
-  }
-  
-  // France Map
-  try {
-    
-    var vmap4 = $('#vmap4');
-    if(vmap4[0]) {
-      vmap4.vectorMap( {
-        map: 'france_fr',
-        color: '#007BFF',
-        borderColor: '#fff',
-        backgroundColor: '#fff',
-        enableZoom: true,
-        showTooltip: true
-      });
-    }
-
-  } catch (error) {
-    console.log(error);
-  }
-
-  // Russia Map
-  try {
-    var vmap5 = $('#vmap5');
-    if(vmap5[0]) {
-      vmap5.vectorMap( {
-        map: 'russia_en',
-        color: '#007BFF',
-        borderColor: '#fff',
-        backgroundColor: '#fff',
-        hoverOpacity: 0.7,
-        selectedColor: '#999999',
-        enableZoom: true,
-        showTooltip: true,
-        scaleColors: [ '#C8EEFF', '#006491' ],
-        normalizeFunction: 'polynomial'
-      });
-    }
-
-
-  } catch (error) {
-    console.log(error);
-  }
-  
-  // Brazil Map
-  try {
-    
-    var vmap6 = $('#vmap6');
-    if(vmap6[0]) {
-      vmap6.vectorMap( {
-        map: 'brazil_br',
-        color: '#007BFF',
-        borderColor: '#fff',
-        backgroundColor: '#fff',
-        onRegionClick: function ( element, code, region ) {
-            var message = 'You clicked "' + region + '" which has the code: ' + code.toUpperCase();
-            alert( message );
-        }
-      });
-    }
-
-  } catch (error) {
-    console.log(error);
-  }
-})(jQuery);
 (function ($) {
   // Use Strict
   "use strict";
@@ -1482,6 +1329,7 @@
     console.log(err);
   }
 })(jQuery);
+
 (function ($) {
   // USE STRICT
   "use strict";
@@ -1504,6 +1352,7 @@
   }
 
 })(jQuery);
+
 (function ($) {
   // USE STRICT
   "use strict";
@@ -1524,6 +1373,7 @@
 
 
 })(jQuery);
+
 (function ($) {
   // USE STRICT
   "use strict";
@@ -1623,6 +1473,7 @@
     console.log(error);
   }
 })(jQuery);
+
 (function ($) {
   // USE STRICT
   "use strict";
@@ -1650,6 +1501,7 @@
   }
 
 })(jQuery);
+
 (function ($) {
   // USE STRICT
   "use strict";
