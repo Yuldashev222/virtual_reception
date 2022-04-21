@@ -117,13 +117,20 @@ def appeals(request):
     
     if is_ajax:
         if request.method == 'GET':
-            appeals = Appeal.objects.filter(applicant_province=request.GET.get('optionValue')).values()
-            print(request.GET.get('optionValue'))
-            print(appeals)
-            print(request.GET.get('optionValue'))
-            if appeals:
-                data ={'appeals':list(appeals)}
-                return JsonResponse(data)
+            country = request.GET.get('optionValue')
+            if country:
+                appeals = Appeal.objects.filter(applicant_province=country).values()
+                if appeals:
+                    data ={'appeals':list(appeals)}
+                    return JsonResponse(data)
+                else:
+                    messages.error(request, 'sadasdasdasd')
+                    data ={'appeals':list(appeals)}
+                    return JsonResponse(data)
+            else:
+                appeals = Appeal.objects.all().values()
+                
+                
         
         
     if search_appeal:

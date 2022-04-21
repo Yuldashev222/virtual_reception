@@ -265,7 +265,7 @@
 {% endblock search %}
 {% block content %}
 <div class="main-content">
-        <div class="section__content section__content--p30">
+    <div class="section__content section__content--p30">
             <div class="container-fluid">
                 {% if appeals %}
                     <form method="get">
@@ -529,6 +529,7 @@
                             {% endif %}
                             {% comment %} <h2 class="title-1 m-l-100 text-left" >Murojaatlar</h2> {% endcomment %}
                             <h2 class="title-1 m-b-25 text-center" >Murojaatlar</h2>
+                            
                             <div class="table-responsive table--no-card m-b-40">
                                 <table class="table table-fixed table-borderless table-striped table-earning">
                                     <thead>
@@ -540,8 +541,8 @@
                                             <th>file</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        {% for appeal in appeals %}
+                                    <tbody id="appealsList">
+                                        <!-- {% for appeal in appeals %}
                                             <tr>
                                                 <th>{{ forloop.counter }}</th>
                                                 <td data-toggle="modal" data-target="#scrollmodal{{ appeal.pk }}" style="word-break: break-all;">{{ appeal.applicant_name }}</td>
@@ -555,7 +556,7 @@
                                                     <td>-</td>
                                                 {% endif %}
                                             </tr>
-                                        {% endfor %}
+                                        {% endfor %} -->
                                     </tbody>
                                 </table>
                             </div>
@@ -566,7 +567,7 @@
                 {% endif %}
             </div>
         </div>
-    </div>
+</div>
 {% endblock content %}
 {% block modal %}
     {% for appeal in appeals %}
@@ -700,27 +701,41 @@
 
 {% endblock modal %}
 {% block scripts %}
-<script>
-    function myFunction() {
-        var optionValue = document.getElementById("country").value;
-        console.log(optionValue)
+    <script>
+        function myFunction() {
+            var optionValue = document.getElementById("country").value;
+            console.log(optionValue)
 
-        $.ajax({
-            url: '',
-            datatype: 'json',
-            data: {'optionValue': optionValue},
-            type: 'GET',
-            success: function(data) {
-                //$.each(data.events, function(index, element) {
-                //    $('body').append($('<div>', {
-                //        text: element.name
-                //    }));
-                //});
-                console.log(data.appeals)
-            }
-        });
+            $.ajax({
+                url: '',
+                datatype: 'json',
+                data: {'optionValue': optionValue},
+                type: 'GET',
+                success: function(data) {
+                    const appealList = document.getElementById("appealsList")
+                    appealList.innerHTML = "";
+                    (data.appeals).forEach(appeal => {
+                        const appealHTMLElement = `
+                        <tr>
+                            <th>${ appeal.id }</th>
+                            <td data-toggle="modal" data-target="#scrollmodal${ appeal.pk }" style="word-break: break-all;">${ appeal.applicant_name }</td>
+                            <td>${ appeal.appeal_type }</td>
+                            <td>${ appeal.applicant_position }</td>
+                            {% if appeal.appeal_file %}
+                                <td>
+                                    <a href="{% url 'download-appealFile' appeal.id %}" style="color: #4272d7">${ appeal.filename }</a>
+                                </td>
+                            {% else %}
+                                <td>-</td>
+                            {% endif %}
+                        </tr>
+                        `
+                        appealList.innerHTML += appealHTMLElement;
+                    });
+                }
+            });
 
-       }
-       
-</script>
+        }
+        
+    </script>
 {% endblock scripts %}
