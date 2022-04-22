@@ -160,31 +160,13 @@
             position: sticky;
             top: 0;
         }
-        .filter_icon {
-            position: absolute;
-            left: 100%;
-            top: 0;
-            
-            cursor: pointer;
-            font-size: 30px;
-            background-color: #4272d7;
-            padding: 5px 25px;
-            color: #fff;
-
-            transition: .1s linear
+        .appeals_cnt {
+            text-transform: lowercase; 
+            font-size: 65%;
+            background: #cccccc82;
+            border-radius: 20px;
+            padding: 2px 10px;
         }
-        .filter_icon i {
-            display: block;
-        }
-        .filter_icon:hover {
-            background-color: #4272d7c9;
-            color: #00000073;
-        }
-        .appeal__filter_in_date .filter_icon {
-            left: unset;
-            right: 100%;
-        }
-
     </style>
 {% endblock style %}
 
@@ -228,7 +210,7 @@
             <li class="noti__item active has-sub">
                 <a href="{% url 'appeals' %}">
                     <i class="fas fa-envelope"></i>
-                    <span class="quantity">{{ appeals_cnt }}</span>
+                    <span class="quantity">{{ new_appeals_cnt }}</span>
                     Murojaatlar
                 </a>
             </li>
@@ -251,13 +233,13 @@
 
 {% block search %}
     <form class="form-header" action="{% url 'appeals' %}">
-        <input class="au-input au-input--xl" type="text" name="search" value="{{ search_appeal }}" placeholder="Murojaatni qidirish..." />
+        <input id="search" onInput='myFunction()' class="au-input au-input--xl" type="text" name="search" placeholder="Murojaatni qidirish..." />
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
     </form>
     <form class="form-header" action="{% url 'appeals' %}" method="get">
-        <input class="au-input" type="date" name="search_in_date" min="2022-04-20" value="{{ search_date }}"/>
+        <input id="search_in_date" onInput='myFunction()' class="au-input" type="date" name="search_in_date" max="2022-04-22"/>
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
@@ -272,8 +254,8 @@
 
                         <div class="appeal__filter">
                             <h4>Viloyat</h4>
-                            <select id="country" onInput='myFunction()' class="w-100 p-1" name="province">
-                                <option value="">umumiy</option>
+                            <select id="applicant_province" onInput='myFunction()' class="w-100 p-1" name="province">
+                                <option value="all">umumiy</option>
                                 <option value="toshkent">Toshkent</option>
                                 <option value="samarqand">Samarqand</option>
                                 <option value="andijon">Andijon</option>
@@ -290,8 +272,8 @@
                             </select>
                             <hr>
                             <h4>Murojaat yo'nalishi</h4>
-                            <select class="w-100 p-1" name="appeal_direction">
-                                <option value="">umumiy</option>
+                            <select id="appeal_direction" onInput='myFunction()' class="w-100 p-1" name="appeal_direction">
+                                <option value="all">umumiy</option>
                                 <option value="diplom_olish">Diplom olish masalalari</option>
                                 <option value="ishga_joylash">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
                                 <option value="kontrakt_tolovi">Kontrakt to'lovi to'g'risida</option>
@@ -323,25 +305,25 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" checked name="appeal_type" value="">
+                                        <input onclick='myFunction()' type="radio" checked name="appeal_type" value="all">
                                         Umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="appeal_type" value="ariza">
+                                        <input onclick='myFunction()' type="radio" name="appeal_type" value="ariza">
                                         Ariza
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="appeal_type" value="shikoyat">
+                                        <input onclick='myFunction()' type="radio" name="appeal_type" value="shikoyat">
                                         Shikoyat
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="appeal_type" value="taklif">
+                                        <input onclick='myFunction()' type="radio" name="appeal_type" value="taklif">
                                         Taklif
                                     </label>
                                 </li>
@@ -352,19 +334,19 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" checked name="applicant_type" value="">
+                                        <input type="radio" onclick='myFunction()' checked name="applicant_type" value="all">
                                         umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="applicant_type" value="yuridik_shaxs">
+                                        <input type="radio" onclick='myFunction()' name="applicant_type" value="yuridik_shaxs">
                                         Yuridik shaxs
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="applicant_type" value="jismoniy_shaxs">
+                                        <input type="radio" onclick='myFunction()' name="applicant_type" value="jismoniy_shaxs">
                                         Jismoniy shaxs
                                     </label>
                                 </li>
@@ -375,25 +357,24 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" checked name="yes_or_no_answer" value="">
+                                        <input type="radio" onclick='myFunction()' checked name="yes_or_no_answer" value="all">
                                         Umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="yes_or_no_answer" value="yes">
+                                        <input type="radio" onclick='myFunction()' name="yes_or_no_answer" value="yes">
                                         Bor 
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="yes_or_no_answer" value="no">
+                                        <input type="radio" onclick='myFunction()' name="yes_or_no_answer" value="no">
                                         yo'q
                                     </label>
                                 </li>
                             </ul>
 
-                            <button><span class="filter_icon"><i class="fas fa-sliders-h"></i></span></button>
 
                         </div>
 
@@ -402,31 +383,31 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" checked name="appeal_status" value="">
+                                        <input type="radio" onclick='myFunction()'  checked name="appeal_status" value="all">
                                         Umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="appeal_status" value="new">
+                                        <input type="radio" onclick='myFunction()' name="appeal_status" value="new">
                                         yangi
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="appeal_status" value="process">
+                                        <input type="radio" onclick='myFunction()' name="appeal_status" value="process">
                                         Ko'rib chiqilmoqda
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="appeal_status" value="completed">
+                                        <input type="radio" onclick='myFunction()' name="appeal_status" value="completed">
                                         Bajarilgan
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="appeal_status" value="rejected">
+                                        <input type="radio" onclick='myFunction()' name="appeal_status" value="rejected">
                                         Rad etilgan
                                     </label>
                                 </li>
@@ -437,37 +418,37 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" checked name="applicant_position" value="">
+                                        <input type="radio" onclick='myFunction()' checked name="applicant_position" value="all">
                                         Umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="applicant_position" value="talaba">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="talaba">
                                         Talaba
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="applicant_position" value="ota_ona">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="ota_ona">
                                         Ota ona
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="applicant_position" value="oqituvchi">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="oqituvchi">
                                         O'qituvchi
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="applicant_position" value="universitet_xodimi">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="universitet_xodimi">
                                         universitet_xodimi
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="applicant_position" value="tashkilot">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="tashkilot">
                                         tashkilot
                                     </label>
                                 </li>
@@ -478,42 +459,41 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" checked name="date" value="">
+                                        <input type="radio" onclick='myFunction()' checked name="date" value="all">
                                         Umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="date" value="day">
+                                        <input type="radio" onclick='myFunction()' name="date" value="day">
                                         bugun
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="date" value="week">
+                                        <input type="radio" onclick='myFunction()' name="date" value="week">
                                         oxirgi xafta
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="date" value="month"> 
+                                        <input type="radio" onclick='myFunction()' name="date" value="month"> 
                                         oxirgi oy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" name="date" value="year">
+                                        <input type="radio" onclick='myFunction()' name="date" value="year">
                                         Oxirgi yil
                                     </label>
                                 </li>
                             </ul>
-                            <button><span class="filter_icon"><i class="fas fa-sliders-h"></i></span></button>
                         </div>
 
                     </form>
                     <div class="row">
                         <div class="col-md-8 mx-auto">
-                            {% if messages %}
+                            <!-- {% if messages %}
                                 {% for msg in messages %}
                                     {% if msg.tags == 'error' %}
                                         <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
@@ -526,9 +506,8 @@
                                             </button>
                                         </div>
                                 {% endfor %}
-                            {% endif %}
-                            {% comment %} <h2 class="title-1 m-l-100 text-left" >Murojaatlar</h2> {% endcomment %}
-                            <h2 class="title-1 m-b-25 text-center" >Murojaatlar</h2>
+                            {% endif %} -->
+                            <h2 class="title-1 m-b-25" id="appeals_cnt">Murojaatlar <small class="appeals_cnt">{{ new_appeals_cnt }} ta</small></h2>
                             
                             <div class="table-responsive table--no-card m-b-40">
                                 <table class="table table-fixed table-borderless table-striped table-earning">
@@ -542,7 +521,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="appealsList">
-                                        <!-- {% for appeal in appeals %}
+                                        {% for appeal in appeals %}
                                             <tr>
                                                 <th>{{ forloop.counter }}</th>
                                                 <td data-toggle="modal" data-target="#scrollmodal{{ appeal.pk }}" style="word-break: break-all;">{{ appeal.applicant_name }}</td>
@@ -556,7 +535,7 @@
                                                     <td>-</td>
                                                 {% endif %}
                                             </tr>
-                                        {% endfor %} -->
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -703,39 +682,66 @@
 {% block scripts %}
     <script>
         function myFunction() {
-            var optionValue = document.getElementById("country").value;
-            console.log(optionValue)
+            var country_optionValue = document.getElementById("applicant_province").value;
+            var direction_optionValue = document.getElementById("appeal_direction").value;
+            var appeal_type_optionValue = document.querySelector("input[name='appeal_type']:checked").value;
+            var applicant_type_optionValue = document.querySelector("input[name='applicant_type']:checked").value;
+            var appeal_status_optionValue = document.querySelector("input[name='appeal_status']:checked").value;
+            var applicant_position_optionValue = document.querySelector("input[name='applicant_position']:checked").value;
+            var yes_or_no_answer_optionValue = document.querySelector("input[name='yes_or_no_answer']:checked").value;
+            var date_optionValue = document.querySelector("input[name='date']:checked").value;
+            
+            // Search
+            var search_optionValue = document.getElementById("search").value;
+            var search_in_date_optionValue = document.getElementById("search_in_date").value;
 
             $.ajax({
                 url: '',
                 datatype: 'json',
-                data: {'optionValue': optionValue},
+                data: {
+                    'applicant_province': country_optionValue, 
+                    'appeal_direction': direction_optionValue,
+                    'appeal_type': appeal_type_optionValue,
+                    'applicant_type': applicant_type_optionValue,
+                    'appeal_status': appeal_status_optionValue,
+                    'applicant_position': applicant_position_optionValue,
+                    'yes_or_no_answer': yes_or_no_answer_optionValue,
+                    'date': date_optionValue,
+
+                    'search': search_optionValue,
+                    'search_in_date': search_in_date_optionValue,
+                },
                 type: 'GET',
                 success: function(data) {
-                    const appealList = document.getElementById("appealsList")
+                    const appealList = document.getElementById("appealsList");
+                    const appeals_cnt = document.getElementById("appeals_cnt");
+
+                    appeals_cnt.innerHTML = "";
+                    const appeals_cntHTMLElement = `Murojaatlar <small class="appeals_cnt">${ data.appeals_cnt } ta</small>`
+                    appeals_cnt.innerHTML += appeals_cntHTMLElement;
+
                     appealList.innerHTML = "";
+
                     (data.appeals).forEach(appeal => {
                         const appealHTMLElement = `
                         <tr>
                             <th>${ appeal.id }</th>
-                            <td data-toggle="modal" data-target="#scrollmodal${ appeal.pk }" style="word-break: break-all;">${ appeal.applicant_name }</td>
+                            <td style="word-break: break-all;">${ appeal.applicant_name }</td>
                             <td>${ appeal.appeal_type }</td>
                             <td>${ appeal.applicant_position }</td>
-                            {% if appeal.appeal_file %}
-                                <td>
-                                    <a href="{% url 'download-appealFile' appeal.id %}" style="color: #4272d7">${ appeal.filename }</a>
-                                </td>
-                            {% else %}
-                                <td>-</td>
-                            {% endif %}
+                            <td>-</td>
+                            
                         </tr>
                         `
                         appealList.innerHTML += appealHTMLElement;
                     });
                 }
             });
-
+            
         }
         
     </script>
 {% endblock scripts %}
+<!-- <td>
+    <a href="{% url 'download-appealFile' appeal.id %}" style="color: #4272d7">${ appeal.filename }</a>
+</td> -->

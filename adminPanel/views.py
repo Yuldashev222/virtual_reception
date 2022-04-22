@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timedelta
 from django.http import FileResponse, JsonResponse
 from django.contrib import messages
 from django.db.models import Q
@@ -13,7 +14,7 @@ from appeals.forms import ApplicantsPanelForm
 # app imports
 from .models import User
 
-appeals_cnt = Appeal.objects.filter(appeal_status='new').count()
+new_appeals_cnt = Appeal.objects.filter(appeal_status='new').count()
 
 
 def admin_login(request):
@@ -48,123 +49,129 @@ def dashboard(request, username):
         return HttpResponse('Error')
 
     context = {
-        'appeals_cnt': appeals_cnt,
+        'new_appeals_cnt': new_appeals_cnt,
         
     }
             
     return render(request, 'adminPanel/dashboard.html', context)
 
 
-
-def filter_appeals_or_all_appeals(request):
-    appeals = Appeal.objects.all()
-    
-    # Filter objs
-    appeal_type = request.GET.get('appeal_type')
-    province = request.GET.get('province')
-    appeal_direction = request.GET.get('appeal_direction')
-    applicant_type = request.GET.get('applicant_type')
-    appeal_status = request.GET.get('appeal_status')
-    applicant_position = request.GET.get('applicant_position')
-
-    yes_or_no_answer = request.GET.get('yes_or_no_answer')
-    date = request.GET.get('date')
-    
-    
-    if province or appeal_direction or appeal_type or applicant_type or appeal_status or applicant_position or yes_or_no_answer:
-        
-        appeals = appeals.filter(
-              Q(applicant_province=province)
-            | Q(appeal_direction=appeal_direction)
-            | Q(appeal_type=appeal_type)
-            | Q(applicant_type=applicant_type)
-            | Q(appeal_status=appeal_status)
-            | Q(applicant_position=applicant_position)
-            )
-
-
-        test = False
-        if not appeals:
-            appeals = Appeal.objects.all()
-            test = True
-
-        if yes_or_no_answer == 'yes':
-            appeals = appeals.filter( Q(appeal_status="rejected") | Q(appeal_status="completed") )
-
-        elif yes_or_no_answer == 'on':
-            appeals = appeals.filter( Q(appeal_status='new') | Q(appeal_status='process') )
-
-
-        if test:
-            messages.error(request, 'Filter bo\'yicha murojaat kelmagan')
-            appeals = Appeal.objects.all()
-
-
-    return appeals
-
-
 def appeals(request):
-    appeals = filter_appeals_or_all_appeals(request).order_by('-created_date')
+    appeals = Appeal.objects.all().order_by('-created_date')
+    new_appeals_cnt = Appeal.objects.all().count()
 
-    search_appeal = request.GET.get('search')
-    search_date = request.GET.get('search_in_date')
-    
+    # search_appeal = request.GET.get('search')
+    # search_date = request.GET.get('search_in_date')
     context = {
         'appeals': appeals,
-        'appeals_cnt': appeals_cnt,
+        'new_appeals_cnt': new_appeals_cnt,
     }
-    is_ajax = request.GET.get('optionValue')
     
-    if is_ajax:
-        if request.method == 'GET':
-            country = request.GET.get('optionValue')
-            if country:
-                appeals = Appeal.objects.filter(applicant_province=country).values()
-                if appeals:
-                    data ={'appeals':list(appeals)}
-                    return JsonResponse(data)
-                else:
-                    messages.error(request, 'sadasdasdasd')
-                    data ={'appeals':list(appeals)}
-                    return JsonResponse(data)
-            else:
-                appeals = Appeal.objects.all().values()
-                
-                
+    if request.GET:
         
+        d = {}
+        for key, val in request.GET.items():
+            if val != 'all':
+                d[key] = val
         
-    if search_appeal:
-        appeals = Appeal.objects.filter(Q(applicant_name__icontains=search_appeal)).order_by('-created_date')
-
-        if not appeals:
+        if d:
+            if 'applicant_province' in d:
+                appeals = Appeal.objects.filter( Q(applicant_province=d['applicant_province']) )
             
-            messages.error(request, "Murojaat topilmadi")
-            return redirect('appeals')
-        
+            if 'appeal_direction' in d:
+                appeals = appeals.filter( Q(appeal_direction=d['appeal_direction']) )
+            
+            if 'appeal_type' in d:
+                appeals = appeals.filter( Q(appeal_type=d['appeal_type']) )
+            
+            if 'applicant_type' in d:
+                appeals = appeals.filter( Q(applicant_type=d['applicant_type']) )
+            
+            if 'appeal_status' in d:
+                appeals = appeals.filter( Q(appeal_status=d['appeal_status']) )
+
+            if 'applicant_position' in d:
+                appeals = appeals.filter( Q(applicant_position=d['applicant_position']) )
+            
+            if 'yes_or_no_answer' in d:
+                if d['yes_or_no_answer'] == 'yes':
+                    appeals = appeals.filter( Q(appeal_status='completed') | Q(appeal_status='rejected') )
+                else:
+                    appeals = appeals.filter( Q(appeal_status='new') | Q(appeal_status='process') )
+            
+            if 'date' in d:
+                
+                if d['date'] == 'day':
+                    day = datetime.now() - timedelta(minutes=60*24)
+                    appeals = appeals.filter(created_date__gte=day)
+                
+                elif d['date'] == 'week':
+                    week = datetime.now() - timedelta(minutes=60*24*7)
+                    appeals = appeals.filter(created_date__gte=week)
+                
+                elif d['date'] == 'month':
+                    month = datetime.now() - timedelta(minutes=60*24*30)
+                    appeals = appeals.filter(created_date__gte=month)
+
+                else:
+                    year = datetime.now() - timedelta(minutes=60*24*365)
+                    appeals = appeals.filter(created_date__gte=year)
+
+            if d['search']:
+                appeals = appeals.filter(Q(applicant_name__icontains=d['search']))
+            
+            if d['search_in_date']:
+                appeals = appeals.filter(Q(created_date__date=d['search_in_date']))
+                print(appeals, '//////////')
+                
+            
+            appeals = list(appeals.order_by('-created_date').values())
+            data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
+            
+            return JsonResponse(data)
+
         else:
-            context['appeals'] = appeals
-            context['search_appeal'] = search_appeal
-            messages.success(request, f'{appeals.count()} ta Murojaat topildi')
-    
-    
-    elif search_date:
-        try:
-            appeals = Appeal.objects.filter(created_date__date=search_date)
-        except:
-            return redirect('appeals')
-        
-
-        if appeals:
-            context['appeals'] = appeals
-            messages.success(request, f"{search_date} sana bo'yicha {appeals.count()} ta Murojaat topildi")        
-
-        else:
-            context['search_date'] = search_date
-            messages.error(request, 'Murojaat topilmadi')
-            return redirect('appeals')
-
-
+            appeals = list(appeals.values())
+            data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
+            print('-----------------')
+            return JsonResponse(data)
+            
+                
     return render(request, 'adminPanel/appeals.html', context)
+        
+    # if search_appeal:
+        
+    #     appeals = Appeal.objects.filter(Q(applicant_name__icontains=search_appeal)).order_by('-created_date')
+
+    #     if not appeals:
+            
+    #         messages.error(request, "Murojaat topilmadi")
+    #         return redirect('appeals')
+        
+    #     else:
+    #         context['appeals'] = appeals
+    #         context['search_appeal'] = search_appeal
+    #         messages.success(request, f'{appeals.count()} ta Murojaat topildi')
+    
+    
+    # elif search_date:
+        
+    #     try:
+    #         appeals = Appeal.objects.filter(created_date__date=search_date)
+    #     except:
+    #         return redirect('appeals')
+        
+
+    #     if appeals:
+    #         context['appeals'] = appeals
+    #         messages.success(request, f"{search_date} sana bo'yicha {appeals.count()} ta Murojaat topildi")        
+
+    #     else:
+    #         context['search_date'] = search_date
+    #         messages.error(request, 'Murojaat topilmadi')
+    #         return redirect('appeals')
+
+
 
 
 def answers(request):
@@ -172,7 +179,7 @@ def answers(request):
 
     context = {
         'answers': answers,
-        'appeals_cnt': appeals_cnt,
+        'new_appeals_cnt': new_appeals_cnt,
         
     }
             
@@ -223,7 +230,7 @@ def profile(request, username):
             return redirect('profile', user.username)
 
     context = {
-        'appeals_cnt': appeals_cnt,
+        'new_appeals_cnt': new_appeals_cnt,
         'user': user,
         'edit_user': edit_user,
 
@@ -247,7 +254,7 @@ def add_admin(request):
             
     context = {
         'addAdminForm': addAdminForm,
-        'appeals_cnt': appeals_cnt,
+        'new_appeals_cnt': new_appeals_cnt,
         
     }
 
