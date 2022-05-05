@@ -6,6 +6,9 @@
 
 {% block style %}
     <style>
+        ul, li {
+            list-style-type: none;
+        }
         .position-icons {
             color: inherit;
         }
@@ -239,7 +242,7 @@
         </button>
     </form>
     <form class="form-header" action="{% url 'appeals' %}" method="get">
-        <input id="search_in_date" onInput='myFunction()' class="au-input" type="date" name="search_in_date" max="2022-04-22"/>
+        <input id="search_in_date" onInput='myFunction()' class="au-input" type="date" name="search_in_date" max="{{ today_date }}"/>
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
@@ -466,7 +469,7 @@
                                 <li>
                                     <label>
                                         <input type="radio" onclick='myFunction()' name="date" value="day">
-                                        bugun
+                                        oxirgi sutka
                                     </label>
                                 </li>
                                 <li>
@@ -493,20 +496,6 @@
                     </form>
                     <div class="row">
                         <div class="col-md-8 mx-auto">
-                            <!-- {% if messages %}
-                                {% for msg in messages %}
-                                    {% if msg.tags == 'error' %}
-                                        <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
-                                    {% else %}
-                                        <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">
-                                    {% endif %}
-                                                {{ msg }}
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                {% endfor %}
-                            {% endif %} -->
                             <h2 class="title-1 m-b-25" id="appeals_cnt">Murojaatlar <small class="appeals_cnt">{{ new_appeals_cnt }} ta</small></h2>
                             
                             <div class="table-responsive table--no-card m-b-40">
@@ -524,9 +513,9 @@
                                         {% for appeal in appeals %}
                                             <tr>
                                                 <th>{{ forloop.counter }}</th>
-                                                <td data-toggle="modal" data-target="#scrollmodal{{ appeal.pk }}" style="word-break: break-all;">{{ appeal.applicant_name }}</td>
-                                                <td>{{ appeal.appeal_type }}</td>
-                                                <td>{{ appeal.applicant_position }}</td>
+                                                <td onclick="openSingleAppeal({{appeal.id}})" data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ appeal.applicant_name }}</td>
+                                                <td>{{ appeal.get_appeal_type_display }}</td>
+                                                <td>{{ appeal.get_applicant_position_display }}</td>
                                                 {% if appeal.appeal_file %}
                                                     <td>
                                                         <a href="{% url 'download-appealFile' appeal.id %}" style="color: #4272d7">{{ appeal.filename }}</a>
@@ -549,135 +538,86 @@
 </div>
 {% endblock content %}
 {% block modal %}
-    {% for appeal in appeals %}
-        <div class="modal fade" id="scrollmodal{{ appeal.pk }}" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="scrollmodalLabel">{{ appeal.applicant_name }} murojaati</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <!-- <div id="single_appeal"></div> -->
+    <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="single-appeal">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scrollmodalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="appeal_detail"></div>
+
+                    <div id="appeal_answers">
+                        <div class="appeal_answers_header">
+                            <h5 style="margin-bottom: 20px">Murojaat javoblari:</h5>
+                        </div>
+                        <div id="appeal_answers_main" style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
+
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <ul>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">F I O:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_name }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Tel raqami:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_tel_num }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Email:</h5>
-                                {% if appeal.applicant_email %}
-                                    <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_email }}</p>
-                                {% else %}
-                                    <p style="text-decoration: underline; margin-left: 20px">Ko'rsatilmagan</p>
-                                {% endif %}
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Yuborilgan sana:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.created_date }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Viloyat:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_province }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Murojaat yo'nalishi:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.appeal_direction }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Murojaat turi:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.appeal_type }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">murojaatchi turi:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_type }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Kim tomonidan:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.applicant_position }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Murojaat mavzusi:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.appeal_subject }}</p>
-                            </li>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                                <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
-                                <p style="text-decoration: underline; margin-left: 20px">{{ appeal.filename }}</p>
-                            </li>
-                            <li style="padding: 5px 0;">
-                                <h5 style="margin-bottom: 20px">Murojaat mazmuni:</h5>
-                                <p style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; word-break: break-all;">
-                                    {{ appeal.appeal_text }}
-                                </p>
-                            </li>
-                            <li style="padding: 5px 0;">
-                                <hr style="height: 15px; background-color: #ccc; border-radius: 300%;">
-                                <h4 style="margin-bottom: 20px">Javob yozish:</h4>
-                                <textarea class="modal-answer-textarea" style="border: 1px solid #ccc; width: 100%;"></textarea>
-                                <input type="file">
-                            </li>
-                            <li style="padding: 5px 0;">
-                                <hr>
-                                <h4 style="margin-bottom: 20px">Javob turi:</h4>
-                                <input type="radio" name="type__answer" id="accepted" checked>
-                                <label for="accepted">
-                                    <i class="fas fa-check"></i>
-                                    Bajarildi
-                                </label>
-                                <input type="radio" name="type__answer" id="rejected">
-                                <label for="rejected">
-                                    <i class="fas fa-close"></i>
-                                    Rad etildi
-                                </label>
-                            </li>
-                            <li style="padding: 5px 0;">
-                                <hr>
-                                <h4 style="margin-bottom: 20px">Javob manzili:</h4>
-                                <input type="radio" name="address__answer" id="in_site" checked>
-                                <label for="in_site">
-                                    <i class='fab fa-chrome'></i>
-                                    Sayt
-                                </label>
-                                <input type="radio" name="address__answer" id="in_email">
-                                <label for="in_email">
-                                    <i class="fas fa-envelope"></i>
-                                    Email
-                                </label>
-                                <input type="radio" name="address__answer" id="in_site_and_email">
-                                <label for="in_site_and_email">
-                                    <i class='fab fa-chrome'></i> Sayt va<span style="margin-left: 10px;"><i class="fas fa-envelope"></i> Email</span>
-                                </label>
-                            </li>
-                            <li style="padding: 5px 0;">
-                                <hr>
-                                <h4 style="margin-bottom: 20px">Javob holati:</h4>
-                                <input type="radio" name="active__answer" id="send_answer" checked>
-                                <label for="send_answer">
-                                    <i class='fa fa-send'></i>
-                                    Yuborilsin
-                                </label>
-                                <input type="radio" name="active__answer" id="save_answer">
-                                <label for="save_answer">
-                                    <i class="fa fa-save"></i>
-                                    Saqlab qo'yilsin
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
-                        <button type="button" class="btn btn-primary">Javob Yuborish</button>
+
+
+                    <div class="send_answer">
+                        <form id="answerForm" method="POST">{% csrf_token %}
+                            <input type="hidden" name="appeal" id="answer_appeal">
+                            <ul>
+                                <li style="padding: 5px 0;">
+                                    <hr style="height: 15px; background-color: #ccc; border-radius: 300%;">
+                                    <h4 style="margin-bottom: 20px">Javob yozish:</h4>
+                                    <textarea id="answer_text" name="text" class="modal-answer-textarea" style="border: 1px solid #ccc; width: 100%;"></textarea>
+                                </li>
+                                <li>
+                                    <hr>
+                                    <h4 style="margin-bottom: 20px">Javob fayl ko'rinishi:</h4>
+                                    <input id="answer_file" type="file" name="file">
+                                </li>
+                                <li style="padding: 5px 0;">
+                                    <hr>
+                                    <h4 style="margin-bottom: 20px">Javob turi:</h4>
+                                    <input type="radio" name="answer_type" value="done" id="accepted" checked>
+                                    <label for="accepted">
+                                        <i class="fas fa-check"></i>
+                                        Bajarildi
+                                    </label>
+                                    <input type="radio" name="answer_type" value="rejected" id="rejected">
+                                    <label for="rejected">
+                                        <i class="fas fa-close"></i>
+                                        Rad etildi
+                                    </label>
+                                </li>
+
+                                <li style="padding: 5px 0;" id="answer_address">
+                                </li>
+
+                                <li style="padding: 5px 0;">
+                                    <hr>
+                                    <h4 style="margin-bottom: 20px">Javob holati:</h4>
+                                    <input type="radio" name="active" value="send" id="send_answer" checked>
+                                    <label for="send_answer">
+                                        <i class='fa fa-send'></i>
+                                        Yuborilsin
+                                    </label>
+                                    <input type="radio" name="active" value="save" id="save_answer">
+                                    <label for="save_answer">
+                                        <i class="fa fa-save"></i>
+                                        Saqlab qo'yilsin
+                                    </label>
+                                </li>
+                            </ul>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
+                                <button type="submit" class="btn btn-primary">Javob Yuborish</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    {% endfor %}
-
+    </div>
 {% endblock modal %}
 {% block scripts %}
     <script>
@@ -721,27 +661,225 @@
                     appeals_cnt.innerHTML += appeals_cntHTMLElement;
 
                     appealList.innerHTML = "";
-
+                    var counter = 1;
                     (data.appeals).forEach(appeal => {
                         const appealHTMLElement = `
                         <tr>
-                            <th>${ appeal.id }</th>
-                            <td style="word-break: break-all;">${ appeal.applicant_name }</td>
+                            <th>${ counter }</th>
+                            <td onclick="openSingleAppeal(${appeal.id})" data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">${ appeal.applicant_name }</td>
                             <td>${ appeal.appeal_type }</td>
                             <td>${ appeal.applicant_position }</td>
-                            <td>-</td>
-                            
+                            <td>
+                                <a href="/admin/appeals/download-appealfile/${appeal.id}/" style="color: #4272d7">${ appeal.appeal_file }</a>
+                            </td>
                         </tr>
                         `
                         appealList.innerHTML += appealHTMLElement;
+                        counter += 1;
                     });
                 }
             });
             
         }
-        
+
+        function openSingleAppeal(id) {
+
+
+            $.ajax({
+                url: id + '/',
+                dataType: 'json',
+                data: {
+                    'id': id,
+                },
+                type: 'GET',
+                success: function(data) {
+                    appeal = data.appeal
+
+                    const answer_text = document.getElementById("answer_text");
+                    answer_text.value = "";
+
+                    //const answer_file = document.getElementById("answer_file");
+                    //answer_file.value = "";
+
+                    const answer_appeal = document.getElementById("answer_appeal");
+                    answer_appeal.value = appeal.id;
+
+                    const answer_address = document.getElementById("answer_address");
+                    
+                    if (appeal.applicant_email) {
+                        answer_address.innerHTML = "";
+                        answer_address.innerHTML += `
+                        <hr>
+                        <h4 style="margin-bottom: 20px">Javob manzili:</h4>
+                        <input type="radio" name="answer_address" value="site" id="in_site" checked>
+                        <label for="in_site">
+                            <i class='fab fa-chrome'></i>
+                            Sayt
+                        </label>
+                        <input type="radio" name="answer_address" value="email" id="in_email">
+                        <label for="in_email">
+                            <i class="fas fa-envelope"></i>
+                            Email
+                        </label>
+                        <input type="radio" name="answer_address" value="site_and_email" id="in_site_and_email">
+                        <label for="in_site_and_email">
+                            <i class='fab fa-chrome'></i> Sayt va<span style="margin-left: 10px;"><i class="fas fa-envelope"></i> Email</span>
+                        </label>`
+                    }
+
+                    else {
+                        answer_address.innerHTML = `
+                        <input type="hidden" name="answer_address" value="site" id="in_site">
+                        `
+                    }
+
+                    const appeal_name = document.getElementById("scrollmodalLabel");
+                    appeal_name.innerHTML = `${appeal.applicant_name} murojaati`;
+                    
+                    const appeal_detail = document.getElementById("appeal_detail");
+                    appeal_detail.innerHTML = "";
+                    appeal_detail.innerHTML += `
+                    <ul>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">F I O:</h5>
+                            <p style="margin-left: 20px">${appeal.applicant_name}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Tel raqami:</h5>
+                            <p style="margin-left: 20px"><a href="tel:${appeal.applicant_tel_num}">${appeal.applicant_tel_num}</a></p>
+                        </li>`
+
+                        if (appeal.applicant_email) {
+
+                            appeal_detail.innerHTML += `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                                <h5 style="margin-bottom: 5px">Email:</h5>
+                                    <p style="margin-left: 20px"><a href="mailto:${appeal.applicant_email}">${appeal.applicant_email}</a></p>
+                            </li>`
+                        
+                        }
+                        
+                        else {
+
+                            appeal_detail.innerHTML += `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                                <h5 style="margin-bottom: 5px">Email:</h5>
+                                    <p style="margin-left: 20px">-</p>
+                            </li>`
+                        
+                        }
+                    
+                        appeal_detail.innerHTML += `
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Yuborilgan sana:</h5>
+                            <p style="margin-left: 20px">${appeal.created_date}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Viloyat:</h5>
+                            <p style="margin-left: 20px">${appeal.applicant_province}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Murojaat yo'nalishi:</h5>
+                            <p style="margin-left: 20px">${appeal.appeal_direction}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Murojaat turi:</h5>
+                            <p style="margin-left: 20px">${appeal.appeal_type}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">murojaatchi turi:</h5>
+                            <p style="margin-left: 20px">${appeal.applicant_type}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Kim tomonidan:</h5>
+                            <p style="margin-left: 20px">${appeal.applicant_position}</p>
+                        </li>`
+
+                        if ( appeal.appeal_file ) {
+                            appeal_detail.innerHTML += `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                                <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
+                                <p style="margin-left: 20px">
+                                    <a href="/admin/appeals/download-appealfile/${appeal.id}/" style="color: #4272d7">${ appeal.appeal_file }</a>
+                                </p>
+                            </li>`
+                            
+                        }
+                        
+                        else {
+                            appeal_detail.innerHTML += `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                                <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
+                                <p style="margin-left: 20px">-</p>
+                            </li>`
+                        } 
+                        
+                        appeal_detail.innerHTML += `
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Murojaat mavzusi:</h5>
+                            <p style="margin-left: 20px">${appeal.appeal_subject}</p>
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <h5 style="margin-bottom: 20px">Murojaat mazmuni:</h5>
+                            <p style="border: 1px solid #ccc; padding: 15px 10px; max-height: 300px; overflow-y: scroll; word-break: break-all;">
+                                ${appeal.appeal_text}
+                            </p>
+                        </li>
+                    </ul>`
+                    
+                    const appeal_answers = document.getElementById('appeal_answers');
+
+                    const appeal_answers_main = document.getElementById('appeal_answers_main');
+                    
+                    if (data.appeal_answers != false) {
+                        
+                        appeal_answers_main.innerHTML = "";                                                                                                     
+                        appeal_answers_main.innerHTML = `
+                        <p class="d-flex justify-content-between">
+                            <span>No</span>
+                            <span>kim tomonidan</span>
+                            <span>javob manzili</span>
+                            <span>sana</span>
+                        </p>`;
+                        var index = 1;
+                        (data.appeal_answers).forEach(answer => {
+                            
+                            appeal_answers_main.innerHTML += `
+                            <p class="d-flex justify-content-between">
+                                <span class="">${index}.</span>
+                                <a href="#">${answer.author}</a>
+                                <a href="#">${answer.answer_address}</a>
+                                <a href="#">${answer.created_date}</a>
+                            </p>`;
+                            
+                            index ++;
+                        });
+                        
+                    }
+
+                    else {
+                        appeal_answers.innerHTML = "";
+                    }
+                }
+            });
+        }
+   
+        $(document).ready(function () {
+
+            $('#answerForm').submit(function () {
+
+                $.ajax({
+                    data: $(this).serialize(),
+                    type: $(this).attr('method'),
+                    url: "{% url 'add-appeal' %}",
+                    success: function (response) {
+                        alert(response.result);
+                    },
+
+                });
+
+                return false;
+            });
+        })
     </script>
 {% endblock scripts %}
-<!-- <td>
-    <a href="{% url 'download-appealFile' appeal.id %}" style="color: #4272d7">${ appeal.filename }</a>
-</td> -->

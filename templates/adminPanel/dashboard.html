@@ -23,6 +23,18 @@
             justify-content: end;
         }
 
+        #map_holder {
+            border: 1px solid #ccc;
+        }
+
+        .country_info {
+            display: none;
+        }
+
+        .country_info .active {
+            display: block;
+        }
+
     </style>
 {% endblock style %}
 {% block header_mobile_nav %}
@@ -59,7 +71,7 @@
             <li class="noti__item">
                 <a href="{% url 'appeals' %}">
                     <i class="fas fa-envelope"></i>
-                    <span class="quantity">{{ appeals_cnt }}</span>
+                    <span class="quantity">{{ new_appeals_cnt }}</span>
                     Murojaatlar
                 </a>
             </li>
@@ -91,8 +103,9 @@
                     </div>
                 </div>
                 <div class="row" style="margin: 100px 0;">
-                    <div class="col-md-12">
+                    <div class="col-md-8 d-flex">
                         <div id="map"></div>
+                        <div id="country_info" class="country_info">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem, ad!</div>
                     </div>
                 </div>
                 <div class="row">
@@ -335,3 +348,14 @@
     </div>
     <!-- END MAIN CONTENT-->
 {% endblock content %}
+{% block scripts %}
+    <script>
+        const country = document.querySelector(".sm_state_UZB356");
+        const country_info = document.querySelector(".country_info");
+        console.log(country);
+        country.addEventListener("click", function(){
+            country_info.classList.add("active");
+            console.log('asdasdasdasd');
+        });
+    </script>
+{% endblock scripts %}

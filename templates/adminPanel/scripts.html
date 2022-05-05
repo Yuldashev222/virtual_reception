@@ -30,17 +30,3 @@
 
 <!-- Main JS-->
 <script src="{% static 'js/main.js' %}"></script>
-
-<script>
-    function scrollmodal(id){
-        $.ajax({
-        url: $(this).attr("data-url")
-         type: 'get',
-         dataType: "HTML" 
-         success: function(res) {
-           $('#scrollmodal .modal-body').html(res); 
-           $("#scrollmodal").modal("show");
-         }
-        });
-      }
-</script>

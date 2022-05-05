@@ -42,7 +42,7 @@ class Social(models.Model):
     
 
 class Appeal(models.Model):
-    
+
     PROVINCE = [
         ('toshkent', 'Toshkent'),
         ('samarqand', 'Samarqand'),
@@ -58,14 +58,14 @@ class Appeal(models.Model):
         ('jizzax', 'Jizzax'),
         ('qoraqalpoq', 'Qoraqalpog\'iston Respublikasi'),
     ]
-    
+
     APPEAL_TYPE = [
         ('ariza', 'Ariza'),
         ('shikoyat', 'Shikoyat'),
         ('taklif', 'Taklif'),
         ('boshqa', 'boshqa'),
     ]
-   
+
     APPLICANT_POSITION = [
         ("talaba", "Talaba"),
         ("ota_ona", "Ota ona"),
@@ -74,12 +74,13 @@ class Appeal(models.Model):
         ("tashkilot", "Tashkilot"),
         ("boshqa", "Boshqa"),
     ]
-    
+
+
     APPLICANT_TYPE = [
         ('yuridik_shaxs', 'Yuridik shaxs'),
         ('jismoniy_shaxs', 'Jismoniy shaxs'),
     ]
-    
+
     APPEAL_DIRECTION = [
         ("diplom_olish", "Diplom olish masalalari"),
         ("ishga_joylash", "Ishga joylash, ishdagi tortishuv, oylik maoshi"),
@@ -111,12 +112,12 @@ class Appeal(models.Model):
         ('new', 'Yangi'),
         ('process', 'Ko\'rib chiqilmoqda'),
         ('rejected', 'Rad etilgan'),
-        ('completed', 'Bajarilgan'),
+        ('done', 'Bajarilgan'),
     ]
 
-    appeal_subject = models.CharField(max_length=60)
-    appeal_text = models.TextField()
-    appeal_file = models.FileField(upload_to='Appeal_Files/', blank=True, validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt"])])
+    appeal_subject = models.CharField(max_length=60, blank=True)
+    appeal_text = models.TextField(blank=True)
+    appeal_file = models.FileField(upload_to='Appeal_Files/', blank=True, validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt", "xlsx", "xls"])])
     appeal_type = models.CharField(max_length=10, choices=APPEAL_TYPE)
     appeal_direction = models.CharField(max_length=70, choices=APPEAL_DIRECTION)
     privacy = models.BooleanField(default=False)
@@ -158,8 +159,8 @@ class Answer(models.Model):
         ('site_and_email', 'Sayt va Email'),
     ]
     
-    text = models.TextField()
-    file = models.FileField(upload_to='Answers/files/', blank=True, validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt"])])
+    text = models.TextField(blank=True)
+    file = models.FileField(upload_to='Answers/files/', blank=True)
     appeal = models.ForeignKey(Appeal, on_delete=models.SET_NULL, related_name='get_answers', null=True)
     answer_type = models.CharField(max_length=10, choices=ANSWER_TYPE)
     answer_address = models.CharField(max_length=15, choices=ANSWER_ADDRESS)

@@ -34,18 +34,21 @@ def home(request):
     }
     
     code = request.POST.get('answer_code')
+    
     if code:
+
         try:
             appeal = Appeal.objects.get(code=code)
             answers = Answer.objects.filter(appeal=appeal)
             context['answers'] = answers
+
         except:
+            messages.error(request, 'Javob yoq')
             return redirect('home')
         
     if request.POST:
         
             appealForm = AppealForm(request.POST, request.FILES)
-
             if appealForm.is_valid():
                 obj = appealForm.save(commit=False)
                 obj.save()

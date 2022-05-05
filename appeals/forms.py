@@ -26,6 +26,12 @@ class AppealForm(forms.ModelForm):
         ]
 
 
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ["text", "file", "appeal", "answer_type", "answer_address", "active"]
+
+
 class ApplicantsPanelForm(forms.ModelForm):
     class Meta:
         model = Applicants_panel

@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta
+from telnetlib import STATUS
 from django.http import FileResponse, JsonResponse
 from django.contrib import messages
 from django.db.models import Q
@@ -9,7 +10,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 
 from appeals.models import Answer, Appeal, Applicants_panel
 from .forms import AddUserForm, EditUserForm
-from appeals.forms import ApplicantsPanelForm
+from appeals.forms import AnswerForm, ApplicantsPanelForm
 
 # app imports
 from .models import User
@@ -50,21 +51,24 @@ def dashboard(request, username):
 
     context = {
         'new_appeals_cnt': new_appeals_cnt,
-        
+
     }
-            
+
     return render(request, 'adminPanel/dashboard.html', context)
 
 
 def appeals(request):
+    form = AnswerForm()
     appeals = Appeal.objects.all().order_by('-created_date')
     new_appeals_cnt = Appeal.objects.all().count()
 
     # search_appeal = request.GET.get('search')
     # search_date = request.GET.get('search_in_date')
     context = {
+        'answer_form': form,
         'appeals': appeals,
         'new_appeals_cnt': new_appeals_cnt,
+        'today_date': datetime.today().strftime('%Y-%m-%d'),
     }
     
     if request.GET:
@@ -95,7 +99,7 @@ def appeals(request):
             
             if 'yes_or_no_answer' in d:
                 if d['yes_or_no_answer'] == 'yes':
-                    appeals = appeals.filter( Q(appeal_status='completed') | Q(appeal_status='rejected') )
+                    appeals = appeals.filter( Q(appeal_status='done') | Q(appeal_status='rejected') )
                 else:
                     appeals = appeals.filter( Q(appeal_status='new') | Q(appeal_status='process') )
             
@@ -119,13 +123,17 @@ def appeals(request):
 
             if d['search']:
                 appeals = appeals.filter(Q(applicant_name__icontains=d['search']))
-            
+
             if d['search_in_date']:
                 appeals = appeals.filter(Q(created_date__date=d['search_in_date']))
-                print(appeals, '//////////')
-                
-            
+
             appeals = list(appeals.order_by('-created_date').values())
+
+            for obj in appeals:
+                obj['appeal_file'] = str(Appeal.objects.get(id=obj['id']).filename())
+                continue
+                
+
             data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
             
             return JsonResponse(data)
@@ -133,46 +141,64 @@ def appeals(request):
         else:
             appeals = list(appeals.values())
             data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
-            print('-----------------')
             return JsonResponse(data)
             
-                
+       
     return render(request, 'adminPanel/appeals.html', context)
-        
-    # if search_appeal:
-        
-    #     appeals = Appeal.objects.filter(Q(applicant_name__icontains=search_appeal)).order_by('-created_date')
 
-    #     if not appeals:
+
+def send_answer(request):
+    form = AnswerForm(request.POST, request.FILES)
+    
+    if form.is_valid():
+        answer = form.save(commit=False)
+        if answer.file or answer.text:
+            answer.author = request.user
+            appeal = Appeal.objects.get(id=answer.appeal.id)
+            appeal.appeal_status = answer.answer_type
+            appeal.save()
+            answer.save()
+
+            return JsonResponse({'result': 'javob yuborildi'}, status=200)
+
+        else:
             
-    #         messages.error(request, "Murojaat topilmadi")
-    #         return redirect('appeals')
+            return JsonResponse({'result': 'Javob yuborish uchun kamida text yoki file maydonlarini to\'ldiring'}, status=200)
+            
+
+def single_appeal(request, id):
+    if request.GET:
+        ajax_id = request.GET['id']
+        appeal = list(Appeal.objects.filter(id=ajax_id).values())
         
-    #     else:
-    #         context['appeals'] = appeals
-    #         context['search_appeal'] = search_appeal
-    #         messages.success(request, f'{appeals.count()} ta Murojaat topildi')
-    
-    
-    # elif search_date:
         
-    #     try:
-    #         appeals = Appeal.objects.filter(created_date__date=search_date)
-    #     except:
-    #         return redirect('appeals')
+        appeal[0]['created_date'] = appeal[0]['created_date'].strftime('%d.%m.%Y || %H:%M')
+        appeal[0]['appeal_file'] = str(Appeal.objects.get(id=appeal[0]['id']).filename())
+        appeal[0]['applicant_province'] = str(Appeal.objects.get(id=appeal[0]['id']).get_applicant_province_display())
+        appeal[0]['appeal_direction'] = str(Appeal.objects.get(id=appeal[0]['id']).get_appeal_direction_display())
+        appeal[0]['appeal_type'] = str(Appeal.objects.get(id=appeal[0]['id']).get_appeal_type_display())
+        appeal[0]['applicant_type'] = str(Appeal.objects.get(id=appeal[0]['id']).get_applicant_type_display())
+        appeal[0]['applicant_position'] = str(Appeal.objects.get(id=appeal[0]['id']).get_applicant_position_display())
+
         
+        data = {'appeal': appeal[0], "appeal_answers": False, "appeal_answers_count": False}
+        try:
+            appeal_answers = list(Answer.objects.filter(appeal=request.GET['id']).values())
+            appeal_answers_count = Answer.objects.filter(appeal=request.GET['id']).count()
+            for answer in appeal_answers:
+                answer['author'] = str(User.objects.get(id=answer['author_id']))
+                continue
+            
+            data['appeal_answers'] = appeal_answers
+            data['appeal_answers_count'] = appeal_answers_count
 
-    #     if appeals:
-    #         context['appeals'] = appeals
-    #         messages.success(request, f"{search_date} sana bo'yicha {appeals.count()} ta Murojaat topildi")        
+            return JsonResponse(data)        
 
-    #     else:
-    #         context['search_date'] = search_date
-    #         messages.error(request, 'Murojaat topilmadi')
-    #         return redirect('appeals')
+        except:
 
+            return JsonResponse(data)        
 
-
+    return render(request, 'adminPanel/appeals.html')
 
 def answers(request):
     answers = Answer.objects.all().order_by('-created_date')
@@ -203,7 +229,7 @@ def applicants_view(request):
     
     context = {
         'applicantsPanelForm': applicantsPanelForm,
-        'appeals_cnt': appeals_cnt,
+        'new_appeals_cnt': new_appeals_cnt,
         
     }
     
@@ -270,9 +296,19 @@ def logout_admin(request, username):
 
 
 def download_appealFile(request, id):
-    appeal = Appeal.objects.get(id=id)
+    try: 
+        appeal = Appeal.objects.get(id=request.GET['id'])
+    except:
+        appeal = Appeal.objects.get(id=id)
     filename = appeal.appeal_file.path
     response = FileResponse(open(filename, 'rb'))
+    
+    # if request.GET or True:
+    #     appeal = Appeal.objects.get(id=request.GET['id'])
+    #     filename = appeal.appeal_file.path
+    #     response = FileResponse(open(filename, 'rb'))
+        
+    
     return response
 
 
@@ -281,6 +317,3 @@ def download_answerFile(request, id):
     filename = answer.file.path
     response = FileResponse(open(filename, 'rb'))
     return response
-    
-
-    
