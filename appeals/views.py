@@ -55,6 +55,5 @@ def home(request):
 
                 messages.success(request, f"{obj.code}")
                 return redirect('home')
-        
-    
-    return render(request, 'index.html', context)
+            
+    return render(request, 'index.html')

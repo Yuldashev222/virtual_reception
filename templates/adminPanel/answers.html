@@ -1,9 +1,14 @@
 {% extends 'adminPanel/base.html' %}
+
 {% load static %}
+
 {% block title %}<title>Javoblar</title>{% endblock title %}
+
 {% block style %}
-    {% comment %} <link rel="stylesheet" href="{% static 'css/answers.css' %}"> {% endcomment %}
     <style>
+        ul, li {
+            list-style-type: none;
+        }
         .position-icons {
             color: inherit;
         }
@@ -158,26 +163,40 @@
             position: sticky;
             top: 0;
         }
+        .appeals_cnt {
+            text-transform: lowercase; 
+            font-size: 65%;
+            background: #cccccc82;
+            border-radius: 20px;
+            padding: 2px 10px;
+        }
     </style>
 {% endblock style %}
+
 {% block header_mobile_nav %}
     <nav class="navbar-mobile">
         <div class="container-fluid">
             <ul class="navbar-mobile__list list-unstyled">
                 <li>
                     <a class="" href="{% url 'dashboard' request.user.username %}">
-                        <i class="fas fa-chart-bar"></i>Statistika</a>
+                        <i class="fas fa-chart-bar"></i>
+                        Statistika
+                    </a>
                 </li>
-                <li class=" noti__item">
+                <li class="noti__item">
                     <a href="{% url 'appeals' %}">
                         <i class="fas fa-envelope"></i>
-                        <span class="quantity">1</span>
+                        
+                        <span class="quantity"></span>
+                            
                         Murojaatlar
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <i class="fas fa-reply"></i>Javoblar</a>
+                    <a href="{% url 'answers' %}">
+                        <i class="fas fa-reply"></i>
+                        Javoblar
+                    </a>
                 </li>
                 <li>
                     <a href="form.html">
@@ -187,22 +206,25 @@
         </div>
     </nav>
 {% endblock header_mobile_nav %}
+
 {% block aside_nav %}
     <nav class="navbar-sidebar">
         <ul class="list-unstyled navbar__list">
-            <li>    
+            <li>
                 <a class="js-arrow" href="{% url 'dashboard' request.user.username %}">
                     <i class="fas fa-chart-bar"></i>Statistika</a>
             </li>
-            <li class="noti__item">
+            <li class="noti__item ">
                 <a href="{% url 'appeals' %}">
                     <i class="fas fa-envelope"></i>
-                    <span class="quantity">{{ appeals_cnt }}</span>
+                    {% if new_appeals_cnt > 0 %}
+                        <span class="quantity" id="quantity">{{ new_appeals_cnt }}</span>
+                    {% endif %}
                     Murojaatlar
                 </a>
             </li>
             <li class="active has-sub">
-                <a href="#">
+                <a href="{% url 'answers' %}">
                     <i class="fas fa-reply"></i>Javoblar</a>
             </li>
             <li>
@@ -216,344 +238,755 @@
         </ul>
     </nav>
 {% endblock aside_nav %}
+
+
 {% block search %}
-    <form class="form-header" action="" method="POST">
-        <input class="au-input au-input--xl" type="text" name="search" placeholder="Javoblarni qidirish..." />
+    <form class="form-header" action="{% url 'appeals' %}">
+        <input id="search" onInput='myFunction()' class="au-input au-input--xl" type="text" name="search" placeholder="Javobni qidirish..." />
+        <button class="au-btn--submit" type="submit">
+            <i class="zmdi zmdi-search"></i>
+        </button>
+    </form>
+    <form class="form-header" action="{% url 'appeals' %}" method="get">
+        <input id="search_in_date" onInput='myFunction()' class="au-input" type="date" name="search_in_date" max="{{ today_date }}"/>
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
     </form>
 {% endblock search %}
 {% block content %}
-    <div class="main-content">
-        <div class="section__content section__content--p30">
-            <div class="container-fluid">
-                {% if answers %}
+<div class="main-content">
+    <div class="section__content section__content--p30">
+        <div class="container-fluid">
+            {% if answers %}
+                <form method="get">
+
                     <div class="appeal__filter">
                         <h4>Viloyat</h4>
-                        <select class="w-100 p-1">
-                            <option>umumiy</option>
-                            <option>Toshkent</option>
-                            <option>Samarqand</option>
-                            <option>Andijon</option>
-                            <option>Fargona</option>
-                            <option>Namangan</option>
-                            <option>Qashqadaryo</option>
-                            <option>Surxondaryo</option>
-                            <option>Buxoro</option>
-                            <option>Navoiy</option>
-                            <option>Xorazm</option>
-                            <option>Sirdaryo</option>
-                            <option>Jizzax</option>
-                            <option>Qoraqalpog'iston Respublikasi</option>
+                        <select id="applicant_province" onInput='myFunction()' class="w-100 p-1" name="province">
+                            <option value="all">umumiy</option>
+                            <option value="toshkent">Toshkent</option>
+                            <option value="samarqand">Samarqand</option>
+                            <option value="andijon">Andijon</option>
+                            <option value="fargona">Fargona</option>
+                            <option value="namangan">Namangan</option>
+                            <option value="qashqadaryo">Qashqadaryo</option>
+                            <option value="surxondaryo">Surxondaryo</option>
+                            <option value="buxoro">Buxoro</option>
+                            <option value="navoiy">Navoiy</option>
+                            <option value="xorazm">Xorazm</option>
+                            <option value="sirdaryo">Sirdaryo</option>
+                            <option value="jizzax">Jizzax</option>
+                            <option value="qoraqalpoq">Qoraqalpog'iston Respublikasi</option>
                         </select>
                         <hr>
-                        <h4>Murojaat yo'nalishi</h4>
-                        <select class="w-100 p-1">
-                            <option class="">umumiy</option>
-                            <option class="">Diplom olish masalalari</option>
-                            <option class="">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
-                            <option class="">Kontrakt to'lovi to'g'risida</option>
-                            <option class="">Magistratura masalalari</option>
-                            <option class="">Fuqarolar murojaatlari to'g'risida</option>
-                            <option class="">Moliyaviy masalalar</option>
-                            <option class="">Talaba ustidan shikoyat</option>
-                            <option class="">Rahbar faoliyatidan norozilik arizasi</option>
-                            <option class="">Stipendiya masalalari</option>
-                            <option class="">O'qishga kirish to'g'risida</option>
-                            <option class="">O'qishni ko'chirish to'g'risida</option>
-                            <option class="">O'qishni tiklash to'g'risida</option>
-                            <option class="">Ijodiy imtihondan norozilik to'g'risida</option>
-                            <option class="">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
-                            <option class="">Nafaqa masalalari</option>
-                            <option class="">Arxiv ma'lumotlarini olish to'grisida</option>
-                            <option class="">Ikkinchi mutaxasislik</option>
-                            <option class="">Kitob nashr qilish</option>
-                            <option class="">Ixtiro qilish taklifi</option>
-                            <option class="">Taklif va minnatdorchilik</option>
-                            <option class="">Sirtqi o'qish masalalari</option>
-                            <option class="">Yotoqxona masalalari bo'yicha</option>
-                            <option class="">Olimpiada masalasi bo'yicha</option>
-                            <option class="">Boshqa savollar</option>
+                        <h4>Javob yo'nalishi</h4>
+                        <select id="appeal_direction" onInput='myFunction()' class="w-100 p-1" name="appeal_direction">
+                            <option value="all">umumiy</option>
+                            <option value="diplom_olish">Diplom olish masalalari</option>
+                            <option value="ishga_joylash">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
+                            <option value="kontrakt_tolovi">Kontrakt to'lovi to'g'risida</option>
+                            <option value="mag_masalalari">Magistratura masalalari</option>
+                            <option value="fuqarolar_murojaatlari">Fuqarolar murojaatlari to'g'risida</option>
+                            <option value="moliyaviy_masalalar">Moliyaviy masalalar</option>
+                            <option value="talaba_ustidan">Talaba ustidan shikoyat</option>
+                            <option value="rahbar_faoliyatidan">Rahbar faoliyatidan norozilik arizasi</option>
+                            <option value="stipendiya_masalalari">Stipendiya masalalari</option>
+                            <option value="oqishga_kirish">O'qishga kirish to'g'risida</option>
+                            <option value="oqishni_kochirish">O'qishni ko'chirish to'g'risida</option>
+                            <option value="oqishni_tiklash">O'qishni tiklash to'g'risida</option>
+                            <option value="ijodiy_imtihondan">Ijodiy imtihondan norozilik to'g'risida</option>
+                            <option value="diplom_xaqqoniyligini">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
+                            <option value="nafaqa_masalalari">Nafaqa masalalari</option>
+                            <option value="arxiv_malumotlarini">Arxiv ma'lumotlarini olish to'grisida</option>
+                            <option value="ikkinchi_mutaxasislik">Ikkinchi mutaxasislik</option>
+                            <option value="kitob_nashr">Kitob nashr qilish</option>
+                            <option value="ixtiro_qilish">Ixtiro qilish taklifi</option>
+                            <option value="taklif_va">Taklif va minnatdorchilik</option>
+                            <option value="sirtqi_oqish">Sirtqi o'qish masalalari</option>
+                            <option value="yotoqxona_masalalari">Yotoqxona masalalari bo'yicha</option>
+                            <option value="olimpiada_masalasi">Olimpiada masalasi bo'yicha</option>
+                            <option value="boshqa_yo">Boshqa savollar</option>
                         </select>
                         <hr>
+
                         <h4>Murojaat turi</h4>
                         <ul>
                             <li>
                                 <label>
-                                    <input type="radio" checked name="appeal_type">
+                                    <input onclick='myFunction()' type="radio" checked name="appeal_type" value="all">
                                     Umumiy
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="appeal_type">
+                                    <input onclick='myFunction()' type="radio" name="appeal_type" value="ariza">
                                     Ariza
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="appeal_type">
+                                    <input onclick='myFunction()' type="radio" name="appeal_type" value="shikoyat">
                                     Shikoyat
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="appeal_type">
+                                    <input onclick='myFunction()' type="radio" name="appeal_type" value="taklif">
                                     Taklif
                                 </label>
                             </li>
                         </ul>
                         <hr>
-                        <h4>Murojaatchi turi</h4>
+
+
+                        <h4>Javob turi</h4>
                         <ul>
                             <li>
                                 <label>
-                                    <input type="radio" checked name="applicant_type">
+                                    <input type="radio" onclick='myFunction()' checked name="answer_type" value="all">
+                                    Umumiy
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" onclick='myFunction()' name="answer_type" value="done">
+                                    Bajarilgan 
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" onclick='myFunction()' name="answer_type" value="rejected">
+                                    Rad etilgan
+                                </label>
+                            </li>
+                        </ul>
+
+                        <hr>
+                        <h4>Admin</h4>
+                        <ul>
+                            <li>
+                                <label>
+                                    <input type="radio" onclick='myFunction()' checked name="applicant_type" value="all">
                                     umumiy
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="applicant_type">
-                                    Yuridik shaxs
+                                    <input type="radio" onclick='myFunction()' name="applicant_type" value="yuridik_shaxs">
+                                    Admin1
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="applicant_type">
-                                    Jismoniy shaxs
+                                    <input type="radio" onclick='myFunction()' name="applicant_type" value="jismoniy_shaxs">
+                                    Admin2
                                 </label>
                             </li>
                         </ul>
-                        <hr>
-                        <h4>Kim tomonidan</h4>
-                        <ul>
-                            <li>
-                                <label>
-                                    <input type="radio" checked name="by_whom" >
-                                    Umumiy
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="by_whom">
-                                    Talaba
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="by_whom">
-                                    O'qituvchi
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="by_whom">
-                                    Ota ona
-                                </label>
-                            </li>
-                        </ul>
+
                     </div>
+
                     <div class="appeal__filter appeal__filter_in_date">
-                        <h4>Murojaat holati</h4>
+                        <h4>Javob manzili</h4>
                         <ul>
                             <li>
                                 <label>
-                                    <input type="radio" checked name="condition" >
+                                    <input type="radio" onclick='myFunction()'  checked name="answer_address" value="all">
                                     Umumiy
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="condition">
-                                    Bajarilgan
+                                    <input type="radio" onclick='myFunction()' name="answer_address" value="site">
+                                    sayt
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="condition">
-                                    Rad etilgan
+                                    <input type="radio" onclick='myFunction()' name="answer_address" value="email">
+                                    email
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="radio" onclick='myFunction()' name="answer_address" value="site_and_email">
+                                    sayt va email
                                 </label>
                             </li>
                         </ul>
                         <hr>
+
                         <h4>Javob holati</h4>
                         <ul>
                             <li>
                                 <label>
-                                    <input type="radio" checked name="answer_status" >
+                                    <input type="radio" onclick='myFunction()' checked name="active" value="all">
                                     Umumiy
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="answer_status">
+                                    <input type="radio" onclick='myFunction()' name="active" value="send">
                                     Yuborilgan
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="answer_status">
+                                    <input type="radio" onclick='myFunction()' name="active" value="save">
                                     Saqlab qo'yilgan
                                 </label>
                             </li>
                         </ul>
                         <hr>
+
                         <h4>Sana</h4>
                         <ul>
                             <li>
                                 <label>
-                                    <input type="radio" checked name="date" >
+                                    <input type="radio" onclick='myFunction()' checked name="date" value="all">
                                     Umumiy
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="date">
-                                    bugun
+                                    <input type="radio" onclick='myFunction()' name="date" value="day">
+                                    oxirgi sutka
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="date">
+                                    <input type="radio" onclick='myFunction()' name="date" value="week">
                                     oxirgi xafta
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="date">
+                                    <input type="radio" onclick='myFunction()' name="date" value="month"> 
                                     oxirgi oy
                                 </label>
                             </li>
                             <li>
                                 <label>
-                                    <input type="radio" name="date">
+                                    <input type="radio" onclick='myFunction()' name="date" value="year">
                                     Oxirgi yil
                                 </label>
                             </li>
                         </ul>
-                        <hr>
-                        <h4>Sana bo'yicha qidirish</h4>
-                        <form action="" method="POST">
-                            <input class="au-input" type="text" name="search" placeholder="DD-MM-YYYY" />{% csrf_token %}
-                            <button class="au-btn--submit p-3 float-right mt-1" type="submit">
-                                <i class="zmdi zmdi-search"></i>
-                            </button>
-                        </form>
                     </div>
-                    <div class="row">
-                        <div class="col-md-8 mx-auto">
-                            <h2 class="title-1 m-b-25">Javoblar</h2>
-                            <div class="table-responsive table--no-card m-b-40">
-                                <table class="table table-fixed table-borderless table-striped table-earning">
-                                    <thead>
+
+                </form>
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <h2 class="title-1 m-b-25" id="appeals_cnt">Javoblar <small class="answers_cnt">{{ answers_cnt }} ta</small></h2>
+                        
+                        <div class="table-responsive table--no-card m-b-40">
+                            <table class="table table-fixed table-borderless table-striped table-earning">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th style="text-align: center">Murojaat</th>
+                                        <th>Admin</th>
+                                        <th>Javob turi</th>
+                                        <th>Sana</th>
+                                        <th>file</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="answersList">
+                                    {% for answer in answers %}
                                         <tr>
-                                            <th>No</th>
-                                            <th style="text-align: center">Murojaat</th>
-                                            <th>Admin</th>
-                                            <th>Javob turi</th>
-                                            <th>Sana</th>
-                                            <th>file</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for answer in answers %}
-                                            <tr>
-                                                <th>{{ forloop.counter }}</th>
+                                            <th>{{ forloop.counter }}</th>
+                                            
+                                            {% if answer.appeal %}
                                                 <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ answer.appeal}}</td>
-                                                <td>{{ answer.author }}</td>
-                                                {% if answer.answer_type == 'done' %}
-                                                    <td>Yuborilgan</td>
-                                                {% else %}
-                                                    <td>Saqlab qo'yilgan</td>
-                                                {% endif %}
-                                                <td>{{ answer.updated_date }}</td>
-                                                {% if answer.file %}
-                                                    <td>
-                                                        <a href="{% url 'download-answerFile' answer.id %}" style="color: #4272d7">{{ answer.filename }}</a>
-                                                    </td>
-                                                {% else %}
-                                                    <td>-</td>
-                                                {% endif %}
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
+                                            {% else %}
+                                                <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">O'chirilgan</td>
+                                            {% endif %}
+                                                
+                                            <td>{{ answer.author }}</td>
+                                            {% if answer.answer_type == 'done' %}
+                                                <td>Yuborilgan</td>
+                                            {% else %}
+                                                <td>Saqlab qo'yilgan</td>
+                                            {% endif %}
+                                            <td>{{ answer.updated_date|date }}</td>
+                                            {% if answer.file %}
+                                                <td>
+                                                    <a href="{% url 'download-answerFile' answer.id %}" style="color: #4272d7">{{ answer.filename }}</a>
+                                                </td>
+                                            {% else %}
+                                                <td>-</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                {% else %}
-                    <h2 class="title-1 m-b-25">Xozircha Javoblar yo'q</h2>
-                {% endif %}
-            </div>
+                </div>
+            {% else %}
+                <h2 class="title-1 m-b-25">Xozircha javob qaytarilmagan</h2>
+            {% endif %}
         </div>
     </div>
-    <!-- END MAIN CONTENT-->
+</div>
 {% endblock content %}
 {% block modal %}
-    <!-- modal scroll -->
+    <!-- <div id="single_appeal"></div> -->
     <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content" id="single-appeal">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="scrollmodalLabel"><span style="font-weight: normal;">{{ answers.0.appeal }}</span> murojaatiga javob</h5>
+                    <h5 class="modal-title d-flex justify-content-between w-100" id="scrollmodalLabel"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <ul>
-                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                            <h5 style="margin-bottom: 5px">Murojaat:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ answers.0.appeal }}</p>
-                        </li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                            <h5 style="margin-bottom: 5px">Javob holati:</h5>
-                            {% if answers.0.active == 'send' %}
-                                <p style="text-decoration: underline; margin-left: 20px">Yuborilgan</p>
-                            {% else %}
-                                <p style="text-decoration: underline; margin-left: 20px">Saqlab qo'yilgan</p>
-                            {% endif %}
-                        </li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                            <h5 style="margin-bottom: 5px">Murojaat holati:</h5>
-                            {% if answers.0.answer_type == 'done' %}
-                                <p style="text-decoration: underline; margin-left: 20px">Bajarilgan</p>
-                            {% else %}
-                                <p style="text-decoration: underline; margin-left: 20px">Rad etilgan</p>
-                            {% endif %}
-                        </li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                            <h5 style="margin-bottom: 5px">admin:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ answers.0.author }}</p>
-                        </li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                            <h5 style="margin-bottom: 5px">Javob manzili:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ answers.0.answer_address }} orqali</p>
-                        </li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                            <h5 style="margin-bottom: 5px">Javob yuborilgan sana:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ answers.0.updated_date }}</p>
-                        </li>
-                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
-                            <h5 style="margin-bottom: 5px">Javob fayl ko'rinishi:</h5>
-                            <p style="text-decoration: underline; margin-left: 20px">{{ answers.0.file }}</p>
-                        </li>
-                        <li style="padding: 5px 0;">
-                            <h5 style="margin-bottom: 20px">Javob mazmuni:</h5>
-                            <p style="border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll;">
-                                {{ answers.0.text }}
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
-                    <button type="button" class="btn btn-primary">O'zgartirish</button>
+                    <div id="appeal_detail"></div>
+
+                    <div id="appeal_answers">
+                        <div class="appeal_answers_header">
+                            <h5 style="margin-bottom: 20px">Murojaat javoblari:</h5>
+                        </div>
+                        <div id="appeal_answers_main" style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
+
+                        </div>
+                    </div>
+
+
+                    <div class="send_answer">
+                        <form id="answerForm" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                            <input type="hidden" name="appeal" id="answer_appeal">
+                            <ul>
+                                <li style="padding: 5px 0;">
+                                    <hr style="height: 15px; background-color: #ccc; border-radius: 300%;">
+                                    <h4 style="margin-bottom: 20px">Javob yozish:</h4>
+                                    <textarea id="answer_text" name="text" class="modal-answer-textarea" style="border: 1px solid #ccc; width: 100%;"></textarea>
+                                </li>
+                                <li>
+                                    <hr>
+                                    <h4 style="margin-bottom: 20px">Javob fayl ko'rinishi:</h4>
+                                    <input id="answer_file" type="file" name="file">
+                                </li>
+                                <li style="padding: 5px 0;">
+                                    <hr>
+                                    <h4 style="margin-bottom: 20px">Javob turi:</h4>
+                                    <input type="radio" name="answer_type" value="done" id="accepted" checked>
+                                    <label for="accepted">
+                                        <i class="fas fa-check"></i>
+                                        Bajarildi
+                                    </label>
+                                    <input type="radio" name="answer_type" value="rejected" id="rejected">
+                                    <label for="rejected">
+                                        <i class="fas fa-close"></i>
+                                        Rad etildi
+                                    </label>
+                                </li>
+
+                                <li style="padding: 5px 0;" id="answer_address">
+                                </li>
+
+                                <li style="padding: 5px 0;">
+                                    <hr>
+                                    <h4 style="margin-bottom: 20px">Javob holati:</h4>
+                                    <input type="radio" name="active" value="send" id="send_answer" checked>
+                                    <label for="send_answer">
+                                        <i class='fa fa-send'></i>
+                                        Yuborilsin
+                                    </label>
+                                    <input type="radio" name="active" value="save" id="save_answer">
+                                    <label for="save_answer">
+                                        <i class="fa fa-save"></i>
+                                        Saqlab qo'yilsin
+                                    </label>
+                                </li>
+                            </ul>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
+                                <button type="submit" class="btn btn-primary">Javob Yuborish</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- end modal scroll -->
 {% endblock modal %}
+{% block scripts %}
+    <script>
+        function myFunction() {
+            var country_optionValue = document.getElementById("applicant_province").value;
+            var direction_optionValue = document.getElementById("appeal_direction").value;
+            var appeal_type_optionValue = document.querySelector("input[name='appeal_type']:checked").value;
+            var answer_type_optionValue = document.querySelector("input[name='answer_type']:checked").value;
+            var answer_status_optionValue = document.querySelector("input[name='active']:checked").value;
+            var answer_address_optionValue = document.querySelector("input[name='answer_address']:checked").value;
+            var date_optionValue = document.querySelector("input[name='date']:checked").value;
+            
+            // Search
+            var search_optionValue = document.getElementById("search").value;
+            var search_in_date_optionValue = document.getElementById("search_in_date").value;
+
+            $.ajax({
+                url: '{% url "answers" %}',
+                datatype: 'json',
+                data: {
+                    'applicant_province': country_optionValue, 
+                    'appeal_direction': direction_optionValue,
+                    'appeal_type': appeal_type_optionValue,
+                    'answer_type': answer_type_optionValue,
+                    'active': answer_status_optionValue,
+                    'answer_address': answer_address_optionValue,
+                    'date': date_optionValue,
+
+                    'search': search_optionValue,
+                    'search_in_date': search_in_date_optionValue,
+                },
+                type: 'GET',
+                success: function(data) {
+                    const answersList = document.getElementById("answersList");
+                    const answers_cnt = document.getElementById("answers_cnt");
+
+                    answers_cnt.innerHTML = "";
+                    const answers_cntHTMLElement = `Javoblar <small class="answers_cnt">${ data.answers_cnt } ta</small>`
+                    answers_cnt.innerHTML += answers_cntHTMLElement;
+
+                    answersList.innerHTML = "";
+                    var counter = 1;
+                    (data.answers).forEach(answer => {
+                        var answerHTMLElement = `
+                            <tr>
+                                <th>${ counter }</th>
+                                
+                                {% if answer.appeal %}
+                                    <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">${ answer.appeal}</td>
+                                {% else %}
+                                    <td data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">O'chirilgan</td>
+                                {% endif %}
+                                    
+                                <td>${ answer.author }</td>
+                                {% if answer.answer_type == 'done' %}
+                                    <td>Yuborilgan</td>
+                                {% else %}
+                                    <td>Saqlab qo'yilgan</td>
+                                {% endif %}
+                                <td>${ answer.updated_date|date }</td>
+                                {% if answer.file %}
+                                    <td>
+                                        <a href="{% url 'download-answerFile' answer.id %}" style="color: #4272d7">${ answer.filename }</a>
+                                    </td>
+                                {% else %}
+                                    <td>-</td>
+                                {% endif %}
+                            </tr>`
+
+                        answersList.innerHTML += appealHTMLElement + `</tr>`;
+                        counter += 1;
+                    });
+                }
+            });
+            
+        }
+
+        function openSingleAppeal(id) {
+
+            $.ajax({
+                url: id + '/',
+                dataType: 'json',
+                data: {
+                    'id': id,
+                },
+                type: 'GET',
+                success: function(data) {
+                    if (data.new_appeals_cnt > 1) {
+
+                        const new_appeals_cnt = document.getElementById('quantity')
+                        new_appeals_cnt.innerHTML = "";
+                        new_appeals_cnt.innerHTML += `${data.new_appeals_cnt}`;
+                    }
+                    
+                    else if (data.new_appeals_cnt == 1) {
+                        
+                        const new_appeals_cnt = document.getElementById('quantity')
+                        new_appeals_cnt.classList.add('d-none');
+                    }
+                    
+
+                    appeal = data.appeal
+
+                    const answer_text = document.getElementById("answer_text");
+                    answer_text.value = "";
+
+                    
+
+                    const answer_appeal = document.getElementById("answer_appeal");
+                    answer_appeal.value = appeal.id;
+
+                    const answer_address = document.getElementById("answer_address");
+                    
+                    if (appeal.applicant_email) {
+                        answer_address.innerHTML = "";
+                        answer_address.innerHTML += `
+                        <hr>
+                        <h4 style="margin-bottom: 20px">Javob manzili:</h4>
+                        <input type="radio" name="answer_address" value="site" id="in_site" checked>
+                        <label for="in_site">
+                            <i class='fab fa-chrome'></i>
+                            Sayt
+                        </label>
+                        <input type="radio" name="answer_address" value="email" id="in_email">
+                        <label for="in_email">
+                            <i class="fas fa-envelope"></i>
+                            Email
+                        </label>
+                        <input type="radio" name="answer_address" value="site_and_email" id="in_site_and_email">
+                        <label for="in_site_and_email">
+                            <i class='fab fa-chrome'></i> Sayt va<span style="margin-left: 10px;"><i class="fas fa-envelope"></i> Email</span>
+                        </label>`
+                    }
+
+                    else {
+                        answer_address.innerHTML = `
+                        <input type="hidden" name="answer_address" value="site" id="in_site">
+                        `
+                    }
+
+                    const appeal_name = document.getElementById("scrollmodalLabel");
+                    appeal_name.innerHTML = `<span>${appeal.applicant_name} murojaati</span><span id="appeal_status" style="color: #bbbb05;">${appeal.appeal_status}</span>`;
+                    
+                    const appeal_detail = document.getElementById("appeal_detail");
+                    appeal_detail.innerHTML = "";
+                    appeal_detail.innerHTML += `
+                    <ul>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">F I O:</h5>
+                            <p style="margin-left: 20px">${appeal.applicant_name}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Tel raqami:</h5>
+                            <p style="margin-left: 20px"><a href="tel:${appeal.applicant_tel_num}">${appeal.applicant_tel_num}</a></p>
+                        </li>`
+
+                        if (appeal.applicant_email) {
+
+                            appeal_detail.innerHTML += `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                                <h5 style="margin-bottom: 5px">Email:</h5>
+                                    <p style="margin-left: 20px"><a href="mailto:${appeal.applicant_email}">${appeal.applicant_email}</a></p>
+                            </li>`
+                        
+                        }
+                        
+                        else {
+
+                            appeal_detail.innerHTML += `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                                <h5 style="margin-bottom: 5px">Email:</h5>
+                                    <p style="margin-left: 20px">-</p>
+                            </li>`
+                        
+                        }
+                    
+                        appeal_detail.innerHTML += `
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Yuborilgan sana:</h5>
+                            <p style="margin-left: 20px">${appeal.created_date}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Viloyat:</h5>
+                            <p style="margin-left: 20px">${appeal.applicant_province}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Murojaat yo'nalishi:</h5>
+                            <p style="margin-left: 20px">${appeal.appeal_direction}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Murojaat turi:</h5>
+                            <p style="margin-left: 20px">${appeal.appeal_type}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">murojaatchi turi:</h5>
+                            <p style="margin-left: 20px">${appeal.applicant_type}</p>
+                        </li>
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Kim tomonidan:</h5>
+                            <p style="margin-left: 20px">${appeal.applicant_position}</p>
+                        </li>`
+
+                        if ( appeal.appeal_file ) {
+                            appeal_detail.innerHTML += `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                                <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
+                                <p style="margin-left: 20px">
+                                    <a href="/admin/appeals/download-appealfile/${appeal.id}/" style="color: #4272d7">${ appeal.appeal_file }</a>
+                                </p>
+                            </li>`
+                            
+                        }
+                        
+                        else {
+                            appeal_detail.innerHTML += `
+                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                                <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
+                                <p style="margin-left: 20px">-</p>
+                            </li>`
+                        } 
+                        
+                        appeal_detail.innerHTML += `
+                        <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <h5 style="margin-bottom: 5px">Murojaat mavzusi:</h5>
+                            <p style="margin-left: 20px">${appeal.appeal_subject}</p>
+                        </li>
+                        <li style="padding: 5px 0;">
+                            <h5 style="margin-bottom: 20px">Murojaat mazmuni:</h5>
+                            <p style="border: 1px solid #ccc; padding: 15px 10px; max-height: 300px; overflow-y: scroll; word-break: break-all;">
+                                ${appeal.appeal_text}
+                            </p>
+                        </li>
+                    </ul>`
+                    
+                    const appeal_answers = document.getElementById('appeal_answers');
+
+                    
+                    if (data.appeal_answers != false) {
+                        appeal_answers.innerHTML = `
+                        <div class="appeal_answers_header">
+                            <h5 style="margin-bottom: 20px">Murojaat javoblari:</h5>
+                        </div>
+                        <div 
+                            id="appeal_answers_main" 
+                            style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
+                        </div>`
+
+                        
+                        const appeal_answers_main = document.getElementById('appeal_answers_main');
+                        appeal_answers_main.innerHTML = "";                                                                                                     
+                        appeal_answers_main.innerHTML = `
+                        <p class="">
+                            <span>No</span>
+                            <span class="ml-3">kim tomonidan</span>
+                            <span class="ml-3">javob turi</span>
+                            <span class="ml-3">javob manzili</span>
+                            <span class="ml-3">sana</span>
+                        </p>`;
+                        var index = 1;
+                        (data.appeal_answers).forEach(answer => {
+                            
+                            if (answer.active == 'send') {
+                                
+                                appeal_answers_main.innerHTML += `
+                                <p class="">
+                                    <span class="">${index}.</span>
+                                    <a class="" href="#" style="margin-left: 30px">${answer.author}</a>
+                                    <a class="" href="#" style="margin-left: 86px">${answer.answer_type}</a>
+                                    <a class="" href="#" style="margin-left: 26px">${answer.answer_address}</a>
+                                    <a class="" href="#" style="margin-left: 86px">${answer.created_date}</a>
+                                </p>`;
+                            }
+
+                            else {
+
+                                appeal_answers_main.innerHTML += `
+                                <p class="">
+                                    <span class="">${index}.</span>
+                                    <a class="" href="#" style="margin-left: 30px; color: #bbbb05">${answer.author}</a>
+                                    <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.answer_type}</a>
+                                    <a class="" href="#" style="margin-left: 26px; color: #bbbb05">${answer.answer_address}</a>
+                                    <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.created_date}</a>
+                                </p>`;
+                            }
+                            
+                            index ++;
+                        });
+                        
+                    }
+
+                    else {
+                        appeal_answers.innerHTML = "";
+                    }
+                }
+            });
+        }
+   
+        $(document).ready(function () {
+            
+            
+            
+            $('#answerForm').submit(function () {
+                const answer_file = document.getElementById("answer_file");
+                
+                $.ajax({
+                    data: $(this).serialize(),
+                    type: $(this).attr('method'),
+                    url: "{% url 'send-answer' %}",
+                    success: function (response) {
+                        
+                        const appeal_answers = document.getElementById('appeal_answers');
+                        document.getElementById('appeal_status').innerHTML = `${response.appeal_status}`;
+                    
+                        if (response.appeal_answers != false) {
+                            document.getElementById('answerForm').reset();
+
+                            appeal_answers.innerHTML = `
+                            <div class="appeal_answers_header">
+                                <h5 style="margin-bottom: 20px">Murojaat javoblari:</h5>
+                            </div>
+                            <div 
+                                id="appeal_answers_main" 
+                                style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
+                            </div>`
+
+                            
+                            const appeal_answers_main = document.getElementById('appeal_answers_main');
+                            appeal_answers_main.innerHTML = "";                                                                                                     
+                            appeal_answers_main.innerHTML = `
+                            <p class="">
+                                <span>No</span>
+                                <span class="ml-3">kim tomonidan</span>
+                                <span class="ml-3">javob turi</span>
+                                <span class="ml-3">javob manzili</span>
+                                <span class="ml-3">sana</span>
+                            </p>`;
+                            var index = 1;
+                            (response.appeal_answers).forEach(answer => {
+                                
+                                if (answer.active == 'send') {
+                                    
+                                    appeal_answers_main.innerHTML += `
+                                    <p class="">
+                                        <span class="">${index}.</span>
+                                        <a class="" href="#" style="margin-left: 30px">${answer.author}</a>
+                                        <a class="" href="#" style="margin-left: 86px">${answer.answer_type}</a>
+                                        <a class="" href="#" style="margin-left: 26px">${answer.answer_address}</a>
+                                        <a class="" href="#" style="margin-left: 86px">${answer.created_date}</a>
+                                    </p>`;
+                                }
+
+                                else {
+
+                                    appeal_answers_main.innerHTML += `
+                                    <p class="">
+                                        <span class="">${index}.</span>
+                                        <a class="" href="#" style="margin-left: 30px; color: #bbbb05">${answer.author}</a>
+                                        <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.answer_type}</a>
+                                        <a class="" href="#" style="margin-left: 26px; color: #bbbb05">${answer.answer_address}</a>
+                                        <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.created_date}</a>
+                                    </p>`;
+                                }
+                                
+                                index ++;
+                            });
+                            
+                        }
+
+                        alert(response.result);
+                    },
+
+                });
+
+                return false;
+            });
+        })
+    </script>
+{% endblock scripts %}

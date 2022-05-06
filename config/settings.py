@@ -1,3 +1,4 @@
+from smtplib import SMTP_PORT
 import os
 from pathlib import Path
 
@@ -26,8 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    
+
+
     # Libs
     'phonenumber_field',
     'captcha',
@@ -36,8 +37,8 @@ INSTALLED_APPS = [
     # apps
     'adminPanel',
     'appeals',
-    
-    
+
+
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'adminPanel.User'
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'oybekyuldashov54@gmail.com'
+EMAIL_HOST_PASSWORD = 'Yu:444oyb'
+EMAIL_USE_TRUE = True
+EMAIL_PORT = 587

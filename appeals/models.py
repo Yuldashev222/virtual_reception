@@ -171,7 +171,9 @@ class Answer(models.Model):
     
 
     def __str__(self):
-        return f'{self.appeal.applicant_name} murojaati javobi'
+        if self.appeal:
+            return f'{self.appeal} murojaati javobi'
+        return f'{self.author} javobi'
     
     
     def filename(self):
