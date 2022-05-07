@@ -555,6 +555,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    
                     <div id="appeal_detail"></div>
 
                     <div id="appeal_answers">
@@ -699,7 +700,7 @@
         function openSingleAppeal(id) {
 
             $.ajax({
-                url: id + '/',
+                url: "{% url 'single-appeal' %}",
                 dataType: 'json',
                 data: {
                     'id': id,
@@ -715,7 +716,7 @@
                     
                     else if (data.new_appeals_cnt == 1) {
                         
-                        const new_appeals_cnt = document.getElementById('quantity')
+                        const new_appeals_cnt = document.getElementById('quantity');
                         new_appeals_cnt.classList.add('d-none');
                     }
                     

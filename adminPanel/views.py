@@ -66,8 +66,6 @@ def appeals(request):
     appeals = Appeal.objects.all().order_by('-created_date')
     appeals_cnt = Appeal.objects.all().count()
 
-    # search_appeal = request.GET.get('search')
-    # search_date = request.GET.get('search_in_date')
     context = {
         'answer_form': form,
         'appeals': appeals,
@@ -111,19 +109,19 @@ def appeals(request):
             if 'date' in d:
                 if d['date'] == 'day':
                     day = datetime.now() - timedelta(minutes=60*24)
-                    appeals = appeals.filter(created_date__gte=day)
+                    appeals = appeals.filter(created_date__gte=day, created_date__lte=datetime.now())
                 
                 elif d['date'] == 'week':
                     week = datetime.now() - timedelta(minutes=60*24*7)
-                    appeals = appeals.filter(created_date__gte=week)
+                    appeals = appeals.filter(created_date__gte=week, created_date__lte=datetime.now())
                 
                 elif d['date'] == 'month':
                     month = datetime.now() - timedelta(minutes=60*24*30)
-                    appeals = appeals.filter(created_date__gte=month)
+                    appeals = appeals.filter(created_date__gte=month, created_date__lte=datetime.now())
 
                 else:
                     year = datetime.now() - timedelta(minutes=60*24*365)
-                    appeals = appeals.filter(created_date__gte=year)
+                    appeals = appeals.filter(created_date__gte=year, created_date__lte=datetime.now())
 
             if d['search']:
                 appeals = appeals.filter(Q(applicant_name__icontains=d['search']))
@@ -139,21 +137,15 @@ def appeals(request):
                   
                     
 
-            appeals = list(appeals.order_by('-created_date').values())
+        appeals = list(appeals.order_by('-created_date').values())
 
-            for obj in appeals:
-                obj['appeal_file'] = str(Appeal.objects.get(id=obj['id']).filename())
-                continue
+        for obj in appeals:
+            obj['appeal_file'] = str(Appeal.objects.get(id=obj['id']).filename())
+            continue
             
-
-            data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
-            
-            return JsonResponse(data)
-
-        else:
-            appeals = list(appeals.values())
-            data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
-            return JsonResponse(data)
+        data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
+        
+        return JsonResponse(data)
 
 
     return render(request, 'adminPanel/appeals.html', context)
@@ -218,7 +210,7 @@ def send_answer(request):
                 )
             
 
-def single_appeal(request, id):
+def single_appeal(request):
     
     ajax_id = request.GET['id']
     
@@ -257,24 +249,27 @@ def single_appeal(request, id):
         data['appeal_answers'] = appeal_answers
         data['appeal_answers_count'] = appeal_answers_count
 
-        return JsonResponse(data)        
+        return JsonResponse(data)
 
     except:
 
-        return JsonResponse(data)        
-
+        return JsonResponse(data)
+         
 
 def answers(request):
     new_appeals_cnt = Appeal.objects.filter(appeal_status='new').count()
     
     form = AnswerForm()
     answers = Answer.objects.all().order_by('-updated_date')
+    appeals = Appeal.objects.all()
     answers_cnt = Answer.objects.all().count()
 
-    # search_appeal = request.GET.get('search')
-    # search_date = request.GET.get('search_in_date')
+    
+    admins = User.objects.exclude(username=request.user.username)
+
     context = {
         'answer_form': form,
+        'admins': admins,
         'answers': answers,
         'answers_cnt': answers_cnt,
         'new_appeals_cnt': new_appeals_cnt,
@@ -292,78 +287,143 @@ def answers(request):
             if 'applicant_province' in d:
                 appeals = Appeal.objects.filter( Q(applicant_province=d['applicant_province']) )
                 answers = Answer.objects.filter(appeal__in=appeals)
+               
+            if 'appeal_direction' in d:
+                appeals = appeals.filter( Q(appeal_direction=d['appeal_direction']) )
+                answers = answers.filter(appeal__in=appeals)
             
-            # if 'appeal_direction' in d:
-            #     appeals = appeals.filter( Q(appeal_direction=d['appeal_direction']) )
+            if 'appeal_type' in d:
+                appeals = appeals.filter( Q(appeal_type=d['appeal_type']) )
+                answers = answers.filter(appeal__in=appeals)
             
-            # if 'appeal_type' in d:
-            #     appeals = appeals.filter( Q(appeal_type=d['appeal_type']) )
+            if 'answer_type' in d:
+                answers = answers.filter(answer_type=d['answer_type'])
             
-            # if 'applicant_type' in d:
-            #     appeals = appeals.filter( Q(applicant_type=d['applicant_type']) )
-            
-            # if 'appeal_status' in d:
-            #     appeals = appeals.filter( Q(appeal_status=d['appeal_status']) )
+            if 'answer_address' in d:
+                answers = answers.filter(answer_address=d['answer_address'])
 
-            # if 'applicant_position' in d:
-            #     appeals = appeals.filter( Q(applicant_position=d['applicant_position']) )
+            if 'active' in d:
+                answers = answers.filter(active=d['active'])
+
+            if 'author' in d:
+                answers = answers.filter(author_id=d['author'])
             
-            # if 'yes_or_no_answer' in d:
-            #     if d['yes_or_no_answer'] == 'yes':
-            #         appeals = appeals.filter( Q(appeal_status='done') | Q(appeal_status='rejected') )
-            #     else:
-            #         appeals = appeals.filter( Q(appeal_status='new') | Q(appeal_status='process') )
-            
-            # if 'date' in d:
-            #     if d['date'] == 'day':
-            #         day = datetime.now() - timedelta(minutes=60*24)
-            #         appeals = appeals.filter(created_date__gte=day)
+            if 'date' in d:
+                if d['date'] == 'day':
+                    day = datetime.now() - timedelta(minutes=60*24)
+                    answers = answers.filter(updated_date__gte=day, updated_date__lte=datetime.now())
                 
-            #     elif d['date'] == 'week':
-            #         week = datetime.now() - timedelta(minutes=60*24*7)
-            #         appeals = appeals.filter(created_date__gte=week)
+                elif d['date'] == 'week':
+                    week = datetime.now() - timedelta(minutes=60*24*7)
+                    answers = answers.filter(updated_date__gte=week, updated_date__lte=datetime.now())
+
+                elif d['date'] == 'month':
+                    month = datetime.now() - timedelta(minutes=60*24*30)
+                    answers = answers.filter(updated_date__gte=month, updated_date__lte=datetime.now())
+
+                else:
+                    year = datetime.now() - timedelta(minutes=60*24*365)
+                    answers = answers.filter(updated_date__gte=year, updated_date__lte=datetime.now())
+
+            if d['search']:
+                appeals = Appeal.objects.filter(applicant_name__icontains=d['search'])
+                answers = answers.filter(appeal__in=appeals)
+
+            if d['search_in_date']:
+                try:
+                    valid_date = datetime.strptime(d['search_in_date'], '%Y-%m-%d')
+                    # print(valid_date.tm_year, valid_date.tm_mon, valid_date.tm_mday)
+                    
+                    answers = answers.filter(Q(created_date__date=d['search_in_date']) | Q(updated_date__date=d['search_in_date']))
+
+                except ValueError:
+                    pass
+            
+
+        answers = list(answers.order_by('-updated_date').values())
+
+        for obj in answers:
+            obj['author'] = str(User.objects.get(id=obj['author_id']))
+            obj['updated_date'] = obj['updated_date'].strftime('%d-%m-%Y || %H:%M')
+
+            if obj['appeal_id']:
+                obj['appeal'] = str(Appeal.objects.get(id=obj['appeal_id']))
+            else:
+                obj['appeal'] = 'O\'chirilgan'
                 
-            #     elif d['date'] == 'month':
-            #         month = datetime.now() - timedelta(minutes=60*24*30)
-            #         appeals = appeals.filter(created_date__gte=month)
-
-            #     else:
-            #         year = datetime.now() - timedelta(minutes=60*24*365)
-            #         appeals = appeals.filter(created_date__gte=year)
-
-            # if d['search']:
-            #     appeals = appeals.filter(Q(applicant_name__icontains=d['search']))
-
-            # if d['search_in_date']:
-            #     try:
-            #         valid_date = datetime.strptime(d['search_in_date'], '%Y-%m-%d')
-            #         # print(valid_date.tm_year, valid_date.tm_mon, valid_date.tm_mday)
-                    
-            #         appeals = appeals.filter(Q(created_date__date=d['search_in_date']))
-            #     except ValueError:
-            #         appeals = appeals.filter(created_date=str(datetime.today().date() + timedelta(days=1)))
-                  
-                    
-
-            # appeals = list(appeals.order_by('-created_date').values())
-            answers = list(answers.order_by('-updated_date').values())
-
-            for obj in appeals:
-                obj['appeal_file'] = str(Appeal.objects.get(id=obj['id']).filename())
-                continue
+            if obj['answer_type'] == 'done':
+                obj['answer_type'] = 'Yuborilgan'
+            else:
+                obj['answer_type'] = 'Saqlab qo\'yilgan'
             
-
-            data = {'answers': answers, 'answers_cnt': len(answers)}
+            if obj['file']:
+                obj['file'] = str(Answer.objects.get(id=obj['id']).filename())
+            else:
+                obj['file'] = '-'
             
-            return JsonResponse(data)
-
-        else:
-            appeals = list(appeals.values())
-            data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
-            return JsonResponse(data)
-
+        data = {'answers': answers, 'answers_cnt': len(answers)}
+        
+        return JsonResponse(data)
 
     return render(request, 'adminPanel/answers.html', context)
+
+
+
+def single_answer(request):
+    
+    ajax_id = request.GET['id']
+    
+    answer = list(Answer.objects.filter(id=ajax_id).values())
+    
+    answer[0]['updated_date'] = answer[0]['updated_date'].strftime('%d.%m.%Y || %H:%M')
+    answer[0]['created_date'] = answer[0]['created_date'].strftime('%d.%m.%Y || %H:%M')
+    answer[0]['file'] = str(Answer.objects.get(id=answer[0]['id']).filename())
+    answer[0]['answer_type'] = str(Answer.objects.get(id=answer[0]['id']).get_answer_type_display())
+    answer[0]['answer_address'] = str(Answer.objects.get(id=answer[0]['id']).get_answer_address_display())
+    answer[0]['active_display'] = str(Answer.objects.get(id=answer[0]['id']).get_active_display())
+    answer[0]['author'] = str(User.objects.get(id=answer[0]['author_id']).username)
+
+    try:
+        answer[0]['appeal'] = str(Appeal.objects.get(id=answer[0]['appeal_id']).applicant_name)
+    except:
+        answer[0]['appeal'] = 'O\'chirilgan'
+
+
+    # single_appeal = Appeal.objects.get(id=ajax_id)
+    # if single_appeal.appeal_status == 'new':
+    #     single_appeal.appeal_status = single_appeal.APPEAL_STATUS[1][0]
+    #     single_appeal.save()
+    
+    
+    data = {'answer': answer[0]}
+
+    return JsonResponse(data)        
+
+
+def edit_answer(request):
+    
+    id = request.GET['answer_id']
+    answer = list(Answer.objects.filter(id=id).values())
+    appeal = Appeal.objects.get(id=answer[0]['appeal_id'])
+    
+    if appeal.applicant_email:
+        answer[0]['appeal_email'] = appeal.applicant_email
+    else:
+        answer[0]['appeal_email'] = False
+        
+
+
+    answer[0]['updated_date'] = answer[0]['updated_date'].strftime('%d.%m.%Y || %H:%M')
+    answer[0]['created_date'] = answer[0]['created_date'].strftime('%d.%m.%Y || %H:%M')
+    answer[0]['file'] = str(Answer.objects.get(id=answer[0]['id']).filename())
+    answer[0]['answer_type_display'] = str(Answer.objects.get(id=answer[0]['id']).get_answer_type_display())
+    answer[0]['answer_address_display'] = str(Answer.objects.get(id=answer[0]['id']).get_answer_address_display())
+    answer[0]['active_display'] = str(Answer.objects.get(id=answer[0]['id']).get_active_display())
+    answer[0]['author'] = str(User.objects.get(id=answer[0]['author_id']).username)
+
+    answer[0]['appeal'] = str(Appeal.objects.get(id=answer[0]['appeal_id']).applicant_name)
+    
+    return JsonResponse({'answer': answer[0]})
 
 
 def applicants_view(request):
@@ -457,24 +517,15 @@ def download_appealFile(request, id):
     filename = appeal.appeal_file.path
     response = FileResponse(open(filename, 'rb'))
     
-    # if request.GET or True:
-    #     appeal = Appeal.objects.get(id=request.GET['id'])
-    #     filename = appeal.appeal_file.path
-    #     response = FileResponse(open(filename, 'rb'))
-        
-    
     return response
 
 
 def download_answerFile(request, id):
-    answer = Answer.objects.get(id=id)
+    try: 
+        answer = Answer.objects.get(id=request.GET['id'])
+    except:
+        answer = Answer.objects.get(id=id)
     filename = answer.file.path
     response = FileResponse(open(filename, 'rb'))
+    
     return response
-
-
-# def test(request):
-#     if request.method == 'POST':
-#         send_mail('hello', 'test message', 'oybekyuldashov54@gmail.com', ['oybekyuldashov54@gmail.com'])
-        
-#     return render(request, 'test.html')

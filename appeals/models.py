@@ -178,3 +178,7 @@ class Answer(models.Model):
     
     def filename(self):
         return os.path.basename(self.file.name)
+    
+    def updated_date_format(self):
+        return self.updated_date.strftime('%d-%m-%Y || %H:%M')
+    

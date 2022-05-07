@@ -8,11 +8,15 @@
 </head>
 <body>
     <form action="" method="post">{% csrf_token %}
-        <input type="checkbox" name="category[]" value="first">
-        <input type="checkbox" name="category[]" value="second">
-        <input type="checkbox" name="category[]" value="thread">
+        <input type="checkbox" name="category" value="done">
+        <input type="checkbox" name="category" value="rejected">
         <input type="submit">
     </form>
+    <ul>
+        {% for appeal in appeals %}
+            <li>{{ appeal }}</li>          
+        {% endfor %}
+    </ul>
 
 </body>
 </html>
