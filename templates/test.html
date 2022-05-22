@@ -7,16 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post">{% csrf_token %}
+    <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
         <input type="checkbox" name="category" value="done">
-        <input type="checkbox" name="category" value="rejected">
+        <input type="file" name="ccc" multiple>
         <input type="submit">
     </form>
-    <ul>
-        {% for appeal in appeals %}
-            <li>{{ appeal }}</li>          
-        {% endfor %}
-    </ul>
-
 </body>
 </html>

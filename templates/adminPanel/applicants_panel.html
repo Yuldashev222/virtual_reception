@@ -40,10 +40,6 @@
                     <a href="{% url 'answers' %}">
                         <i class="fas fa-reply"></i>Javoblar</a>
                 </li>
-                <li>
-                    <a href="form.html">
-                        <i class="far fa-comments"></i>Chat</a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -53,22 +49,22 @@
         <ul class="list-unstyled navbar__list">
             <li class="">
                 <a class="js-arrow" href="{% url 'login' %}">
-                    <i class="fas fa-chart-bar"></i>Statistika</a>
+                    <i class="fas fa-chart-bar"></i>
+                    Statistika
+                </a>
             </li>
-            <li class="noti__item">
+            <li class="noti__item ">
                 <a href="{% url 'appeals' %}">
                     <i class="fas fa-envelope"></i>
-                    <span class="quantity">{{ appeals_cnt }}</span>
+                    {% if new_appeals_cnt > 0 %}
+                        <span class="quantity" id="quantity">{{ new_appeals_cnt }}</span>
+                    {% endif %}
                     Murojaatlar
                 </a>
             </li>
             <li>
                 <a href="{% url 'answers' %}">
                     <i class="fas fa-reply"></i>Javoblar</a>
-            </li>
-            <li>
-                <a href="form.html">
-                    <i class="fas fa-comments"></i>Chat</a>
             </li>
             <li class="active has-sub">
                 <a href="#">

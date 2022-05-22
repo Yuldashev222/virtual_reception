@@ -174,7 +174,7 @@ body {
   z-index: 3;
 
   transition: .3s ease-in-out;
-  transition: right .3s linear;
+  transition: right .25s linear;
 }
 
 #content.before::before {

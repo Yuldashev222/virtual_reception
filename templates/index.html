@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -9,2356 +9,1138 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css/">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
-    {% comment %} <link rel="stylesheet" href="{% static 'css/normalize.css' %}"> {% endcomment %}
-    {% comment %} <link rel="stylesheet" href="{% static 'css/main.css' %}"> {% endcomment %}
-    
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
-      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
-      crossorigin="anonymous"/>
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+            integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+            crossorigin="anonymous"/>
 
-    <script src="{% static 'js/fileFunction.js' %}"></script>
     {% if applicants_panel_info.sup_title %}
-      <title>{{ applicants_panel_info.sup_title }}</title>
+        <title>{{ applicants_panel_info.sup_title }}</title>
     {% else %}
-      <title>TDTrU rektori virtual qabulxonasi</title>
+        <title>TDTrU rektori virtual qabulxonasi</title>
     {% endif %}
+
     <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        outline: none;
-      }
 
-      h1, h2, h3, h4, h5, h6 {
-        margin: 0;
-        padding: 0;
-      }
-
-      ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-      }
-      /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
-
-      /* Document
-        ========================================================================== */
-
-      /**
-      * 1. Correct the line height in all browsers.
-      * 2. Prevent adjustments of font size after orientation changes in iOS.
-      */
-
-      html {
-        line-height: 1.15; /* 1 */
-        -webkit-text-size-adjust: 100%; /* 2 */
-      }
-
-      /* Sections
-        ========================================================================== */
-
-      /**
-      * Remove the margin in all browsers.
-      */
-
-      body {
-        margin: 0;
-      }
-
-      /**
-      * Render the `main` element consistently in IE.
-      */
-
-      main {
-        display: block;
-      }
-
-      /**
-      * Correct the font size and margin on `h1` elements within `section` and
-      * `article` contexts in Chrome, Firefox, and Safari.
-      */
-
-      h1 {
-        font-size: 2em;
-        margin: 0.67em 0;
-      }
-
-      /* Grouping content
-        ========================================================================== */
-
-      /**
-      * 1. Add the correct box sizing in Firefox.
-      * 2. Show the overflow in Edge and IE.
-      */
-
-      hr {
-        box-sizing: content-box; /* 1 */
-        height: 0; /* 1 */
-        overflow: visible; /* 2 */
-      }
-
-      /**
-      * 1. Correct the inheritance and scaling of font size in all browsers.
-      * 2. Correct the odd `em` font sizing in all browsers.
-      */
-
-      pre {
-        font-family: monospace, monospace; /* 1 */
-        font-size: 1em; /* 2 */
-      }
-
-      /* Text-level semantics
-        ========================================================================== */
-
-      /**
-      * Remove the gray background on active links in IE 10.
-      */
-
-      a {
-        background-color: transparent;
-      }
-
-      /**
-      * 1. Remove the bottom border in Chrome 57-
-      * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
-      */
-
-      abbr[title] {
-        border-bottom: none; /* 1 */
-        text-decoration: underline; /* 2 */
-        text-decoration: underline dotted; /* 2 */
-      }
-
-      /**
-      * Add the correct font weight in Chrome, Edge, and Safari.
-      */
-
-      b,
-      strong {
-        font-weight: bolder;
-      }
-
-      /**
-      * 1. Correct the inheritance and scaling of font size in all browsers.
-      * 2. Correct the odd `em` font sizing in all browsers.
-      */
-
-      code,
-      kbd,
-      samp {
-        font-family: monospace, monospace; /* 1 */
-        font-size: 1em; /* 2 */
-      }
-
-      /**
-      * Add the correct font size in all browsers.
-      */
-
-      small {
-        font-size: 80%;
-      }
-
-      /**
-      * Prevent `sub` and `sup` elements from affecting the line height in
-      * all browsers.
-      */
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-
-      sub {
-        bottom: -0.25em;
-      }
-
-      sup {
-        top: -0.5em;
-      }
-
-      /* Embedded content
-        ========================================================================== */
-
-      /**
-      * Remove the border on images inside links in IE 10.
-      */
-
-      img {
-        border-style: none;
-      }
-
-      /* Forms
-        ========================================================================== */
-
-      /**
-      * 1. Change the font styles in all browsers.
-      * 2. Remove the margin in Firefox and Safari.
-      */
-
-      button,
-      input,
-      optgroup,
-      select,
-      textarea {
-        font-family: inherit; /* 1 */
-        font-size: 100%; /* 1 */
-        line-height: 1.15; /* 1 */
-        margin: 0; /* 2 */
-      }
-
-      /**
-      * Show the overflow in IE.
-      * 1. Show the overflow in Edge.
-      */
-
-      button,
-      input { /* 1 */
-        overflow: visible;
-      }
-
-      /**
-      * Remove the inheritance of text transform in Edge, Firefox, and IE.
-      * 1. Remove the inheritance of text transform in Firefox.
-      */
-
-      button,
-      select { /* 1 */
-        text-transform: none;
-      }
-
-      /**
-      * Correct the inability to style clickable types in iOS and Safari.
-      */
-
-      button,
-      [type="button"],
-      [type="reset"],
-      [type="submit"] {
-        -webkit-appearance: button;
-      }
-
-      /**
-      * Remove the inner border and padding in Firefox.
-      */
-
-      button::-moz-focus-inner,
-      [type="button"]::-moz-focus-inner,
-      [type="reset"]::-moz-focus-inner,
-      [type="submit"]::-moz-focus-inner {
-        border-style: none;
-        padding: 0;
-      }
-
-      /**
-      * Restore the focus styles unset by the previous rule.
-      */
-
-      button:-moz-focusring,
-      [type="button"]:-moz-focusring,
-      [type="reset"]:-moz-focusring,
-      [type="submit"]:-moz-focusring {
-        outline: 1px dotted ButtonText;
-      }
-
-      /**
-      * Correct the padding in Firefox.
-      */
-
-      fieldset {
-        padding: 0.35em 0.75em 0.625em;
-      }
-
-      /**
-      * 1. Correct the text wrapping in Edge and IE.
-      * 2. Correct the color inheritance from `fieldset` elements in IE.
-      * 3. Remove the padding so developers are not caught out when they zero out
-      *    `fieldset` elements in all browsers.
-      */
-
-      legend {
-        box-sizing: border-box; /* 1 */
-        color: inherit; /* 2 */
-        display: table; /* 1 */
-        max-width: 100%; /* 1 */
-        padding: 0; /* 3 */
-        white-space: normal; /* 1 */
-      }
-
-      /**
-      * Add the correct vertical alignment in Chrome, Firefox, and Opera.
-      */
-
-      progress {
-        vertical-align: baseline;
-      }
-
-      /**
-      * Remove the default vertical scrollbar in IE 10+.
-      */
-
-      textarea {
-        overflow: auto;
-      }
-
-      /**
-      * 1. Add the correct box sizing in IE 10.
-      * 2. Remove the padding in IE 10.
-      */
-
-      [type="checkbox"],
-      [type="radio"] {
-        box-sizing: border-box; /* 1 */
-        padding: 0; /* 2 */
-      }
-
-      /**
-      * Correct the cursor style of increment and decrement buttons in Chrome.
-      */
-
-      [type="number"]::-webkit-inner-spin-button,
-      [type="number"]::-webkit-outer-spin-button {
-        height: auto;
-      }
-
-      /**
-      * 1. Correct the odd appearance in Chrome and Safari.
-      * 2. Correct the outline style in Safari.
-      */
-
-      [type="search"] {
-        -webkit-appearance: textfield; /* 1 */
-        outline-offset: -2px; /* 2 */
-      }
-
-      /**
-      * Remove the inner padding in Chrome and Safari on macOS.
-      */
-
-      [type="search"]::-webkit-search-decoration {
-        -webkit-appearance: none;
-      }
-
-      /**
-      * 1. Correct the inability to style clickable types in iOS and Safari.
-      * 2. Change font properties to `inherit` in Safari.
-      */
-
-      ::-webkit-file-upload-button {
-        -webkit-appearance: button; /* 1 */
-        font: inherit; /* 2 */
-      }
-
-      /* Interactive
-        ========================================================================== */
-
-      /*
-      * Add the correct display in Edge, IE 10+, and Firefox.
-      */
-
-      details {
-        display: block;
-      }
-
-      /*
-      * Add the correct display in all browsers.
-      */
-
-      summary {
-        display: list-item;
-      }
-
-      /* Misc
-        ========================================================================== */
-
-      /**
-      * Add the correct display in IE 10+.
-      */
-
-      template {
-        display: none;
-      }
-
-      /**
-      * Add the correct display in IE 10.
-      */
-
-      [hidden] {
-        display: none;
-      }
-    </style>
-    <style>
-      body {
-        background-color: #fff;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: 100vw;
-        height: 100vh;
-      
-        /* font-family: 'Roboto', sans-serif; */
-      
-        font-style: italic;
-        font-size: 20px;
-        color: #40324b;
-        overflow: hidden;
-        
-      }
-      
-      /* ///////////////////////////////////header */
-      
-      .logo {
-        display: block;
-      
-        transition: .1s linear;
-      }
-      
-      .logo:hover {
-        opacity: 0.8;
-      }
-      
-      .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      
-        padding-left: 80px;
-        background-color: #cccccc69;
-        box-shadow: 0 2px 10px 1px #ccc;
-        z-index: 20;
-      }
-      
-      .header:hover .dropdown__list {
-        z-index: -20;
-      }
-      
-      .nav__list {
-        display: flex;
-        align-items: center;
-      
-      }
-      
-      .nav__item {
-        position: relative;
-      }
-      
-      .nav__link {
-        display: block;
-        padding: 30px 50px;
-        color: inherit;
-      
-        text-decoration: none;
-      
-        transition: .2s linear;
-        transition: color .25s linear;
-      }
-      
-      .nav__link:hover {
-        /* background-color: #ccc; */
-        color: #fff;
-      
-      }
-      
-      .nav__item::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: #ffffff40;
-        z-index: -1;
-        transition: transform .7s;
-        transform-origin: 0 0;
-        transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
-        transform: scaleY(0);
-      }
-      
-      .nav__item:hover::before {
-        transform: scaleY(1);
-      }
-      
-      .dropdown__list {
-        position: absolute;
-        background-color: #afafafd3;
-        box-shadow: 0 .5px 5px .5px #ccc;
-      
-        right: 0;
-        top: -350%;
-      
-        transition: .3s linear;
-      }
-      
-      .nav__item:hover {
-        z-index: 10;
-      }
-      
-      .nav__item:hover > .dropdown__list {
-        z-index: 3;
-        top: 100%;
-      }
-      
-      .dropdown__link {
-        display: block;
-        text-decoration: none;
-        color: inherit;
-        text-align: center;
-      
-        transition: .2s linear;
-        transition: color .25s linear;
-      
-        position: relative;
-        padding: 10px 100px;
-        width: 410px;
-        font-size: 18px;
-      }
-      
-      .nav__item:nth-child(3) .dropdown__link {
-        width: 530px;
-      }
-      
-      .dropdown__link:hover {
-        color: #fff;
-      
-      }
-      
-      .dropdown__link::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: #ffffff7c;
-        z-index: -1;
-        transition: transform 1.2s;
-        transform-origin: 1 0;
-        transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
-        transform: scaleX(0);
-      }
-      
-      .dropdown__link:hover::before {
-        transform: scaleX(1);
-      }
-      
-      
-      
-      /* ///////////////////////////////////main */
-      
-      .content {
-        display: flex;
-        align-items: center;
-        padding-top: 45px;
-      
-        position: relative;
-      }
-      
-      .content__inn::before {
-        content: '';
-        width: 100vw;
-        height: 100vh;
-        position: absolute;
-        top: 0;
-        right: -100vw;
-      
-        background-color: #00000082;
-        z-index: 3;
-      
-        transition: .3s ease-in-out;
-        transition: right .3s linear;
-      }
-      
-      #content.before::before {
-        right: 0;
-      
-      }
-      
-      p {
-        margin: 0;
-        padding: 0;
-      }
-      
-      .main__block {
-        background: linear-gradient(
-          to top right,
-          rgba(150, 150, 150, 1),
-          rgba(150, 150, 150, 0.4)
-        );
-      
-        border-radius: 20px;
-        
-        /* width: 1000px; */
-      
-      
-        display: flex;
-      
-      }
-      
-      .main__sidebar {
-        /* width: 30%; */
-      
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0.6),
-          rgba(255, 255, 255, 0.3)
-        );
-        border-radius: 20px 30px 30px 20px;
-      }
-      /* ////////////////////////////////////////////sidebar */
-      
-      .sidebar {
-        margin-right: auto;
-        margin-left: 20px;
-      }
-      
-      .sidebar__title {
-        text-align: center;
-      }
-      
-      .sidebar .form__header {
-        margin-bottom: 0;
-      }
-      
-      .swiper {
-        padding: 20px 25px;
-        width: 350px;
-        height: 700px;
-        border-radius: 0 0 20px 20px;
-      
-        background: linear-gradient(
-          to top right,
-          rgba(150, 150, 150, 1),
-          rgba(150, 150, 150, 0.4)
-        );
-      }
-      
-      .swiper-slide{
-        width: 300px;
-        height: 150px;
-        border-radius: 30px;
-      
-        position: relative;
-        text-align: center;
-      
-        transition: 1s linaer;
-      
-      }
-      
-      .swiper-slide::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(204, 204, 204, 0.164);
-        border-radius: 30px;
-      
-      }
-      
-      .swiper-slide:hover::before {
-        background-color: transparent;
-      }
-      
-      .swiper__image-block {
-        cursor: pointer;
-      }
-      
-      
-      .swiper__link {
-        /* display: block;
-        width: 100%;
-        height: 100%; */
-      }
-      
-      .swiper__image {
-        transform: scale(1);
-      
-      }
-      
-      .swiper-link:hover .slider_image {
-      }
-      
-      .slider_image {
-        width: 100%;
-        height: 100%;
-        border-radius: 30px;
-      }
-      
-      .swiper__title {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-      
-        font-size: 20px;
-      }
-      
-      .rektor_position {
-        width: 210px;
-        text-align: center;
-        margin: 0 auto;
-        margin-top: 5px;
-      }
-      
-      .main__sidebar_content {
-        margin-top: 50px;
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-        padding-left: 19px;
-        padding-bottom: 15px;
-        font-size: 17px;
-        letter-spacing: 1px;
-      }
-      
-      .rektor__info__item {
-        margin-bottom: 10px;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      .rektor__info__item:last-child {
-        margin-bottom: 0;
-      }
-      
-      .rektor__info__item_span {
-        font-weight: 700;
-      }
-      
-      .rektor__info__item_desc {
-        margin-left: 20px;
-        margin-top: 5px;
-      }
-      
-      .rektor_tell,
-      .rektor_email {
-        color: inherit;
-        text-decoration: none;
-      
-        transition: all .2s linear;
-      }
-      
-      .rektor_tell:hover,
-      .rektor_email:hover {
-        color: #fff;
-      }
-      
-      
-      .social {
-        margin-top: 20px;
-      }
-      
-      .social__list {
-        display: flex;
-        /* margin: 0 auto; */
-        margin-top: 15px;
-        margin-left: 20px;
-      }
-      
-      .social__item {
-        margin-right: 10px;
-      
-        transition: .1s linear;
-      }
-      
-      .social__item:hover {
-        transform: scale(1.1);
-      }
-      
-      .social__item:last-child {
-        margin-right: 0;
-      }
-      
-      .main__sidebar_img {
-        overflow: hidden;
-        border-radius: 20px 30px 0 0;
-      }
-      
-      .main__sidebar_img img {
-        opacity: 0.95;
-      
-        transition: .2s ease-in;
-      }
-      
-      .main__sidebar_img:hover img {
-        transform: scale(1.1);
-      
-      }
-      
-      .main__content {
-        position: relative;
-      }
-      
-      .main__content::before {
-        content: '';
-        display: block;
-        position: absolute;
-        right: 50%;
-        transform: translateX(50%);
-        top: 10px;
-        width: 470px;
-        height: 460px;
-        background-image: url('../images/logotype.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-      
-        opacity: 0.11;
-      }
-      
-      .main__content_header {
-        width: 500px;
-        margin: 0 auto;
-        text-align: center;
-        letter-spacing: 1px;
-      }
-      
-      /* //////////////////////////////////////////////Progress */
-      
-      .progress_bar {
-        display: flex;
-        margin-bottom: 10px;
-      }
-      
-      .step {
-        text-align: center;
-        width: 100%;
-      
-        position: relative;
-      }
-      
-      .step__name {
-        font-size: 20px;
-        font-weight: 500;
-        color: inherit;
-        margin-bottom: 8px;
-      
-        transition: .2s;
-      }
-      
-      .step__name.active {
-        color: #fff;
-      }
-      
-      .bullet {
-        position: relative;
-      
-        height: 40px;
-        width: 40px; 
-        border: 2px solid #ebe7e7;
-        display: inline-block;
-        border-radius: 50%;
-      
-        transition: 0.2s;
-      }
-      
-      .bullet.active {
-        border-color: #fff;
-        background: #fff;
-      }
-      
-      
-      .bullet::before,
-      .bullet::after {
-        position: absolute;
-        content: '';
-        bottom: 17px;
-        right: -202px;
-        height: 3px;
-        width: 200px;
-        background-color: #ccc;
-      }
-      
-      .step:last-child .bullet::before,
-      .step:last-child .bullet::after {
-        display: none;
-      }
-      
-      .bullet.active::after {
-        background-color: #fff;
-      
-      
-        transform: scaleX(0);
-        transform-origin: left;
-        animation: animate .3s linear forwards;
-      }
-      
-      @keyframes animate {
-        100% {
-          transform: scale(1);
+        .error_full_border {
+            border-color: #f00;
         }
-      }
-      
-      .bullet__span {
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 35px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #fff;
-      }
-      
-      .bullet.active .bullet__span {
-        display: none;
-      }
-      
-      .check {
-        position: absolute;
-        left: 50%;
-        top: 66%;
-        font-size: 15px;
-        transform: translate(-50%, -50%);
-        display: none;
-      }
-      
-      .check::before {
-        display: none;
-      }
-      
-      .check.active.check::before {
-        display: block;
-        /* color: #fff; */
-        font-size: 20px;
-      
-      }
-      
-      
-      /* //////////////////////////////////////////////FORM */
-      
-      .main__content_form {
-        width: 800px;
-        padding: 15px 40px 30px;
-        text-align: center;
-      
-      }
-      
-      .form__header {
-        font-size: 35px;
-        font-weight: 600;
-        margin-bottom: 20px;
-      
-      }
-      
-      .form__outher {
-        width: 100%;
-        overflow: hidden;
-      }
-      
-      .form {
-        display: flex;
-        width: 400%;
-      }
-      
-      .form__page {
-        width: 25%;
-        transition: margin-left .3s ease-in-out;
-      }
-      
-      .form__page:last-child .form__field:first-child {
-        margin-bottom: 0;
-      }
-      
-      .form__page:last-child .form__field:nth-child(2) {
-        margin-top: 35px;
-      }
-      
-      .form__title {
-        text-align: left;
-        font-size: 25px;
-      }
-      
-      .form__field {
-        height: 50px;
-        width: 800px;
-        margin-top: 45px;
-        margin-bottom: 45px;
-      
-        position: relative;
-        display: flex;
-      }
-      
-      .form__category {
-        margin-top: 50px;
-      }
-      
-      .selects .form__field {
-        margin: 70px 0;
-      }
-      
-      .form__field_textarea {
-        height: unset;
-      }
-      
-      .form__label {
-        position: absolute;
-        top: -30px;
-        /* font-weight: 600; */
-        color: inherit;
-        font-size: 21px;
-      
-        transition: color .2s linear;
-      }
-      
-      .select_container {
-        width: 90%;
-      
-        position: relative;
-      
-      }
-      
-      .select_container::before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 10px;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 9px 10px 0 10px;
-        border-color: rgb(255, 255, 255) transparent transparent transparent;
-        z-index: -1;
-      
-        transition: border-color .2s linear;
-      }
-      
-      .select_container:hover::before {
-        border-color: rgba(255, 255, 255, 0.479) transparent transparent transparent;
-      
-      }
-      
-      .form__select {
-        width: 100%;
-        padding-left: 15px;
-        font-size: 18x;
-        font-weight: 500;
-        background-color: transparent;
-        border: none;
-      
-        border-bottom: 1.5px solid #ccc;
-        color: #40324b;
-        height: 32px;
-      }
-      
-      .form__select:focus ~ .form__label {
-        color: #fff;
-      }
-      
-      .form__select {
-        appearance: none;
-      
-      }
-      
-      .form__select_option {
-        background: #ccc !important;
-      }
-      
-      .form__input {
-        height: 50%;
-        width: 90%;
-        border: none;
-        font-size: 18px;
-        padding-left: 8px;
-        background-color: transparent;
-        color: inherit;
-        font-style: inherit;
-        letter-spacing: 1.5px;
-      
-        border-bottom: 1.5px solid #ccc;
-      
-        transition: .1s linear;
-      }
-      
-      .textarea {
-        height: 140px !important;
-      
-        border: 1px solid #ccc;
-        width: 90% !important;
-        font-style: inherit;
-        padding: 5px;
-        padding-left: 10px;
-      }
-      
-      .textarea:focus {
-        border: 2px solid #ccc;
-        box-shadow: 0 0 2px 0 #ccc;
-      }
-      
-      .form__input:focus {
-        box-shadow: 0 2px 0 #ccc;
-      }
-      
-      .btn {
-        width: 90%;
-        height: calc(100% + 5px);
-        border: none;
-        font-size: 18px;
-        font-style: inherit;
-        font-weight: 500;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-      
-        cursor: pointer;
-        background-color: #cccccc61;
-        border: 1px solid #ccc;
-        border-radius: 50px;
-        color: inherit;
-      
-        transition: color 0.3s linear;
-        position: relative;
-      }
-      
-      .btn:hover {
-        color: #fff;
-        border: none;
-      }
-      
-      .btn::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 50px;
-        background: #fff;
-        z-index: -1;
-        transition: transform .7s;
-        transform-origin: 1 0;
-        transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
-        transform: scaleX(0);
-      }
-      
-      .btn:hover::before {
-        transform: scaleX(1);
-      }
-      
-      
-      
-      .btn_first {
-        margin-top: 167px;
-      }
-      
-      .btn_second {
-        margin-top: 126px;
-        margin-bottom: 5px;
-      }
-      
-      .prev {
-        margin-right: 1%;
-        width: 44%;
-        font-size: 17px;
-      }
-      
-      .next {
-        margin-left: 1%;
-        width: 44%;
-      }
-      
-      .submit {
-        width: 44%;
-        margin-left: 1%;
-      }
-      
-      .btn_third {
-        margin: 10px 0;
-        margin-bottom: 0;
-        margin-top: 40px;
-      }
-      
-      .accept_block {
-        display: flex;
-        justify-content: center;
-      
-      }
-      
-      .accept_desc {
-        width: 600px;
-        letter-spacing: 2px;
-      }
-      
-      .warning {
-        color: #8f0c0c;
-        font-size: 24px;
-      }
-      
-      .rules {
-        color: rgb(0, 4, 255);
-        transition: .2s linear;
-        text-decoration: underline;
-      }
-      
-      .rules:hover {
-        opacity: .6;
-        text-decoration-color: rgba(0, 4, 255, .6);
-      }
-      
-      .form__input:focus ~ .form__label {
-        color: #fff;
-      }
-      
-      #form__file {
-        display: none;
-      }
-      
-      
-      
-      .form__file_label {
-        width: 20%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 85%;
-        border: none;
-        font-size: 16px;
-        font-style: inherit;
-        letter-spacing: 1px;
-      
-        cursor: pointer;
-        background-color: rgba(204, 204, 204, 0.089);
-        border: 1px solid #ccc;
-        border-radius: 15px;
-        color: inherit;
-      
-        transition: color 0.3s linear;
-        position: relative;
-      }
-      
-      .form__file_label:hover {
-        color: #fff;
-        border: none;
-      }
-      
-      .form__file_label::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 50px;
-        background: #fff;
-        z-index: -1;
-        transition: transform .7s;
-        transform-origin: 0 1;
-        transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
-        transform: scaleY(0);
-      }
-      
-      .form__file_label:hover::before {
-        transform: scaleY(1);
-      }
-      
-      .organization__name {
-        display: none;
-      }
-      
-      .organization__name.org_name_active {
-        display: block;
-      }
-      
-      
-      /* /////////////////////////////////statistics */
-      
-      .statistics {
-        margin-left: auto;
-        margin-right: 20px;
-      }
-      
-      .statistics__inner {
-        width: 370px;
-      }
-      .statistics__top {
-        background: linear-gradient( 
-          to top right, 
-          rgba(150, 150, 150, 1), 
-          rgba(150, 150, 150, 0.4) 
-          );
-        
-        border-radius: 20px;
-        margin-bottom: 30px;
-      }
-      
-      
-      .statistics__title {
-        background-color: #e5e5e56e;
-        border-radius: 20px 20px 0 0;
-        text-align: center;
-      
-        padding: 20px 5px 10px;
-        font-size: 30px;
-      }
-      
-      .statistics__list {
-        padding: 0 25px;
-        padding-bottom: 20px;
-      }
-      
-      .statistics__item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px;
-        padding-left: 10px;
-        font-weight: unset;
-      
-        position: relative;
-      
-        transition: .2s linear;
-      }
-      
-      .statistics__item:last-child {
-        font-weight: 600;
-      }
-      
-      .statistics__item:hover {
-        color: #fff;
-      }
-      
-      .statistics__item::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: 5px;
-        display: block;
-        width: 100%;
-        height: 1px;
-        background-color: #ccc;
-      
-        transition: .1s linear;
-      }
-      
-      .statistics__item:last-child::before {
-        background-color: #40324b;
-        height: 1.1px;
-      }
-      
-      
-      .statistics__item:hover::before {
-        background-color: #fff;
-        height: 1.1px;
-      }
-      
-      .statistics__count {
-        background-color: #e5e5e540;
-        padding: 1px 10px;
-        border-radius: 12px;
-      
-        transition: .2s linear;
-      }
-      
-      .statistics__item:hover .statistics__count {
-        color: #fff;
-      }
-      
-      .statistics__bottom {
-        background: linear-gradient( 
-          to top right, 
-          rgba(150, 150, 150, 1), 
-          rgba(150, 150, 150, 0.4) 
-          );
-        
-        border-radius: 20px;
-      }
-      
-      .statistics__bottom .statistics__title {
-        margin-bottom: 0;
-      }
-      
-      .statistics__result {
-        padding: 30px;
-        padding-top: 20px;
-      }
-      
-      .statistics__form {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      .statistics__input {
-        background: transparent;
-        border: none;
-        outline: none;
-      
-        padding-left: 5px;
-        font-size: 22px;
-        color: inherit;
-      
-        transition: .2s ease;
-        border-bottom: 1px solid #ccc;
-        border-bottom-width: 2px;
-      }
-      
-      .statistics__input::placeholder {
-        color: #40324b;
-        opacity: 0.8;
-        padding-left: 5px;
-      }
-      
-      .statistics__input:focus {
-        border-color: #fff;
-      }
-      
-      .statistics__input::-webkit-inner-spin-button {
-        display: none;
-      }
-      
-      .statistics__btn {
-        margin-top: 30px;
-        background-color: transparent;
-        border: none;
-        outline: none;
-        color: inherit;
-        text-transform: uppercase;
-      
-        padding: 12px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 20px;
-      
-        
-        transition: color 0.3s linear;
-        position: relative;
-      }
-      
-      .statistics__btn:hover {
-        color: #fff;
-        border-color: transparent;
-      }
-      
-      .statistics__btn::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 20px;
-        background: #fff;
-        z-index: -1;
-        transition: transform .7s;
-        transform-origin: 1 0;
-        transition-timing-function: cubic-bezier(0.5, 1.6, 0.4, 0.7);
-        transform: scaleX(0);
-      }
-      
-      .statistics__btn:hover::before {
-        transform: scaleX(1);
-      }
-      
-      .modal__consent {
-        position: absolute;
-        left: 50%;
-        top: -100%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(204, 204, 204, 0.904);
-        z-index: 30;
-        letter-spacing: 1px;
-        
-        border-radius: 50px;
-        padding: 50px;
-        padding-top: 30px;
-        display: block;
-        transition: top .4s linear;
-      }
-      
-      .modal__consent_close {
-        width: 35px;
-        height: 35px;
-        display: block;
-        top: 30px;
-        right: 30px;
-        position: absolute;
-        cursor: pointer;
-        transition: opacity .2s linear;
-      }
-      
-      .modal__consent_close:hover {
-        opacity: .4;
-      }
-      
-      .modal__consent_close::before,
-      .modal__consent_close::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 3px;
-        display: block;
-        left: 0;
-        top: 0;
-        background-color: #40324b;
-        transform: rotate(45deg);
-      
-      }
-      
-      .modal__consent_close::after {
-        bottom: 0;
-        transform: rotate(-45deg);
-      }
-      
-      .modal__consent::before:hover,
-      .modal__consent::after:hover {
-        opacity: 0.6;
-      }
-      
-      .modal__consent.active {
-        top: 50%;
-      }
-      
-      .modal::before {
-        content: '';
-        position: absolute;
-        bottom: -100%;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: #00000082;
-        z-index: 20;
-        display: block;
-        transition: bottom .2s linear;
-      }
-      
-      .modal.before::before {
-        bottom: 0;
-      }
-      
-      .modal__consent_item {
-        margin-bottom: 30px;
-      }
-      
-      .modal__consent_item:last-child {
-        margin-bottom: 0;
-      }
-      
-      .modal__consent_item:first-child {
-        font-weight: 600;
-        font-size: 25px;
-      }
-      
-      .modal__consent_item p {
-        margin-left: 50px;
-        margin-bottom: 20px;
-        position: relative;
-      }
-      
-      .modal__consent_item span {
-        font-weight: 600;
-        font-size: 21px;
-      }
-      
-      .modal__consent_item p::before {
-        content: '';
-        position: absolute;
-        left: -15px;
-        top: 13px;
-        display: block;
-        width: 5px;
-        height: 5px;
-        background-color: #000;
-        border-radius: 50%;
-      }
-      
-      .modal__consent_item p:last-child {
-        margin-bottom: 0;
-      }
-      
+
+        .error_full_border:focus {
+            border-color: #f00;
+            box-shadow: 0 1px 0 #f00;
+        }
+
+        .error_border {
+            border-bottom-color: #ff0000;
+        }
+
+        .error_border:focus {
+            box-shadow: 0 1px 0 #f00;
+        }
+
+        .swiper-overflow {
+            overflow: hidden;
+        }
+
+        .selects .form__field:last-child {
+            margin-top: 150px !important;
+            margin-bottom: 7px;
+        }
+
+        .btn_second {
+            margin-top: 35px;
+        }
+
+        .form__file {
+            margin-bottom: 15px;
+        }
+
+        .security {
+            margin-left: 0;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        #form__file {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+            display: unset;
+        }
+
+        .btn {
+            line-height: 52px;
+        }
+
+        .rektor__info__item_desc {
+            max-width: 200px;
+            line-height: 1.3;
+        }
     </style>
-    <style>
-      
-      .selects .form__field:last-child {
-        margin-top: 150px !important;
-        margin-bottom: 7px;
-      }
-
-      .btn_second {
-        margin-top: 35px;
-      }
-      .form__file {
-        margin-bottom: 15px;
-      }
-
-      .security {
-        margin-left: 0;
-        margin-bottom: 15px;
-        text-align: left;
-      }
-
-      #form__file {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
-        display: unset;
-      }
-
-      .btn {
-        line-height: 52px;
-      }
-      .rektor__info__item_desc {
-        max-width: 200px;
-        line-height: 1.3;
-      }
-    </style>
-  </head>
-  {% if applicants_panel_info.background %}
+</head>
+{% if applicants_panel_info.background %}
     <body style="background-image: url('{{ applicants_panel_info.background.url }}');">
-  {% else %}
+{% else %}
     <body style="background-image: url('{% static 'images/banner.jpg' %}');">
-  {% endif %}
-    <header class="header">
+{% endif %}
+<header class="header">
 
-      <div class="header__left">
+    <div class="header__left">
 
         {% if applicants_panel_info.main_site_link %}
-          <a href="{{ applicants_panel_info.main_site_link }}" class="logo">
+            <a href="{{ applicants_panel_info.main_site_link }}" class="logo">
         {% else %}
-          <a href="https://tstu.uz" class="logo">
+            <a href="https://tstu.uz" class="logo">
         {% endif %}
 
         {% if applicants_panel_info.logo %}
-          <img src="{{ applicants_panel_info.logo.url }}" width="220" alt="logotype">
-        {% else %}  
-          <img src="{% static 'images/logo.png' %}" width="220" alt="logotype">
+            <img src="{{ applicants_panel_info.logo.url }}" width="220" alt="logotype">
+        {% else %}
+            <img src="{% static 'images/logo.png' %}" width="220" alt="logotype">
         {% endif %}
         </a>
-      </div>
+    </div>
 
-      <div class="header__right">
+    <div class="header__right">
         <nav class="nav">
-          <ul class="nav__list">
-            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
-              {% if applicants_panel_info.main_site_link %}
-                <a href="{{ main_site_link }}" class="nav__link">Bosh sahifa</a>
-              {% else %}  
-                <a href="#" class="nav__link">Bosh sahifa</a>
-              {% endif %}
-              <ul class="dropdown__list">
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Universitet tarixi</a>
+            <ul class="nav__list">
+                <li class="nav__item">
+                    {% if applicants_panel_info.main_site_link %}
+                        <a href="{{ main_site_link }}" class="nav__link">Bosh sahifa</a>
+                    {% else %}
+                        <a href="#" class="nav__link">Bosh sahifa</a>
+                    {% endif %}
+                    <ul class="dropdown__list">
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Universitet tarixi</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Universitet nizomi</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Foto va videolar</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Universitet muzeyi</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">O'quv poligoni</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">TSTU OAV nigohida</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Biz haqimizda</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Universitet nizomi</a>
+                <li class="nav__item">
+                    <a href="#" class="nav__link">Universitet tuzilmasi</a>
+                    <ul class="dropdown__list">
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Rektorat</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Kredit va moodle tizimi</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Korrupsiyaga qarshi kurash</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Foto va videolar</a>
+                <li class="nav__item">
+                    <a href="#" class="nav__link">Faoliyat</a>
+                    <ul class="dropdown__list">
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">xalqaro aloqalar</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Ilmiy faoliyat</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Moliyaviy faoliyat</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Talabalarning o'zini o'zi boshqaruv kengashi</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Universitet muzeyi</a>
+                <li class="nav__item">
+                    <a href="#" class="nav__link">Talaba</a>
+                    <ul class="dropdown__list">
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Ko'rsatmalar</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Davlat imtixonlari</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Kutubxona</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Stipendiyalar</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Dars jadvali</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">To'garaklar</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Talabalar shaharchasi</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">O'quv poligoni</a>
+                <li class="nav__item">
+                    <a href="#" class="nav__link">Abiturient</a>
+                    <ul class="dropdown__list">
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Bakalavriat</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Qo'shma diplom</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Sirtqi</a>
+                        </li>
+                        <li class="dropdown__item">
+                            <a href="#" class="dropdown__link">Magistratura</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">TSTU OAV nigohida</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Biz haqimizda</a>
-                </li>
-              </ul>
-            </li>
-            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()"  class="nav__item">
-              <a href="#" class="nav__link">Universitet tuzilmasi</a>
-              <ul class="dropdown__list">
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Rektorat</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Kredit va moodle tizimi</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Korrupsiyaga qarshi kurash</a>
-                </li>
-              </ul>
-            </li>
-            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
-              <a href="#" class="nav__link">Faoliyat</a>
-              <ul class="dropdown__list">
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">xalqaro aloqalar</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Ilmiy faoliyat</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Moliyaviy faoliyat</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Talabalarning o'zini o'zi boshqaruv kengashi</a>
-                </li>
-              </ul>
-            </li>
-            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
-              <a href="#" class="nav__link">Talaba</a>
-              <ul class="dropdown__list">
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Ko'rsatmalar</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Davlat imtixonlari</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Kutubxona</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Stipendiyalar</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Dars jadvali</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">To'garaklar</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Talabalar shaharchasi</a>
-                </li>
-              </ul>
-            </li>
-            <li onmouseover="hoveronItem()" onmouseout="hoveroffItem()" class="nav__item">
-              <a href="#" class="nav__link">Abiturient</a>
-              <ul class="dropdown__list">
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Bakalavriat</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Qo'shma diplom</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Sirtqi</a>
-                </li>
-                <li class="dropdown__item">
-                  <a href="#" class="dropdown__link">Magistratura</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+            </ul>
         </nav>
-      </div>
+    </div>
 
-    </header>
-    
-    <div class="content content__inn" id="content">
-      <div class="sidebar">
+</header>
+
+<div class="content content__inn" id="content">
+    <div class="sidebar">
         {% if applicants_panel_info.aside_title %}
-          <h2 class="statistics__title form__header sidebar__title ">{{ applicants_panel_info.aside_title | title }}</h2>
-        {% else %}  
-          <h2 class="statistics__title form__header sidebar__title ">So'nggi yangiliklar</h2>
+            <h2 class="statistics__title form__header sidebar__title ">{{ applicants_panel_info.aside_title | title }}</h2>
+        {% else %}
+            <h2 class="statistics__title form__header sidebar__title ">So'nggi yangiliklar</h2>
         {% endif %}
 
-        <div class="swiper">
-          <!-- Additional required wrapper -->
-           <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide swiper__image-block">
-              <a href="#" class="swiper__link">
-                <img src="{% static '/images/prezident.jpg' %}" alt="" class="slider_image">
-                <h3 class="swiper__title">
-                  BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
-                </h3>
-                <!-- <p class="swiper__text">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
-                </p> -->
-              </a>
-            </div>
-            <div class="swiper-slide swiper__image-block">
-              <a href="#">
-                <img src="{% static '/images/bus.jpg' %}" alt="" class="slider_image">
-                <h3 class="swiper__title">
-                  BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
-                </h3>
-                <!-- <p class="swiper__text">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
-                </p> -->
-              </a>
-            </div>
-            <div class="swiper-slide swiper__image-block">
-              <a href="#">
-                <img src="{% static '/images/kimdir.jpg' %}" alt="" class="slider_image">
-                <h3 class="swiper__title">
-                  BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
-                </h3>
-                <!-- <p class="swiper__text">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
-                </p> -->
-              </a>
-            </div>
-            ...
-          </div>
-        </div>
-
-      </div>
-
-
-      <div class="main">
-        <div class="main__block">
-  
-          <div class="main__sidebar">
-            <div class="main__sidebar_img">
-              {% if applicants_panel_info.rector_avatar %}
-                <img src="{{ applicants_panel_info.rector_avatar.url }}" alt="rektor-photo" width="100%" height="250px">
-              {% else %}  
-                <img src="{% static 'images/rektor.jpg' %}" alt="rektor-photo" width="100%" height="250px">
-              {% endif %}
-            </div>
-            {% if applicants_panel_info.university_name %}
-              <p class="rektor_position">{{ applicants_panel_info.university_name }} rektori</p>
-            {% else %}  
-              <p class="rektor_position">Toshkent davlat transport universiteti rektori</p>
-            {% endif %}
-            <div class="main__sidebar_content">
-              <ul class="rektor__info__list">
-                <li class="rektor__info__item">
-                  <span class="rektor__info__item_span">F.I.O</span>
-                  {% if applicants_panel_info.rector_name %}
-                    <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_name }}</p>
-                  {% else %}
-                    <p class="rektor__info__item_desc">Abduraxmanov Odil Qalandarovich</p>
-                  {% endif %}
-                </li>
-                <li class="rektor__info__item">
-                  <span class="rektor__info__item_span">Ilmiy daraja va unvoni:</span>
-                  {% if applicants_panel_info.rector_position %}
-                    <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_position }}</p>
-                  {% else %}
-                    <p class="rektor__info__item_desc">Iqtisodiyot fanlari doktori</p>
-                  {% endif %}
-                </li>
-                <li class="rektor__info__item">
-                  <span class="rektor__info__item_span">Qabul vaqti:</span>
-                  {% if applicants_panel_info.rector_reception_time %}
-                    <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_reception_time }}</p>
-                  {% else %}
-                    <p class="rektor__info__item_desc">Shanba (10:00 – 12:00)</p>
-                  {% endif %}
-                </li>
-                <li class="rektor__info__item">
-                  <span class="rektor__info__item_span">Telefon:</span>
-                  {% if applicants_panel_info.tel %}
-                    <a href="tel:{{ applicants_panel_info.tel }}" class="rektor__info__item_desc rektor_tell">{{ applicants_panel_info.tel }}</a>
-                  {% else %}
-                    <a href="tel:+998712990001" class="rektor__info__item_desc rektor_tell">+998 71 299 00 01</a>
-                  {% endif %}
-                </li>
-                <li class="rektor__info__item">
-                  <span class="rektor__info__item_span">Elektron manzil:</span>
-                  {% if applicants_panel_info.email %}
-                    <a href="mailto:{{ applicants_panel_info.email }}" class="rektor__info__item_desc rektor_email">{{ applicants_panel_info.email }}</a>
-                  {% else %}
-                    <a href="mailto:rektorat@tstu.uz" class="rektor__info__item_desc rektor_email">rektorat@tstu.uz</a>
-                  {% endif %}
-                </li>
-              </ul>
-              <div class="social">
-                <span class="rektor__info__item_span">Ijtimoy tarmoqlar:</span>
-                <ul class="social__list">
-                  {% if socials %}
-                    {% for social in socials %}
-                      <li class="social__item">
-                        <a href="{{ social.link }}" class="social__link">
-                          <img src="{{ social.logo.url }}" width="25" alt="{{ social.name }}-icon">
-                        </a>
-                      </li>
-                    {% endfor %}
-                  {% else %}
-                    <li class="social__item">
-                      <a href="#" class="social__link">
-                        <img src="{% static 'images/facebook-icon.png' %}" width="25" alt="facebook-icon">
-                      </a>
-                    </li>
-                    <li class="social__item">
-                      <a href="#" class="social__link">
-                        <img src="{% static 'images/instagram-icon.png' %}" width="25" alt="instagram-icon">
-                      </a>
-                    </li>
-                    <li class="social__item">
-                      <a href="#" class="social__link">
-                        <img src="{% static 'images/telegram-icon.png' %}" width="25" alt="telegram-icon">
-                      </a>
-                    </li>
-                    <li class="social__item">
-                      <a href="#" class="social__link">
-                        <img src="{% static 'images/twitter-icon.png' %}" width="25" alt="twitter-icon">
-                      </a>
-                    </li>
-                  {% endif %}
-
-                </ul>
-              </div>
-            </div>
-          </div> 
-          
-          <div class="main__content">
-            <div class="main__content_header">
-  
-            </div>
-            
-            <div class="main__content_inner">
-              <div class="main__content_form">
-                {% if applicants_panel_info.title %}
-                  <div class="form__header">{{ applicants_panel_info.title | title }}</div>
-                {% else %}
-                  <div class="form__header">Murojaat</div>
-                {% endif %}
-  
-                <div class="progress_bar">
-                  <div class="step">
-                    {% if applicants_panel_info.step_title_1 %}
-                      <p class="step__name">{{ applicants_panel_info.step_title_1 }}</p>
-                    {% else %}
-                      <p class="step__name">Murojaat turi</p>
-                    {% endif %}
-                    <div class="bullet">
-                      <span class="bullet__span">1</span>
-                    </div>
-                    <div class="fas fa-check check"></div>
-                  </div>
-                  <div class="step">
-                    {% if applicants_panel_info.step_title_2 %}
-                      <p class="step__name">{{ applicants_panel_info.step_title_2 }}</p>
-                    {% else %}
-                      <p class="step__name">Malumot</p>
-                    {% endif %}
-                    <div class="bullet">
-                      <span class="bullet__span">2</span>
-                    </div>
-                    <div class="fas fa-check check"></div>
-                  </div>
-                  <div class="step">
-                    {% if applicants_panel_info.step_title_3 %}
-                      <p class="step__name">{{ applicants_panel_info.step_title_3 }}</p>
-                    {% else %}
-                      <p class="step__name">Murojaat mazmuni</p>
-                    {% endif %}
-                    <div class="bullet">
-                      <span class="bullet__span">3</span>
-                    </div>
-                    <div class="fas fa-check check"></div>
-                  </div>
+        <div class="swiper swiper-overflow">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide swiper__image-block">
+                    <a href="#" class="swiper__link">
+                        <img src="{% static '/images/prezident.jpg' %}" alt="" class="slider_image">
+                        <h3 class="swiper__title">
+                            BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
+                        </h3>
+                        <!-- <p class="swiper__text">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
+                        </p> -->
+                    </a>
                 </div>
-  
-                <div class="form__outher">
-                  <form action="" class="form" method="post" enctype="multipart/form-data">{% csrf_token %}
-  
-                    <div class="form__page slidepage selects">
-                      <div class="form__field">
-                        <div class="select_container">
-                          <select class="form__select" name="appeal_type">
-                            <option class="form__select_option" value="ariza" selected>Ariza</option>
-                            <option class="form__select_option" value="shikoyat">Shikoyat</option>
-                            <option class="form__select_option" value="taklif">Taklif</option>
-                            <option class="form__select_option" value="boshqa">boshqa</option>
-                          </select>
-                          <div class="form__label">Murojaat turi</div>
-                        </div>
-                      </div>
-                      <div class="form__field form__category">
-                        <div class="select_container">
-                          <select class="form__select" name="appeal_direction">
-                            <option class="form__select_option" value="diplom_olish" selected>Diplom olish masalalari</option>
-                            <option class="form__select_option" value="ishga_joylash">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
-                            <option class="form__select_option" value="kontrakt_tolovi">Kontrakt to'lovi to'g'risida</option>
-                            <option class="form__select_option" value="mag_masalalari">Magistratura masalalari</option>
-                            <option class="form__select_option" value="fuqarolar_murojaatlari">Fuqarolar murojaatlari to'g'risida</option>
-                            <option class="form__select_option" value="moliyaviy_masalalar">Moliyaviy masalalar</option>
-                            <option class="form__select_option" value="talaba_ustidan">Talaba ustidan shikoyat</option>
-                            <option class="form__select_option" value="rahbar_faoliyatidan">Rahbar faoliyatidan norozilik arizasi</option>
-                            <option class="form__select_option" value="stipendiya_masalalari">Stipendiya masalalari</option>
-                            <option class="form__select_option" value="oqishga_kirish">O'qishga kirish to'g'risida</option>
-                            <option class="form__select_option" value="oqishni_kochirish">O'qishni ko'chirish to'g'risida</option>
-                            <option class="form__select_option" value="oqishni_tiklash">O'qishni tiklash to'g'risida</option>
-                            <option class="form__select_option" value="ijodiy_imtihondan">Ijodiy imtihondan norozilik to'g'risida</option>
-                            <option class="form__select_option" value="diplom_xaqqoniyligini">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
-                            <option class="form__select_option" value="nafaqa_masalalari">Nafaqa masalalari</option>
-                            <option class="form__select_option" value="arxiv_malumotlarini">Arxiv ma'lumotlarini olish to'grisida</option>
-                            <option class="form__select_option" value="ikkinchi_mutaxasislik">Ikkinchi mutaxasislik</option>
-                            <option class="form__select_option" value="kitob_nashr">Kitob nashr qilish</option>
-                            <option class="form__select_option" value="ixtiro_qilish">Ixtiro qilish taklifi</option>
-                            <option class="form__select_option" value="taklif_va">Taklif va minnatdorchilik</option>
-                            <option class="form__select_option" value="sirtqi_oqish">Sirtqi o'qish masalalari</option>
-                            <option class="form__select_option" value="yotoqxona_masalalari">Yotoqxona masalalari bo'yicha</option>
-                            <option class="form__select_option" value="olimpiada_masalasi">Olimpiada masalasi bo'yicha</option>
-                            <option class="form__select_option" value="boshqa_yo">Boshqa yo'nalishlar</option>
-                          </select>
-                          <div class="form__label">Murojaat yo'nalishi</div>
-                        </div>
-                      </div>
-                      <div class="form__field four">
-                        <div class="select_container">
-                          <select class="form__select"  name="applicant_position">
-                            <option class="form__select_option" value="talaba">Talaba</option>
-                            <option class="form__select_option" value="ota_ona">Ota ona</option>
-                            <option class="form__select_option" value="universitet_xodimi">Universitet xodimi</option>
-                            <option class="form__select_option" value="oqituvchi">O'qituvchi</option>
-                            <option class="form__select_option" value="tashkilot">Tashkilot</option>
-                            <option class="form__select_option" value="boshqa">Boshqa</option>
-                          </select>
-                          <div class="form__label">Kim tomonidan</div>
-                        </div>
-                      </div>
-                      <div class="form__field btns next_btn btn_first">
-                        <span class="btn">keyingi</span>
-                      </div>
-                    </div>
-  
-                    <div class="form__page">
-                      <div class="form__field">
-                        <input type="name" name="applicant_name" class="form__input">
-                        <div class="form__label">F.I.O</div>
-                      </div>
-                      <div class="form__field">
-                        <input type="tel" class="form__input" name="applicant_tel_num">
-                        <div class="form__label">Telefon raqam:</div>
-                      </div>
-                      <div class="form__field">
-                        <input type="email" name="applicant_email" class="form__input">
-                        <div class="form__label">Elektron pochta</div>
-                      </div>
-                      <div class="form__field">
-                        <div class="select_container">
-                          <select class="form__select" name="applicant_type">
-                            <option class="form__select_option" value="yuridik_shaxs" selected>Jismoniy shaxs</option>
-                            <option class="form__select_option" value="jismoniy_shaxs">Yuridik shaxs</option>
-                          </select>
-                          <div class="form__label">Shaxsingiz</div>
-                        </div>
-                      </div>
-                      <div class="form__field" style="margin-bottom: 30px">
-                        <div class="select_container">
-                          <select class="form__select" name="applicant_province">
-                            <option class="form__select_option" value="toshkent">Toshkent</option>
-                            <option class="form__select_option" value="samarqand">Samarqand</option>
-                            <option class="form__select_option" value="andijon">Andijon</option>
-                            <option class="form__select_option" value="fargona">Fargona</option>
-                            <option class="form__select_option" value="namangan">Namangan</option>
-                            <option class="form__select_option" value="qashqadaryo">Qashqadaryo</option>
-                            <option class="form__select_option" value="surxondaryo">Surxondaryo</option>
-                            <option class="form__select_option" value="buxoro">Buxoro</option>
-                            <option class="form__select_option" value="navoiy">Navoiy</option>
-                            <option class="form__select_option" value="xorazm">Xorazm</option>
-                            <option class="form__select_option" value="sirdaryo">Sirdaryo</option>
-                            <option class="form__select_option" value="jizzax">Jizzax</option>
-                            <option class="form__select_option" value="qoraqalpoq">Qoraqalpog'iston Respublikasi</option>
-                          </select>
-                          <div class="form__label">Viloyat</div>
-                        </div>
-                      </div>
-                      <div class="form__field btns btn_second">
-                        <span class="btn prev_1 prev">ortga</span>
-                        <span class="btn next_1 next">keyingi</span>
-                      </div>
-                    </div>
-  
-                    <div class="form__page last__page">
-                      <div class="form__field">
-                        <input type="text" name="appeal_subject" class="form__input">
-                        <div class="form__label">Murojaat mavzusi</div>
-                      </div>
-                      <div class="form__field form__field_textarea">
-                        <textarea name="appeal_text" id="" rows="10" class="form__input textarea"></textarea>
-                        <div class="form__label">Murojaat matni</div>
-                      </div>
-                      <div class="form__field form__file">
-                        <div class="form__label">Fayl ko'rinishi</div>
-                        <input type="file" class="inputfile" id="form__file" data-multiple-caption="{count} ta fayl tanlandi" multiple name="appeal_file" />
-                        <label for="form__file" class="form__file_label"><span>Faylni tanlang</span></label>
-                      </div>
-                      <div class="security">
-                        <label>
-                          Shaxsim sir saqlansin
-                          <input type="checkbox" name="privacy">
-                        </label>
-                      </div>
-                      <div class="accept_block">
-                        <p class="accept_desc">
-                          <span class="warning">Diqqat!!!</span>
-                          Jo'natish tugmasini bosish orqali siz Virtual qabulxona xizmat ko'rsatish 
-                          <a href="#" class="rules">
-                            <span class="consent">shartlariga</span>
-                          </a> 
-                          rozilik bildirasiz
-                        </p>
-                      </div>
-                      <div class="form__field  btn_third">
-                        <span class="btn prev_2 prev">ortga</span>
-                        <button type="submit" class="btn submit">Jo'natish</button>
-                      </div>
-                    </div>
-  
-                  </form>
+                <div class="swiper-slide swiper__image-block">
+                    <a href="#">
+                        <img src="{% static '/images/bus.jpg' %}" alt="" class="slider_image">
+                        <h3 class="swiper__title">
+                            BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
+                        </h3>
+                        <!-- <p class="swiper__text">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
+                        </p> -->
+                    </a>
                 </div>
-              </div>
+                <div class="swiper-slide swiper__image-block">
+                    <a href="#">
+                        <img src="{% static '/images/kimdir.jpg' %}" alt="" class="slider_image">
+                        <h3 class="swiper__title">
+                            BMT Inson huquqlari bo'yicha kengashining 49-sessiyasida O'zbekiston vakili ma'ruza qildi
+                        </h3>
+                        <!-- <p class="swiper__text">
+                          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eaque, saepe.
+                        </p> -->
+                    </a>
+                </div>
+                ...
             </div>
-  
-          </div>
-  
         </div>
-      </div>
-
-      <div class="statistics">
-        <div class="statistics__inner">
-
-          <div class="statistics__top">
-            {% if applicants_panel_info.statistics_title %}
-              <h2 class="form__header statistics__title">{{ applicants_panel_info.statistics_title }}</h2>
-            {% else %}
-              <h2 class="form__header statistics__title">Murojaatlar statistikasi</h2>
-            {% endif %}
-            <ul class="statistics__list">
-              <li class="rektor__info__item_span statistics__item">
-                <p>Yangi</p>
-                <span class="statistics__count">{{ new_appeals_cnt }}</span>
-              </li>
-              <li class="rektor__info__item_span statistics__item">
-                <p>Ko'rib chiqilmoqda</p>
-                <span class="statistics__count">{{ process_appeals_cnt }}</span>
-              </li>
-              <li class="rektor__info__item_span statistics__item">
-                <p>Rad etilgan</p>
-                <span class="statistics__count">{{ rejected_appeals_cnt }}</span>
-              </li>
-              <li class="rektor__info__item_span statistics__item">
-                <p>Bajarilgan</p>
-                <span class="statistics__count">{{ completed_appeals_cnt }}</span>
-              </li>
-              <li class="rektor__info__item_span statistics__item">
-                <p>Umumiy</p>
-                <span class="statistics__count">{{ all_appeals_cnt }}</span>
-              </li>
-            </ul>
-          </div>
-          
-          <div class="statistics__bottom">
-            {% if applicants_panel_info.answer_title %}
-              <h2 class="form__header statistics__title">{{ applicants_panel_info.answer_title }}</h2>
-            {% else %}
-              <h2 class="form__header statistics__title">Murojaat holatini tekshirish</h2>
-            {% endif %}
-            <div class="statistics__result">
-              <p>Murojaat yuborilganda olingan parolni kiriting</p>
-              <form class="statistics__form" method="post">{% csrf_token %}
-                <label for="st__input"></label>
-                <input id="st__input" type="text" class="statistics__input" style="cursor: pointer;" name="answer_code" placeholder="parol">
-                <button class="statistics__btn">Tekshirish</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
 
     </div>
 
-    
 
-    {% if answers %}
-      <div class="modal before">
-        <div class="modal__consent active">
-          <ul class="modal__consent_list">
-              <li class="modal__consent_item">Javob</li>
-              {% for answer in answers %}
-              <hr>
-                <li class="modal__consent_item">{{ answer.text }}</li>
-                <li class="modal__consent_item">{{ answer.file }}</li>
-                <li class="modal__consent_item">{{ answer.answer_type }}</li>
-              <hr>
-              {% endfor %}
-          </ul>
-          <div class="modal__consent_close"></div>
+    <div class="main">
+        <div class="main__block">
+
+            <div class="main__sidebar">
+                <div class="main__sidebar_img">
+                    {% if applicants_panel_info.rector_avatar %}
+                        <img src="{{ applicants_panel_info.rector_avatar.url }}" alt="rektor-photo" width="100%"
+                             height="250px">
+                    {% else %}
+                        <img src="{% static 'images/rektor.jpg' %}" alt="rektor-photo" width="100%" height="250px">
+                    {% endif %}
+                </div>
+                {% if applicants_panel_info.university_name %}
+                    <p class="rektor_position">{{ applicants_panel_info.university_name }} rektori</p>
+                {% else %}
+                    <p class="rektor_position">Toshkent davlat transport universiteti rektori</p>
+                {% endif %}
+                <div class="main__sidebar_content">
+                    <ul class="rektor__info__list">
+                        <li class="rektor__info__item">
+                            <span class="rektor__info__item_span">F.I.O</span>
+                            {% if applicants_panel_info.rector_name %}
+                                <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_name }}</p>
+                            {% else %}
+                                <p class="rektor__info__item_desc">Abduraxmanov Odil Qalandarovich</p>
+                            {% endif %}
+                        </li>
+                        <li class="rektor__info__item">
+                            <span class="rektor__info__item_span">Ilmiy daraja va unvoni:</span>
+                            {% if applicants_panel_info.rector_position %}
+                                <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_position }}</p>
+                            {% else %}
+                                <p class="rektor__info__item_desc">Iqtisodiyot fanlari doktori</p>
+                            {% endif %}
+                        </li>
+                        <li class="rektor__info__item">
+                            <span class="rektor__info__item_span">Qabul vaqti:</span>
+                            {% if applicants_panel_info.rector_reception_time %}
+                                <p class="rektor__info__item_desc">{{ applicants_panel_info.rector_reception_time }}</p>
+                            {% else %}
+                                <p class="rektor__info__item_desc">Shanba (10:00 – 12:00)</p>
+                            {% endif %}
+                        </li>
+                        <li class="rektor__info__item">
+                            <span class="rektor__info__item_span">Telefon:</span>
+                            {% if applicants_panel_info.tel %}
+                                <a href="tel:{{ applicants_panel_info.tel }}"
+                                   class="rektor__info__item_desc rektor_tell">{{ applicants_panel_info.tel }}</a>
+                            {% else %}
+                                <a href="tel:+998712990001" class="rektor__info__item_desc rektor_tell">+998 71 299 00
+                                    01</a>
+                            {% endif %}
+                        </li>
+                        <li class="rektor__info__item">
+                            <span class="rektor__info__item_span">Elektron manzil:</span>
+                            {% if applicants_panel_info.email %}
+                                <a href="mailto:{{ applicants_panel_info.email }}"
+                                   class="rektor__info__item_desc rektor_email">{{ applicants_panel_info.email }}</a>
+                            {% else %}
+                                <a href="mailto:rektorat@tstu.uz" class="rektor__info__item_desc rektor_email">rektorat@tstu.uz</a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <div class="social">
+                        <span class="rektor__info__item_span">Ijtimoy tarmoqlar:</span>
+                        <ul class="social__list">
+                            {% if socials %}
+                                {% for social in socials %}
+                                    <li class="social__item">
+                                        <a href="{{ social.link }}" class="social__link">
+                                            <img src="{{ social.logo.url }}" width="25" alt="{{ social.name }}-icon">
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="social__item">
+                                    <a href="#" class="social__link">
+                                        <img src="{% static 'images/facebook-icon.png' %}" width="25"
+                                             alt="facebook-icon">
+                                    </a>
+                                </li>
+                                <li class="social__item">
+                                    <a href="#" class="social__link">
+                                        <img src="{% static 'images/instagram-icon.png' %}" width="25"
+                                             alt="instagram-icon">
+                                    </a>
+                                </li>
+                                <li class="social__item">
+                                    <a href="#" class="social__link">
+                                        <img src="{% static 'images/telegram-icon.png' %}" width="25"
+                                             alt="telegram-icon">
+                                    </a>
+                                </li>
+                                <li class="social__item">
+                                    <a href="#" class="social__link">
+                                        <img src="{% static 'images/twitter-icon.png' %}" width="25" alt="twitter-icon">
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main__content">
+                <div class="main__content_header">
+
+                </div>
+
+                <div class="main__content_inner">
+                    <div class="main__content_form">
+                        {% if applicants_panel_info.title %}
+                            <div class="form__header">{{ applicants_panel_info.title | title }}</div>
+                        {% else %}
+                            <div class="form__header">Murojaat</div>
+                        {% endif %}
+
+                        <div class="progress_bar">
+                            <div class="step">
+                                {% if applicants_panel_info.step_title_1 %}
+                                    <p class="step__name">{{ applicants_panel_info.step_title_1 }}</p>
+                                {% else %}
+                                    <p class="step__name">Murojaat turi</p>
+                                {% endif %}
+                                <div class="bullet">
+                                    <span class="bullet__span">1</span>
+                                </div>
+                                <div class="fas fa-check check"></div>
+                            </div>
+                            <div class="step">
+                                {% if applicants_panel_info.step_title_2 %}
+                                    <p class="step__name">{{ applicants_panel_info.step_title_2 }}</p>
+                                {% else %}
+                                    <p class="step__name">Malumot</p>
+                                {% endif %}
+                                <div class="bullet">
+                                    <span class="bullet__span">2</span>
+                                </div>
+                                <div class="fas fa-check check"></div>
+                            </div>
+                            <div class="step">
+                                {% if applicants_panel_info.step_title_3 %}
+                                    <p class="step__name">{{ applicants_panel_info.step_title_3 }}</p>
+                                {% else %}
+                                    <p class="step__name">Murojaat mazmuni</p>
+                                {% endif %}
+                                <div class="bullet">
+                                    <span class="bullet__span">3</span>
+                                </div>
+                                <div class="fas fa-check check"></div>
+                            </div>
+                        </div>
+
+                        <div class="form__outher">
+                            <form id="appealForm" class="form" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+                                <div class="form__page slidepage selects">
+                                    <div class="form__field">
+                                        <div class="select_container">
+                                            <select class="form__select" name="appeal_type">
+                                                <option class="form__select_option" value="ariza" selected>Ariza
+                                                </option>
+                                                <option class="form__select_option" value="shikoyat">Shikoyat</option>
+                                                <option class="form__select_option" value="taklif">Taklif</option>
+                                                <option class="form__select_option" value="boshqa">boshqa</option>
+                                            </select>
+                                            <div class="form__label">Murojaat turi</div>
+                                        </div>
+                                    </div>
+                                    <div class="form__field form__category">
+                                        <div class="select_container">
+                                            <select class="form__select" name="appeal_direction">
+                                                <option class="form__select_option" value="diplom_olish" selected>Diplom
+                                                    olish masalalari
+                                                </option>
+                                                <option class="form__select_option" value="ishga_joylash">Ishga joylash,
+                                                    ishdagi tortishuv, oylik maoshi
+                                                </option>
+                                                <option class="form__select_option" value="kontrakt_tolovi">Kontrakt
+                                                    to'lovi to'g'risida
+                                                </option>
+                                                <option class="form__select_option" value="mag_masalalari">Magistratura
+                                                    masalalari
+                                                </option>
+                                                <option class="form__select_option" value="fuqarolar_murojaatlari">
+                                                    Fuqarolar murojaatlari to'g'risida
+                                                </option>
+                                                <option class="form__select_option" value="moliyaviy_masalalar">
+                                                    Moliyaviy masalalar
+                                                </option>
+                                                <option class="form__select_option" value="talaba_ustidan">Talaba
+                                                    ustidan shikoyat
+                                                </option>
+                                                <option class="form__select_option" value="rahbar_faoliyatidan">Rahbar
+                                                    faoliyatidan norozilik arizasi
+                                                </option>
+                                                <option class="form__select_option" value="stipendiya_masalalari">
+                                                    Stipendiya masalalari
+                                                </option>
+                                                <option class="form__select_option" value="oqishga_kirish">O'qishga
+                                                    kirish to'g'risida
+                                                </option>
+                                                <option class="form__select_option" value="oqishni_kochirish">O'qishni
+                                                    ko'chirish to'g'risida
+                                                </option>
+                                                <option class="form__select_option" value="oqishni_tiklash">O'qishni
+                                                    tiklash to'g'risida
+                                                </option>
+                                                <option class="form__select_option" value="ijodiy_imtihondan">Ijodiy
+                                                    imtihondan norozilik to'g'risida
+                                                </option>
+                                                <option class="form__select_option" value="diplom_xaqqoniyligini">Diplom
+                                                    xaqqoniyligini tasdiqlab berish to'g'risida
+                                                </option>
+                                                <option class="form__select_option" value="nafaqa_masalalari">Nafaqa
+                                                    masalalari
+                                                </option>
+                                                <option class="form__select_option" value="arxiv_malumotlarini">Arxiv
+                                                    ma'lumotlarini olish to'grisida
+                                                </option>
+                                                <option class="form__select_option" value="ikkinchi_mutaxasislik">
+                                                    Ikkinchi mutaxasislik
+                                                </option>
+                                                <option class="form__select_option" value="kitob_nashr">Kitob nashr
+                                                    qilish
+                                                </option>
+                                                <option class="form__select_option" value="ixtiro_qilish">Ixtiro qilish
+                                                    taklifi
+                                                </option>
+                                                <option class="form__select_option" value="taklif_va">Taklif va
+                                                    minnatdorchilik
+                                                </option>
+                                                <option class="form__select_option" value="sirtqi_oqish">Sirtqi o'qish
+                                                    masalalari
+                                                </option>
+                                                <option class="form__select_option" value="yotoqxona_masalalari">
+                                                    Yotoqxona masalalari bo'yicha
+                                                </option>
+                                                <option class="form__select_option" value="olimpiada_masalasi">Olimpiada
+                                                    masalasi bo'yicha
+                                                </option>
+                                                <option class="form__select_option" value="boshqa_yo">Boshqa
+                                                    yo'nalishlar
+                                                </option>
+                                            </select>
+                                            <div class="form__label">Murojaat yo'nalishi</div>
+                                        </div>
+                                    </div>
+                                    <div class="form__field four">
+                                        <div class="select_container">
+                                            <select id="not_tab_app_type" class="form__select"
+                                                    name="applicant_position">
+                                                <option class="form__select_option" value="talaba">Talaba</option>
+                                                <option class="form__select_option" value="ota_ona">Ota ona</option>
+                                                <option class="form__select_option" value="universitet_xodimi">
+                                                    Universitet xodimi
+                                                </option>
+                                                <option class="form__select_option" value="oqituvchi">O'qituvchi
+                                                </option>
+                                                <option class="form__select_option" value="tashkilot">Tashkilot</option>
+                                                <option class="form__select_option" value="boshqa">Boshqa</option>
+                                            </select>
+                                            <div class="form__label">Kim tomonidan</div>
+                                        </div>
+                                    </div>
+                                    <div class="form__field btns next_btn btn_first">
+                                        <span class="btn">keyingi</span>
+                                    </div>
+                                </div>
+
+                                <div class="form__page">
+                                    <div class="form__field">
+                                        <input id="appeal_name" type="name" name="applicant_name" class="form__input"
+                                               onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">
+                                        <div class="form__label">F.I.O</div>
+                                    </div>
+                                    <div class="form__field">
+                                        <input id="appeal_tel" type="tel" class="form__input" name="applicant_tel_num"
+                                               onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">
+                                        <div class="form__label">Telefon raqam:</div>
+                                    </div>
+                                    <div class="form__field">
+                                        <input onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"
+                                               id="appeal_email" type="email" name="applicant_email"
+                                               class="form__input">
+                                        <div class="form__label">Elektron pochta</div>
+                                    </div>
+                                    <div class="form__field">
+                                        <div class="select_container">
+                                            <select class="form__select" name="applicant_type">
+                                                <option class="form__select_option" value="yuridik_shaxs" selected>
+                                                    Jismoniy shaxs
+                                                </option>
+                                                <option class="form__select_option" value="jismoniy_shaxs">Yuridik
+                                                    shaxs
+                                                </option>
+                                            </select>
+                                            <div class="form__label">Shaxsingiz</div>
+                                        </div>
+                                    </div>
+                                    <div class="form__field" style="margin-bottom: 30px">
+                                        <div class="select_container">
+                                            <select id="not_tab_province" class="form__select"
+                                                    name="applicant_province">
+                                                <option class="form__select_option" value="toshkent">Toshkent</option>
+                                                <option class="form__select_option" value="samarqand">Samarqand</option>
+                                                <option class="form__select_option" value="andijon">Andijon</option>
+                                                <option class="form__select_option" value="fargona">Fargona</option>
+                                                <option class="form__select_option" value="namangan">Namangan</option>
+                                                <option class="form__select_option" value="qashqadaryo">Qashqadaryo
+                                                </option>
+                                                <option class="form__select_option" value="surxondaryo">Surxondaryo
+                                                </option>
+                                                <option class="form__select_option" value="buxoro">Buxoro</option>
+                                                <option class="form__select_option" value="navoiy">Navoiy</option>
+                                                <option class="form__select_option" value="xorazm">Xorazm</option>
+                                                <option class="form__select_option" value="sirdaryo">Sirdaryo</option>
+                                                <option class="form__select_option" value="jizzax">Jizzax</option>
+                                                <option class="form__select_option" value="qoraqalpoq">Qoraqalpog'iston
+                                                    Respublikasi
+                                                </option>
+                                            </select>
+                                            <div class="form__label">Viloyat</div>
+                                        </div>
+                                    </div>
+                                    <div class="form__field btns btn_second">
+                                        <span class="btn prev_1 prev">ortga</span>
+                                        <span class="btn next_1 next" id="second_next">keyingi</span>
+                                    </div>
+                                </div>
+
+                                <div class="form__page last__page">
+                                    <div class="form__field">
+                                        <input type="text" name="appeal_subject" class="form__input"
+                                               onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">
+                                        <div class="form__label">Murojaat mavzusi</div>
+                                    </div>
+                                    <div class="form__field form__field_textarea">
+                                        <textarea name="appeal_text" id="appeal_text" rows="10"
+                                                  class="form__input textarea"
+                                                  onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
+                                        <div class="form__label">Murojaat matni</div>
+                                    </div>
+                                    <div class="form__field form__file">
+                                        <div class="form__label">Fayl ko'rinishi</div>
+                                        <input type="file" name="appeal_file[]" class="inputfile" id="form__file"
+                                               data-multiple-caption="{count} ta fayl tanlandi" multiple>
+                                        <label id="appeal_file" for="form__file"
+                                               class="form__file_label"><span>Faylni tanlang</span></label>
+                                    </div>
+                                    <div class="security">
+                                        <label>
+                                            Shaxsim sir saqlansin
+                                            <input type="checkbox" name="privacy">
+                                        </label>
+                                    </div>
+                                    <div class="accept_block">
+                                        <p class="accept_desc">
+                                            <span class="warning">Diqqat!!!</span>
+                                            Jo'natish tugmasini bosish orqali siz Virtual qabulxona xizmat ko'rsatish
+                                            <a href="#" class="rules">
+                                                <span class="consent">shartlariga</span>
+                                            </a>
+                                            rozilik bildirasiz
+                                        </p>
+                                    </div>
+                                    <div class="form__field  btn_third">
+                                        <span class="btn prev_2 prev">ortga</span>
+                                        <button type="submit" class="btn submit">Jo'natish</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
-      </div>
-    {% elif messages %}
-      {% for message in messages %}
-        <div class="modal before">
-          <div class="modal__consent active">
-            <ul class="modal__consent_list">
-                <li class="modal__consent_item">Javobni ko'rish uchun parol</li>
-                <li class="modal__consent_item"><code>{{ message }}</code></li>
-                <li class="modal__consent_item">Ma'lumot</li>
-                <li class="modal__consent_item">Javobni ko'rish uchun, Murojaat yuborish panelidagi o'ng pastki qismda joylashgan joyga parolni kiriting.</li>
-            </ul>
-            <div class="modal__consent_close"></div>
-          </div>
+    </div>
+
+    <div class="statistics">
+        <div class="statistics__inner">
+
+            <div class="statistics__top">
+                {% if applicants_panel_info.statistics_title %}
+                    <h2 class="form__header statistics__title">{{ applicants_panel_info.statistics_title }}</h2>
+                {% else %}
+                    <h2 class="form__header statistics__title">Murojaatlar statistikasi</h2>
+                {% endif %}
+                <ul class="statistics__list">
+                    <li class="rektor__info__item_span statistics__item">
+                        <p>Yangi</p>
+                        <span class="statistics__count">{{ new_appeals_cnt }}</span>
+                    </li>
+                    <li class="rektor__info__item_span statistics__item">
+                        <p>Ko'rib chiqilmoqda</p>
+                        <span class="statistics__count">{{ process_appeals_cnt }}</span>
+                    </li>
+                    <li class="rektor__info__item_span statistics__item">
+                        <p>Rad etilgan</p>
+                        <span class="statistics__count">{{ rejected_appeals_cnt }}</span>
+                    </li>
+                    <li class="rektor__info__item_span statistics__item">
+                        <p>Bajarilgan</p>
+                        <span class="statistics__count">{{ completed_appeals_cnt }}</span>
+                    </li>
+                    <li class="rektor__info__item_span statistics__item">
+                        <p>Umumiy</p>
+                        <span class="statistics__count">{{ all_appeals_cnt }}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="statistics__bottom">
+                {% if applicants_panel_info.answer_title %}
+                    <h2 class="form__header statistics__title">{{ applicants_panel_info.answer_title }}</h2>
+                {% else %}
+                    <h2 class="form__header statistics__title">Murojaat holatini tekshirish</h2>
+                {% endif %}
+                <div class="statistics__result">
+                    <p>Murojaat yuborilganda olingan parolni kiriting</p>
+                    <div class="statistics__form">
+                        <label for="st__input"></label>
+                        <input id="st__input" type="text" class="statistics__input" style="cursor: pointer;"
+                               name="answer_code" placeholder="murojaat kodi">
+                        <button type="button" onclick="getAnswerInfo()" class="statistics__btn" id="check_btn">
+                            Tekshirish
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-      {% endfor %}
-    {% else %}
-      <div class="modal">
-        <div class="modal__consent">
-          <ul class="modal__consent_list">
+    </div>
+
+</div>
+
+<div id="modal_answer" class="modal">
+    <div id="modal_consent_answer" class="modal__consent">
+        <ul class="modal__consent_list" id="answers_info">
             {% if applicants_panel_info.accept_text %}
-              <h2 class="form__header statistics__title">{{ applicants_panel_info.accept_text | safe }}</h2>
+                <h2 class="form__header statistics__title">{{ applicants_panel_info.accept_text | safe }}</h2>
             {% else %}
-              <li class="modal__consent_item">Hurmatli Murojaatchi!</li>
-              <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy maqomga ega ekanligini ham eslatib qo'ymoqchimiz.</li>
-              
-              <li class="modal__consent_item"><span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
-              
-              <li class="modal__consent_item"><span>1.</span> Alohida e'tibor bering! Tuhmat, haqorat so'zlar ishlatilgan va yolg'on xabar beruvchi murojaatlarni taqdim etish mumkin emas.</li>
-              
-              <li class="modal__consent_item"><span>2.</span> Shuningdek, quyidagi holatlarda murojaatlaringiz rad etilishi mumkinligini eslatib o'tmoqchimiz:</li>
-              
-              <li class="modal__consent_item">
-                <p>odobsizlik mazmunidagi murojaatlar (uyatsiz yoxud haqoratli iboralar, tahdidlar, mantiqsiz takliflar va shunga o'xshash murojaatlar);</p>
-                <p>murojaat matnida tushunarsiz qisqartirishlar yoki reklama materiallari mavjud bo'lgan, tarkibida aniq arizalar, shikoyatlar yoki takliflar bo'lmagan murojaatlar</p>
-              </li>
-              <li class="modal__consent_item"><span>3.</span> Shuningdek, foydalanuvchining bir necha bor bitta masala bo'yicha javob berilgan murojaati qayta yuborilganda, agar unda yangi vajlar yoki holatlar keltirilmagan bo'lsa, ko'rib chiqilmaydi. Mazkur shartlarning barchasi O'zbekiston Respublikasining amaldagi qonunchiligidan kelib chiqqan holda belgilangan.</li>
+                <li class="modal__consent_item">Hurmatli Murojaatchi!</li>
+                <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni
+                    yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy
+                    maqomga ega ekanligini ham eslatib qo'ymoqchimiz.
+                </li>
+
+                <li class="modal__consent_item">
+                    <span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
+
+                <li class="modal__consent_item"><span>1.</span> Alohida e'tibor bering! Tuhmat, haqorat so'zlar
+                    ishlatilgan va yolg'on xabar beruvchi murojaatlarni taqdim etish mumkin emas.
+                </li>
+
+                <li class="modal__consent_item"><span>2.</span> Shuningdek, quyidagi holatlarda murojaatlaringiz rad
+                    etilishi mumkinligini eslatib o'tmoqchimiz:
+                </li>
+
+                <li class="modal__consent_item">
+                    <p>odobsizlik mazmunidagi murojaatlar (uyatsiz yoxud haqoratli iboralar, tahdidlar, mantiqsiz
+                        takliflar va shunga o'xshash murojaatlar);</p>
+                    <p>murojaat matnida tushunarsiz qisqartirishlar yoki reklama materiallari mavjud bo'lgan,
+                        tarkibida aniq arizalar, shikoyatlar yoki takliflar bo'lmagan murojaatlar</p>
+                </li>
+                <li class="modal__consent_item"><span>3.</span> Shuningdek, foydalanuvchining bir necha bor bitta
+                    masala bo'yicha javob berilgan murojaati qayta yuborilganda, agar unda yangi vajlar yoki
+                    holatlar keltirilmagan bo'lsa, ko'rib chiqilmaydi. Mazkur shartlarning barchasi O'zbekiston
+                    Respublikasining amaldagi qonunchiligidan kelib chiqqan holda belgilangan.
+                </li>
             {% endif %}
-          </ul>
-          <div class="modal__consent_close"></div>
-        </div>
-      </div>
-    {% endif %}
+        </ul>
+        <div class="modal__consent_close"></div>
+    </div>
+</div>
 
 
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script>
-      const slidePage = document.querySelector(".slidepage");
-      const firstNextBtn = document.querySelector(".next_btn");
-      const prevBtnSecond = document.querySelector(".prev_1");
-      const nextBtnSecond = document.querySelector(".next_1");
-      const prevBtnThird = document.querySelector(".prev_2");
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+    var appeal_files = false;
 
-      const consent = document.querySelector(".consent");
-      const modalConsent = document.querySelector(".modal__consent");
-      const modalConsentClose = document.querySelector(".modal__consent_close");
-      const modal = document.querySelector(".modal");
+    function ready() {
+        var inputFile = document.querySelectorAll(".inputfile");
+        appeal_files = inputFile;
+        Array.prototype.forEach.call(inputFile, function (input) {
+            var label = input.nextElementSibling,
+                labelVal = label.innerHTML;
 
-      const item = document.querySelector("item");
 
-      const submitBtn = document.querySelector(".submit");
+            input.addEventListener('change', function (e) {
+                var fileName = '';
+                if (this.files.length > 0) {
+                    if (this.files.length > 1)
+                        fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                    else
+                        fileName = this.files[0].name;
+                }
 
-      const progressText = document.querySelectorAll(".step .step__name");
+                if (fileName)
+                    label.querySelector('span').innerHTML = fileName;
+                else
+                    label.innerHTML = labelVal;
+            });
+        });
+    }
 
-      const progressCheck = document.querySelectorAll(".step .check");
 
-      const bullet = document.querySelectorAll(".step .bullet");
+    document.addEventListener("DOMContentLoaded", ready);
 
-      let max = 3;
-      let current = 1;
 
-      firstNextBtn.addEventListener("click", function(){
+    $(document).ready(function () {
+        $("#appealForm").submit(function () {
+            console.log($(this).serialize());
+            $.ajax({
+                data: $(this).serialize(),
+                type: $(this).attr("method"),
+                url: "{% url 'post-appeal' %}",
+                success: function (response) {
+                    alert(`Thank you for appeal ${response.applicant_name}, you code ${response.appeal_code}`);
+                },
+
+                error: function (response) {
+                    alert(response.responseJSON.errors);
+                }
+            });
+            return false;
+        });
+    })
+</script>
+<script>
+    function getAnswerInfo() {
+        const appeal_code = document.getElementById('st__input').value;
+        const answers_info = document.getElementById('answers_info');
+        const modal_answer = document.getElementById("modal_answer");
+        const modal_consent_answer = document.getElementById("modal_consent_answer");
+
+        $.ajax({
+            url: '',
+            datatype: 'json',
+            type: 'GET',
+            data: {
+                'appeal_code': appeal_code,
+            },
+
+            success: function (data) {
+                modal_answer.classList.add("before");
+                modal_consent_answer.classList.add("active");
+
+                answers_info.innerHTML = `<li class="modal__consent_item">${data.message}</li>`;
+
+                (data.answers).forEach(answer => {
+                    if (!answer.file) {
+                        answer.file = '-';
+                    }
+                    var html = `
+                        <li class="modal__consent_item"><span>Javob matni:</span> ${answer.text}</li>
+                        <li class="modal__consent_item"><span>Javob fayl ko'rinishi:</span><a href="/admin/answers/download-answerfile/${answer.id}">${answer.file}</a></li>
+                        <li class="modal__consent_item"><span>Sizning murojaatingiz:</span> ${answer.answer_type_display}</li>`
+
+                    answers_info.innerHTML += html;
+                });
+
+                answers_info.innerHTML += `
+                        <li class="modal__consent_item"><span>Murojaat yo'llangan sana:</span> ${data.appeal_date}</li>
+                        <li class="modal__consent_item"><span>Javob qaytarilgan sana:</span> ${data.last_answer_date}</li>`;
+
+            },
+
+            error: function (data) {
+                modal_answer.classList.add("before");
+                modal_consent_answer.classList.add("active");
+
+                answers_info.innerHTML = `<li class="modal__consent_item">${data.responseJSON.error}</li>`;
+            }
+        });
+    }
+
+</script>
+<script>
+    const slidePage = document.querySelector(".slidepage");
+    const firstNextBtn = document.querySelector(".next_btn");
+    const prevBtnSecond = document.querySelector(".prev_1");
+    const nextBtnSecond = document.querySelector(".next_1");
+    const prevBtnThird = document.querySelector(".prev_2");
+
+    const consent = document.querySelector(".consent");
+    const modalConsent = document.querySelector(".modal__consent");
+    const modalConsentClose = document.querySelector(".modal__consent_close");
+    const modal = document.querySelector(".modal");
+
+    const item = document.querySelector("item");
+
+    const submitBtn = document.querySelector(".submit");
+
+    const progressText = document.querySelectorAll(".step .step__name");
+
+    const progressCheck = document.querySelectorAll(".step .check");
+
+    const bullet = document.querySelectorAll(".step .bullet");
+
+    let max = 3;
+    let current = 1;
+
+    firstNextBtn.addEventListener("click", function () {
+
         slidePage.style.marginLeft = "-25%";
-        
-        bullet[current - 1].classList.add("active");
-        progressText[current - 1].classList.add("active");
-        progressCheck[current - 1].classList.add("active");
-        current += 1;
-      });
-
-      nextBtnSecond.addEventListener("click", function(){
-        slidePage.style.marginLeft = "-50%";
 
         bullet[current - 1].classList.add("active");
         progressText[current - 1].classList.add("active");
         progressCheck[current - 1].classList.add("active");
         current += 1;
-      });
+    });
 
-      consent.addEventListener("click", function(){
+
+    var appeal_name = document.querySelector('#appeal_name');
+    var valid_name = false;
+    appeal_name.addEventListener('input', function (e) {
+        var pattern = /^[а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+$/;
+
+        var currentValue = e.target.value;
+        valid_name = pattern.test(currentValue);
+
+        if (valid_name) {
+            appeal_name.classList.remove("error_border")
+        } else {
+            appeal_name.classList.add("error_border")
+        }
+
+    });
+
+    var appeal_tel = document.querySelector('#appeal_tel');
+    var valid_tel = false;
+    appeal_tel.addEventListener('input', function (e) {
+        var pattern = /^((\+998|998)+(97|91|98|93|94|88|33|95|99)+([0-9]){7})$/;
+        var currentValue = e.target.value;
+        valid_tel = pattern.test(currentValue);
+
+        if (valid_tel) {
+            appeal_tel.classList.remove("error_border")
+        } else {
+            appeal_tel.classList.add("error_border")
+        }
+
+    });
+
+    var appeal_email = document.querySelector('#appeal_email');
+    var valid_email = false;
+    appeal_email.addEventListener('input', function (e) {
+        var pattern = /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/;
+        var currentValue = e.target.value;
+        valid_email = pattern.test(currentValue);
+
+        if (valid_email) {
+            appeal_email.classList.remove("error_border")
+        } else {
+            appeal_email.classList.add("error_border")
+        }
+
+        if (!currentValue) {
+            appeal_email.classList.remove("error_border");
+        }
+
+    });
+
+    nextBtnSecond.addEventListener("click", function () {
+
+        if (valid_name && valid_tel) {
+
+            if (appeal_email.value) {
+                if (valid_email) {
+                    slidePage.style.marginLeft = "-50%";
+
+                    bullet[current - 1].classList.add("active");
+                    progressText[current - 1].classList.add("active");
+                    progressCheck[current - 1].classList.add("active");
+                    current += 1;
+                } else {
+                    appeal_email.classList.add("error_border");
+                }
+            } else {
+                slidePage.style.marginLeft = "-50%";
+
+                bullet[current - 1].classList.add("active");
+                progressText[current - 1].classList.add("active");
+                progressCheck[current - 1].classList.add("active");
+                current += 1;
+            }
+
+        }
+        if (!valid_name) {
+            appeal_name.classList.add("error_border")
+        }
+        if (!valid_tel) {
+            appeal_tel.classList.add("error_border")
+        }
+    });
+
+    consent.addEventListener("click", function () {
+        const answers_info = document.getElementById("answers_info");
+        answers_info.innerHTML = "";
+        answers_info.innerHTML += `
+            <li class="modal__consent_item">Hurmatli Murojaatchi!</li>
+            <li class="modal__consent_item">Sizga Universitet rektoriga bevosita elektron tarzda murojaatlarni
+                yuborish imkoniyati taqdim etilmoqda. Shu bilan birga, Sizning yuborayotgan murojaatingiz rasmiy
+                maqomga ega ekanligini ham eslatib qo'ymoqchimiz.
+            </li>
+
+            <li class="modal__consent_item">
+                <span>Shu sababli, Sizdan quyidagilarni unutmasligingizni so'raymiz:</span></li>
+
+            <li class="modal__consent_item"><span>1.</span> Alohida e'tibor bering! Tuhmat, haqorat so'zlar
+                ishlatilgan va yolg'on xabar beruvchi murojaatlarni taqdim etish mumkin emas.
+            </li>
+
+            <li class="modal__consent_item"><span>2.</span> Shuningdek, quyidagi holatlarda murojaatlaringiz rad
+                etilishi mumkinligini eslatib o'tmoqchimiz:
+            </li>
+
+            <li class="modal__consent_item">
+                <p>odobsizlik mazmunidagi murojaatlar (uyatsiz yoxud haqoratli iboralar, tahdidlar, mantiqsiz
+                    takliflar va shunga o'xshash murojaatlar);</p>
+                <p>murojaat matnida tushunarsiz qisqartirishlar yoki reklama materiallari mavjud bo'lgan,
+                    tarkibida aniq arizalar, shikoyatlar yoki takliflar bo'lmagan murojaatlar</p>
+            </li>
+            <li class="modal__consent_item"><span>3.</span> Shuningdek, foydalanuvchining bir necha bor bitta
+                masala bo'yicha javob berilgan murojaati qayta yuborilganda, agar unda yangi vajlar yoki
+                holatlar keltirilmagan bo'lsa, ko'rib chiqilmaydi. Mazkur shartlarning barchasi O'zbekiston
+                Respublikasining amaldagi qonunchiligidan kelib chiqqan holda belgilangan.
+            </li>`
 
         modalConsent.classList.add("active");
         modal.classList.add("before");
-      });
+    });
 
-      modalConsentClose.addEventListener("click", function(){
+    modalConsentClose.addEventListener("click", function () {
 
         modalConsent.classList.remove("active");
         modal.classList.remove("before");
 
-      });
-      
+    });
 
-      submitBtn.addEventListener("click", function(){
 
-        bullet[current - 1].classList.add("active");
-        progressText[current - 1].classList.add("active");
-        progressCheck[current - 1].classList.add("active");
-        current += 1;
+    var appeal_text = document.getElementById('appeal_text');
+    var appeal_file = document.getElementById('form__file');
+    var appeal_file_label = document.getElementById('appeal_file');
+    var valid_text = false;
+    var valid_file = false;
+    appeal_file.addEventListener("change", function (e) {
+        var currentValue = e.target.value;
+        if (currentValue) {
+            appeal_file_label.classList.remove("error_full_border");
+            valid_file = true;
 
-        //setTimeout(function(){
-        //  alert('123');
-        //  location.reload();
-        //}, 800);
-      });
+            if (valid_text || appeal_text.value.trim().length < 1) {
+                appeal_text.classList.remove("error_full_border");
+                valid_text = true;
+            }
+        }
+    });
 
-      prevBtnSecond.addEventListener("click", function(){
+    appeal_text.addEventListener("input", function (e) {
+        var pattern = /^[а-яА-ЯёЁa-zA-Z0-9 ]{100,10000}$/;
+        var currentValue = e.target.value.trim();
+        valid_text = pattern.test(currentValue);
+
+        if (valid_text || appeal_text.value.trim().length < 1) {
+            appeal_text.classList.remove("error_full_border");
+            appeal_file_label.classList.remove("error_full_border");
+            valid_file = true;
+        } else {
+            appeal_text.classList.add("error_full_border");
+        }
+    });
+
+    submitBtn.addEventListener("click", function (e) {
+        if (valid_text && valid_file && (appeal_text.value.trim().length >= 100 || appeal_file.value)) {
+            bullet[current - 1].classList.add("active");
+            progressText[current - 1].classList.add("active");
+            progressCheck[current - 1].classList.add("active");
+            current += 1;
+        } else {
+            e.preventDefault();
+        }
+        if (!appeal_file.value && appeal_text.value.trim().length < 1) {
+            appeal_text.classList.add("error_full_border");
+            appeal_file_label.classList.add("error_full_border");
+            valid_text = false;
+            valid_file = false;
+        }
+        if (!valid_text) {
+            appeal_text.classList.add("error_full_border");
+
+        }
+        if (!valid_file) {
+            appeal_file_label.classList.add("error_full_border");
+        }
+
+    });
+
+    prevBtnSecond.addEventListener("click", function () {
         slidePage.style.marginLeft = "0%";
 
         bullet[current - 2].classList.remove("active");
         progressText[current - 2].classList.remove("active");
         progressCheck[current - 2].classList.remove("active");
         current -= 1;
-      });
+    });
 
-      prevBtnThird.addEventListener("click", function(){
+    prevBtnThird.addEventListener("click", function () {
         slidePage.style.marginLeft = "-25%";
 
         bullet[current - 2].classList.remove("active");
         progressText[current - 2].classList.remove("active");
         progressCheck[current - 2].classList.remove("active");
         current -= 1;
-      });
+    });
 
-      function hoveronItem(){
-        document.getElementById("content").classList.add("before");
-      }
+    $('.nav__item').hover(
+       function(){ document.getElementById("content").classList.add('before') },
+       function(){ document.getElementById("content").classList.remove('before') },
+)
 
-      function hoveroffItem(){
-        document.getElementById("content").classList.remove("before");
-      }
-    </script>
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-    <script type="module">
-        import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js'
-      
-        const swiper = new Swiper('.swiper', {
-            direction: 'vertical',
-            loop: true,
-            slidesPerView: 3,
-            spaceBetween: -70,
-            centeredSlides: true,
-            effect: "coverflow",
-            grabCursor: false,
-            autoplay: {
-                delay: 4000,
-                disableOnInteraction: true,
-                 },
-            pagination: {
-                el: '.swiper-pagination',
-            },
-          })
-    </script>
-    <script>
-      function ready ()
-      {
-          var inputFile = document.querySelectorAll(".inputfile");
-          Array.prototype.forEach.call(inputFile, function( input )
-          {
-              var label = input.nextElementSibling,
-              labelVal = label.innerHTML;
+</script>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script type="module">
+    import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js'
 
-              input.addEventListener('change', function ( e )
-              {
-                  console.log(this.files);
-                  var fileName = '';
-                  if( this.files && this.files.length > 1 )
-                      fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
-                  else
-                      fileName = this.files[0].name;
-                  
-                  if( fileName )
-                      label.querySelector( 'span' ).innerHTML = fileName;
-                  else
-                      label.innerHTML = labelVal;
-              });
-          });
-      };
+    const swiper = new Swiper('.swiper', {
+        direction: 'vertical',
+        loop: true,
+        slidesPerView: 3,
+        spaceBetween: -70,
+        centeredSlides: true,
+        effect: "coverflow",
+        grabCursor: false,
+        autoplay: {
+            delay: 4000,
+            disableOnInteraction: true,
+        },
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    })
+</script>
+<script>
+    var not_tab_applicant_type = document.getElementById("not_tab_app_type");
+    var not_tab_province = document.getElementById("not_tab_province");
+    not_tab_applicant_type.addEventListener('keydown', function (e) {
+        if (e.key == 'Tab') {
+            e.preventDefault();
+            var start = this.selectionStart;
 
-      document.addEventListener("DOMContentLoaded", ready);
-    </script>
-  </body>
+            this.value = this.value.substring(0, start);
+        }
+    });
+    not_tab_province.addEventListener('keydown', function (e) {
+        if (e.key == 'Tab') {
+            e.preventDefault();
+            var start = this.selectionStart;
+
+            this.value = this.value.substring(0, start);
+        }
+    });
+</script>
+</body>
 </html>

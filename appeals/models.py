@@ -2,10 +2,10 @@ import os
 import uuid
 from ckeditor.fields import RichTextField
 from django.core.validators import FileExtensionValidator
-from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 
 from adminPanel.models import User
+
 
 class Applicants_panel(models.Model):
     university_name = models.CharField(max_length=50)
@@ -16,7 +16,7 @@ class Applicants_panel(models.Model):
     sup_title = models.CharField(max_length=100)
     accept_text = RichTextField(blank=True)
     main_site_link = models.URLField()
-    tel = PhoneNumberField(blank=True)
+    tel = models.CharField(blank=True, max_length=13)
     email = models.EmailField(blank=True)
     step_title_1 = models.CharField(max_length=50)
     step_title_2 = models.CharField(max_length=50)
@@ -24,7 +24,6 @@ class Applicants_panel(models.Model):
     aside_title = models.CharField(max_length=20)
     answer_title = models.CharField(max_length=30)
     statistics_title = models.CharField(max_length=30)
-
 
     # Rector infos
     rector_name = models.CharField(max_length=100)
@@ -39,10 +38,9 @@ class Social(models.Model):
     name = models.CharField(max_length=50)
     link = models.URLField()
     logo = models.ImageField(upload_to="Applicants_panel/Social_images/")
-    
+
 
 class Appeal(models.Model):
-
     PROVINCE = [
         ('toshkent', 'Toshkent'),
         ('samarqand', 'Samarqand'),
@@ -74,7 +72,6 @@ class Appeal(models.Model):
         ("tashkilot", "Tashkilot"),
         ("boshqa", "Boshqa"),
     ]
-
 
     APPLICANT_TYPE = [
         ('yuridik_shaxs', 'Yuridik shaxs'),
@@ -117,7 +114,10 @@ class Appeal(models.Model):
 
     appeal_subject = models.CharField(max_length=60, blank=True)
     appeal_text = models.TextField(blank=True)
-    appeal_file = models.FileField(upload_to='Appeal_Files/', blank=True, validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt", "xlsx", "xls"])])
+    appeal_file = models.FileField(
+        upload_to='Appeal_Files/',
+        blank=True,
+        validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt", "xlsx", "xls"])])
     appeal_type = models.CharField(max_length=10, choices=APPEAL_TYPE)
     appeal_direction = models.CharField(max_length=70, choices=APPEAL_DIRECTION)
     privacy = models.BooleanField(default=False)
@@ -127,38 +127,45 @@ class Appeal(models.Model):
 
     # APPLICANT DATA
     applicant_name = models.CharField(max_length=40)
-    applicant_tel_num = PhoneNumberField()
+    applicant_tel_num = models.CharField(max_length=13)
     applicant_email = models.EmailField(blank=True)
     applicant_province = models.CharField(max_length=40, choices=PROVINCE)
     applicant_type = models.CharField(max_length=15, choices=APPLICANT_TYPE)
     applicant_position = models.CharField(max_length=20, choices=APPLICANT_POSITION)
 
-
     def __str__(self):
         return self.applicant_name
-    
+
     def filename(self):
         return os.path.basename(self.appeal_file.name)
 
+    def get_cnt_country(country):
+        return Appeal.objects.filter(applicant_province=country).count()
+
+    def get_cnt_status(status):
+        return Appeal.objects.filter(appeal_status=status).count()
+
+    def get_cnt_direction(direction):
+        return Appeal.objects.filter(appeal_direction=direction).count()
+
 
 class Answer(models.Model):
-
     ACTIVE = [
         ('send', 'Yuborilsin'),
         ('save', 'Saqlab qo\'yilsin'),
     ]
-    
+
     ANSWER_TYPE = [
         ('done', 'bajarildi'),
         ('rejected', 'rad etildi'),
     ]
-    
+
     ANSWER_ADDRESS = [
         ('site', 'Sayt'),
         ('email', 'Email'),
         ('site_and_email', 'Sayt va Email'),
     ]
-    
+
     text = models.TextField(blank=True)
     file = models.FileField(upload_to='Answers/files/', blank=True)
     appeal = models.ForeignKey(Appeal, on_delete=models.SET_NULL, related_name='get_answers', null=True)
@@ -168,17 +175,17 @@ class Answer(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     active = models.CharField(max_length=4, choices=ACTIVE)
-    
 
     def __str__(self):
         if self.appeal:
             return f'{self.appeal} murojaati javobi'
         return f'{self.author} javobi'
-    
-    
+
+    def get_cnt_answer_address(address):
+        return Answer.objects.filter(answer_address=address).count()
+
     def filename(self):
         return os.path.basename(self.file.name)
-    
+
     def updated_date_format(self):
         return self.updated_date.strftime('%d-%m-%Y || %H:%M')
-    

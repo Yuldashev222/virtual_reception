@@ -200,10 +200,6 @@
                         Javoblar
                     </a>
                 </li>
-                <li>
-                    <a href="form.html">
-                        <i class="far fa-comments"></i>Chat</a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -228,10 +224,6 @@
             <li class="active has-sub">
                 <a href="{% url 'answers' %}">
                     <i class="fas fa-reply"></i>Javoblar</a>
-            </li>
-            <li>
-                <a href="form.html">
-                    <i class="fas fa-comments"></i>Chat</a>
             </li>
             <li>
                 <a href="{% url 'applicants-view' %}">
@@ -262,7 +254,6 @@
         <div class="container-fluid">
             {% if answers %}
                 <form method="get">
-
                     <div class="appeal__filter">
                         <h4>Viloyat</h4>
                         <select id="applicant_province" onInput='myFunction()' class="w-100 p-1" name="province">
@@ -369,7 +360,7 @@
 
                             <hr>
                             <h4>Admin</h4>
-                            <ul>
+                            <ul style="overflow-y: scroll; max-height: 140px">
                                 <li>
                                     <label>
                                         <input type="radio" onclick='myFunction()' checked name="answer_author" value="all">
@@ -550,63 +541,10 @@
                     <div id="appeal_detail"></div>
 
                     <div class="text-right mt-2" id="edit_answer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
-                        <button onclick="editAnswer()" type="button" class="btn btn-primary" id="edit_btn"><i class="far fa-edit"></i></button>
+                        <button id="back" type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
+                        <button id="delete_answer" type="button" class="btn btn-danger">o'chirish</button>
+                        <button onclick="editAnswer()" type="button" class="btn btn-primary" id="edit_btn">O'zgartirish</button>
                     </div>
-
-                    <!-- <div class="send_answer">
-                        <form id="answerForm" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                            <input type="hidden" name="appeal" id="answer_appeal">
-                            <ul>
-                                <li style="padding: 5px 0;">
-                                    <hr style="height: 15px; background-color: #ccc; border-radius: 300%;">
-                                    <h4 style="margin-bottom: 20px">Javob yozish:</h4>
-                                    <textarea id="answer_text" name="text" class="modal-answer-textarea" style="border: 1px solid #ccc; width: 100%;"></textarea>
-                                </li>
-                                <li>
-                                    <hr>
-                                    <h4 style="margin-bottom: 20px">Javob fayl ko'rinishi:</h4>
-                                    <input id="answer_file" type="file" name="file">
-                                </li>
-                                <li style="padding: 5px 0;">
-                                    <hr>
-                                    <h4 style="margin-bottom: 20px">Javob turi:</h4>
-                                    <input type="radio" name="answer_type" value="done" id="accepted" checked>
-                                    <label for="accepted">
-                                        <i class="fas fa-check"></i>
-                                        Bajarildi
-                                    </label>
-                                    <input type="radio" name="answer_type" value="rejected" id="rejected">
-                                    <label for="rejected">
-                                        <i class="fas fa-close"></i>
-                                        Rad etildi
-                                    </label>
-                                </li>
-
-                                <li style="padding: 5px 0;" id="answer_address">
-                                </li>
-
-                                <li style="padding: 5px 0;">
-                                    <hr>
-                                    <h4 style="margin-bottom: 20px">Javob holati:</h4>
-                                    <input type="radio" name="active" value="send" id="send_answer" checked>
-                                    <label for="send_answer">
-                                        <i class='fa fa-send'></i>
-                                        Yuborilsin
-                                    </label>
-                                    <input type="radio" name="active" value="save" id="save_answer">
-                                    <label for="save_answer">
-                                        <i class="fa fa-save"></i>
-                                        Saqlab qo'yilsin
-                                    </label>
-                                </li>
-                            </ul>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
-                                <button type="submit" class="btn btn-primary">Javob Yuborish</button>
-                            </div>
-                        </form>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -623,7 +561,7 @@
             var answer_address_optionValue = document.querySelector("input[name='answer_address']:checked").value;
             var date_optionValue = document.querySelector("input[name='date']:checked").value;
             var author_optionValue = document.querySelector("input[name='answer_author']:checked").value;
-            
+
             // Search
             var search_optionValue = document.getElementById("search").value;
             var search_in_date_optionValue = document.getElementById("search_in_date").value;
@@ -632,7 +570,7 @@
                 url: '{% url "answers" %}',
                 datatype: 'json',
                 data: {
-                    'applicant_province': country_optionValue, 
+                    'applicant_province': country_optionValue,
                     'appeal_direction': direction_optionValue,
                     'appeal_type': appeal_type_optionValue,
                     'answer_type': answer_type_optionValue,
@@ -675,10 +613,11 @@
                     });
                 }
             });
-            
+
         }
 
         function openSingleAppeal(id) {
+            $('#delete_answer').attr('onclick', `deleteAnswer(${id})`);
 
             $.ajax({
                 url: "{% url 'single-answer' %}",
@@ -702,7 +641,11 @@
                     else {
                         edit_btn.value = answer.id;
                         edit_btn.classList.remove('d-none');
+                        edit_btn.innerHTML = "O'zgartirish";
+                        $('#edit_btn').attr('onclick', 'editAnswer()');
                     }
+                    $('#back').attr('onclick', ``);
+                    $('#back').attr('data-dismiss', 'modal');
 
 
                     //const answer_text = document.getElementById("answer_text");
@@ -712,16 +655,16 @@
                     //answer_appeal.value = answer.appeal;
 
                     const answer_address = document.getElementById("answer_address");
-                    
+
 
                     const answer_name = document.getElementById("scrollmodalLabel");
-                    answer_name.innerHTML = `<span><span style="color: #4272d7; cursor: pointer;">${answer.appeal}</span> javobi</span><span id="appeal_status" style="color: #bbbb05;">${answer.answer_type}</span>`;
-                    
+                    answer_name.innerHTML = `<span><span id="appeal_view" onclick="appealView(${id})" class="mr-2" style="color: #4272d7; cursor: pointer;">${answer.appeal}</span> javobi</span><span id="appeal_status" style="color: #bbbb05;">${answer.answer_type}</span>`;
+
                     const answer_detail = document.getElementById("appeal_detail");
                     answer_detail.innerHTML = "";
                     answer_detail.innerHTML += `
                         <ul>
-                            <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
+                            <li id="for_email" style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                                 <h5 style="margin-bottom: 5px">Murojaatchi F I O:</h5>
                                 <p style="margin-left: 20px">${answer.appeal}</p>
                             </li>
@@ -760,28 +703,28 @@
                                 </p>
                             </li>
                         </ul>`
-                
-                
+
+
                 }
             });
         }
-   
+
         $(document).ready(function () {
-            
-            
-            
+
+
+
             $('#answerForm').submit(function () {
                 const answer_file = document.getElementById("answer_file");
-                
+
                 $.ajax({
                     data: $(this).serialize(),
                     type: $(this).attr('method'),
                     url: "{% url 'send-answer' %}",
                     success: function (response) {
-                        
+
                         const appeal_answers = document.getElementById('appeal_answers');
                         document.getElementById('appeal_status').innerHTML = `${response.appeal_status}`;
-                    
+
                         if (response.appeal_answers != false) {
                             document.getElementById('answerForm').reset();
 
@@ -789,14 +732,14 @@
                             <div class="appeal_answers_header">
                                 <h5 style="margin-bottom: 20px">Murojaat javoblari:</h5>
                             </div>
-                            <div 
-                                id="appeal_answers_main" 
+                            <div
+                                id="appeal_answers_main"
                                 style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
                             </div>`
 
-                            
+
                             const appeal_answers_main = document.getElementById('appeal_answers_main');
-                            appeal_answers_main.innerHTML = "";                                                                                                     
+                            appeal_answers_main.innerHTML = "";
                             appeal_answers_main.innerHTML = `
                             <p class="">
                                 <span>No</span>
@@ -807,9 +750,9 @@
                             </p>`;
                             var index = 1;
                             (response.appeal_answers).forEach(answer => {
-                                
+
                                 if (answer.active == 'send') {
-                                    
+
                                     appeal_answers_main.innerHTML += `
                                     <p class="">
                                         <span class="">${index}.</span>
@@ -831,10 +774,10 @@
                                         <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.created_date}</a>
                                     </p>`;
                                 }
-                                
+
                                 index ++;
                             });
-                            
+
                         }
 
                         alert(response.result);
@@ -845,10 +788,13 @@
                 return false;
             });
         })
-    
-        
+
+
         function editAnswer() {
             answer_id = document.getElementById('edit_btn').value;
+
+            $('#back').attr('onclick', `openSingleAppeal(${answer.id})`);
+            $('#back').attr('data-dismiss', '');
 
             $.ajax({
                 url: '{% url "edit-answer" %}',
@@ -861,36 +807,39 @@
                 success: function(data) {
                     answer = data.answer;
 
-                   // const answer_detail = document.getElementById("appeal_detail");
-                    //answer_detail.innerHTML = "";
-
-
                     const answer_address = document.getElementById('answer_address');
                     answer_address.innerHTML = "";
 
                     if (answer.appeal_email) {
                         answer_address.innerHTML += `
                             <h5 style="margin-bottom: 5px">Javob manzili:</h5>
-                            <input type="radio" name="answer_address" value="site" id="in_site">
+                            <input type="radio" name="answer_address_instance" value="site" id="in_site">
                             <label for="in_site">
                                 <i class='fab fa-chrome'></i>
                                 Sayt
                             </label>
-                            <input type="radio" name="answer_address" value="email" id="in_email">
+                            <input type="radio" name="answer_address_instance" value="email" id="in_email">
                             <label for="in_email">
                                 <i class="fas fa-envelope"></i>
                                 Email
                             </label>
-                            <input type="radio" name="answer_address" value="site_and_email" id="in_site_and_email">
+                            <input type="radio" name="answer_address_instance" value="site_and_email" id="in_site_and_email">
                             <label for="in_site_and_email">
                                 <i class='fab fa-chrome'></i> Sayt va<span style="margin-left: 10px;"><i class="fas fa-envelope"></i> Email</span>
                             </label>`
+
+
                     }
 
                     else {
-                        answer_address.innerHTML = `
-                        <input type="hidden" name="answer_address" value="site" id="in_site">
-                        `
+                        answer_address.innerHTML += `
+                            <h5 style="margin-bottom: 5px">Javob manzili:</h5>
+                            <input type="radio" name="answer_address_instance" value="site" id="in_site" checked>
+                            <label for="in_site">
+                                <i class='fab fa-chrome'></i>
+                                Sayt
+                            </label>`
+
                     }
 
                     $(`#in_${answer.answer_address}`).attr('checked', true);
@@ -901,12 +850,12 @@
 
                     answer_active.innerHTML += `
                         <h5 style="margin-bottom: 5px">Javob holati:</h5>
-                        <input type="radio" name="active" value="send" id="send_answer" checked>
+                        <input type="radio" name="active_instance" value="send" id="send_answer" checked>
                         <label for="send_answer">
                             <i class='fa fa-send'></i>
                             Yuborilsin
                         </label>
-                        <input type="radio" name="active" value="save" id="save_answer">
+                        <input type="radio" name="active_instance" value="save" id="save_answer">
                         <label for="save_answer">
                             <i class="fa fa-save"></i>
                             Saqlab qo'yilsin
@@ -938,20 +887,68 @@
                     $(`#${answer.answer_type}`).attr('checked', true);
 
 
-                        
                     const file_instance = document.getElementById('file_instance');
                     file_instance.innerHTML = "<h5 style='margin-bottom: 5px'>Fayl ko'rinishi:</h5><input type='file' name='file'>";
 
+
                     const text_instance = document.getElementById('answer_text');
                     text_instance.innerHTML = `
-                        <h5 style="margin-bottom: 20px">Javob matni:</h5>
-                        <p style="border: 1px solid #ccc; padding: 15px 10px; max-height: 300px; overflow-y: scroll; word-break: break-all;">
-                            
-                        </p>`
+                        <hr style="height: 15px; background-color: #ccc; border-radius: 300%;">
+                        <h4 style="margin-bottom: 20px">Javob yozish:</h4>
+                        <textarea id="text_instance" name="text_instance" class="modal-answer-textarea" style="border: 1px solid #ccc; width: 100%;">${answer.text}</textarea>
+                        `
+
+                    const edit_btn = document.getElementById('edit_btn');
+                    $('#edit_btn').attr('onclick', 'updateAnswer()');
+                    edit_btn.innerHTML = 'yangilash';
 
                 }
             });
+
         }
-    
+
+        function updateAnswer() {
+
+            const answer_address = document.querySelector("input[name='answer_address_instance']:checked").value;
+            const active = document.querySelector("input[name='active_instance']:checked").value;
+            const answer_type = document.querySelector("input[name='answer_type_instance']:checked").value;
+            const text = document.getElementById("text_instance").value;
+
+
+            $.ajax({
+                url: '{% url "edit-answer" %}',
+                dataType: 'json',
+                type: 'POST',
+                data: {
+                    'id': answer.id,
+                    'answer_address': answer_address,
+                    'active': active,
+                    'answer_type': answer_type,
+                    'text': text,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    alert(data.result);
+
+                    document.getElementById('appeal_status').innerHTML = `${data.appeal_status}`;
+
+                }
+
+            });
+        }
+
+        function deleteAnswer(id) {
+
+            $.ajax({
+               url: '{% url "delete-answer" %}',
+               datatype: 'json',
+               type: 'GET',
+               data: {'id': id},
+                success: function (data) {
+                   window.location = "{% url 'answers' %}";
+                }
+            });
+        }
+
     </script>
 {% endblock scripts %}

@@ -9,148 +9,179 @@
         ul, li {
             list-style-type: none;
         }
+
         .position-icons {
             color: inherit;
         }
+
         .position-icons:hover {
             color: green;
         }
+
         .position-icons:nth-child(2) {
             margin-left: 20px;
         }
+
         .position-icons:nth-child(2):hover {
             color: red;
         }
-          .navbar-sidebar .navbar__list .noti__item i {
+
+        .navbar-sidebar .navbar__list .noti__item i {
             font-size: 20px;
             color: inherit;
-          }
-          .navbar-sidebar .navbar__list .noti__item .quantity {
+        }
+
+        .navbar-sidebar .navbar__list .noti__item .quantity {
             left: 11px;
             top: 11px;
             right: unset;
-          }
-          .modal::before {
+        }
+
+        .modal::before {
             content: none;
-          }
-          body {
+        }
+
+        body {
             overflow: hidden;
-          }
-          .appeal__filter {
+        }
+
+        .appeal__filter {
             position: fixed;
             left: 320px;
             top: 120px;
             background-color: #fff;
-          
+
             width: 250px;
             padding: 20px;
-          }
-          .appeal__filter_in_date {
+        }
+
+        .appeal__filter_in_date {
             left: unset;
             right: 20px;
-          }
-          .appeal__filter ul {
+        }
+
+        .appeal__filter ul {
             list-style-type: none;
             margin: 0;
             padding: 0;
-          }
-          .appeal__filter h4 {
+        }
+
+        .appeal__filter h4 {
             margin-bottom: 10px;
-          }
-          .appeal__filter label:hover {
+        }
+
+        .appeal__filter label:hover {
             color: #4272d7;
             cursor: pointer;
-          }
-          .appeal__filter select:hover,
-          .appeal__filter input[type="radio"]:hover {
+        }
+
+        .appeal__filter select:hover,
+        .appeal__filter input[type="radio"]:hover {
             cursor: pointer;
-          }
-          .modal-answer-textarea {
+        }
+
+        .modal-answer-textarea {
             padding: 10px;
-          }
-          #accepted {
+        }
+
+        #accepted {
             display: none;
-          }
-          #accepted + label {
+        }
+
+        #accepted + label {
             margin-left: 30px;
-          }
-          #rejected {
+        }
+
+        #rejected {
             display: none;
-          }
-          #rejected + label {
+        }
+
+        #rejected + label {
             margin-left: 30px;
-          }
-          #accepted:checked + label {
+        }
+
+        #accepted:checked + label {
             color: green;
-          }
-          #rejected:checked + label {
+        }
+
+        #rejected:checked + label {
             color: red;
-          }
-          
-          .modal-answer-textarea {
+        }
+
+        .modal-answer-textarea {
             height: 300px !important;
             max-height: 300px;
-          }
-          
+        }
+
         #in_site {
             display: none;
         }
+
         #in_email {
             display: none;
         }
+
         #in_site_and_email {
             display: none;
         }
-        
+
         #in_site:checked + label {
             color: green;
         }
+
         #in_email:checked + label {
             color: green;
         }
+
         #in_site_and_email:checked + label {
             color: green;
         }
-        
+
         #in_site + label {
             margin-left: 35px;
         }
-        
+
         #in_email + label {
             margin-left: 35px;
         }
+
         #in_site_and_email + label {
             margin-left: 35px;
         }
-        
+
         #send_answer {
             display: none;
         }
+
         #save_answer {
             display: none;
         }
-        
+
         #send_answer:checked + label {
             color: green;
         }
+
         #save_answer:checked + label {
             color: #bbbb05;
         }
-        
+
         #send_answer + label {
             margin-left: 35px;
         }
+
         #save_answer + label {
             margin-left: 35px;
         }
-        
+
         label:hover {
             cursor: pointer;
         }
+
         .table-earning tbody td {
             white-space: unset;
             vertical-align: middle;
         }
+
         .table-responsive.table--no-card {
             max-height: 650px;
         }
@@ -159,12 +190,14 @@
         tr td:first-child {
             padding: 22px;
         }
+
         thead {
             position: sticky;
             top: 0;
         }
+
         .appeals_cnt {
-            text-transform: lowercase; 
+            text-transform: lowercase;
             font-size: 65%;
             background: #cccccc82;
             border-radius: 20px;
@@ -186,9 +219,9 @@
                 <li class="noti__item">
                     <a href="#">
                         <i class="fas fa-envelope"></i>
-                        
+
                         <span class="quantity"></span>
-                            
+
                         Murojaatlar
                     </a>
                 </li>
@@ -197,10 +230,6 @@
                         <i class="fas fa-reply"></i>
                         Javoblar
                     </a>
-                </li>
-                <li>
-                    <a href="form.html">
-                        <i class="far fa-comments"></i>Chat</a>
                 </li>
             </ul>
         </div>
@@ -218,7 +247,11 @@
                 <a href="#">
                     <i class="fas fa-envelope"></i>
                     {% if new_appeals_cnt > 0 %}
-                        <span class="quantity" id="quantity">{{ new_appeals_cnt }}</span>
+                        {% if new_appeals_cnt > 9 %}
+                            <span class="quantity" id="quantity" style="width: unset; height: unset; padding: 1px">{{ new_appeals_cnt }}</span>
+                        {% else %}
+                            <span class="quantity" id="quantity">{{ new_appeals_cnt }}</span>
+                        {% endif %}
                     {% endif %}
                     Murojaatlar
                 </a>
@@ -228,10 +261,6 @@
                     <i class="fas fa-reply"></i>Javoblar</a>
             </li>
             <li>
-                <a href="form.html">
-                    <i class="fas fa-comments"></i>Chat</a>
-            </li>
-            <li>
                 <a href="{% url 'applicants-view' %}">
                     <i class="fas fa-book"></i>Murojaatchilar paneli</a>
             </li>
@@ -239,24 +268,26 @@
     </nav>
 {% endblock aside_nav %}
 
-
 {% block search %}
     <form class="form-header" action="{% url 'appeals' %}">
-        <input id="search" onInput='myFunction()' class="au-input au-input--xl" type="text" name="search" placeholder="Murojaatni qidirish..." />
+        <input id="search" onInput='myFunction()' class="au-input au-input--xl" type="text" name="search"
+               placeholder="Murojaatni qidirish..."/>
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
     </form>
     <form class="form-header" action="{% url 'appeals' %}" method="get">
-        <input id="search_in_date" onInput='myFunction()' class="au-input" type="date" name="search_in_date" max="{{ today_date }}"/>
+        <input id="search_in_date" onInput='myFunction()' class="au-input" type="date" name="search_in_date"
+               max="{{ today_date }}"/>
         <button class="au-btn--submit" type="submit">
             <i class="zmdi zmdi-search"></i>
         </button>
     </form>
 {% endblock search %}
+
 {% block content %}
-<div class="main-content">
-    <div class="section__content section__content--p30">
+    <div class="main-content">
+        <div class="section__content section__content--p30">
             <div class="container-fluid">
                 {% if appeals %}
                     <form method="get">
@@ -281,7 +312,8 @@
                             </select>
                             <hr>
                             <h4>Murojaat yo'nalishi</h4>
-                            <select id="appeal_direction" onInput='myFunction()' class="w-100 p-1" name="appeal_direction">
+                            <select id="appeal_direction" onInput='myFunction()' class="w-100 p-1"
+                                    name="appeal_direction">
                                 <option value="all">umumiy</option>
                                 <option value="diplom_olish">Diplom olish masalalari</option>
                                 <option value="ishga_joylash">Ishga joylash, ishdagi tortishuv, oylik maoshi</option>
@@ -296,7 +328,9 @@
                                 <option value="oqishni_kochirish">O'qishni ko'chirish to'g'risida</option>
                                 <option value="oqishni_tiklash">O'qishni tiklash to'g'risida</option>
                                 <option value="ijodiy_imtihondan">Ijodiy imtihondan norozilik to'g'risida</option>
-                                <option value="diplom_xaqqoniyligini">Diplom xaqqoniyligini tasdiqlab berish to'g'risida</option>
+                                <option value="diplom_xaqqoniyligini">Diplom xaqqoniyligini tasdiqlab berish
+                                    to'g'risida
+                                </option>
                                 <option value="nafaqa_masalalari">Nafaqa masalalari</option>
                                 <option value="arxiv_malumotlarini">Arxiv ma'lumotlarini olish to'grisida</option>
                                 <option value="ikkinchi_mutaxasislik">Ikkinchi mutaxasislik</option>
@@ -314,7 +348,8 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input onclick='myFunction()' type="radio" checked name="appeal_type" value="all">
+                                        <input onclick='myFunction()' type="radio" checked name="appeal_type"
+                                               value="all">
                                         Umumiy
                                     </label>
                                 </li>
@@ -343,19 +378,22 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' checked name="applicant_type" value="all">
+                                        <input type="radio" onclick='myFunction()' checked name="applicant_type"
+                                               value="all">
                                         umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="applicant_type" value="yuridik_shaxs">
+                                        <input type="radio" onclick='myFunction()' name="applicant_type"
+                                               value="yuridik_shaxs">
                                         Yuridik shaxs
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="applicant_type" value="jismoniy_shaxs">
+                                        <input type="radio" onclick='myFunction()' name="applicant_type"
+                                               value="jismoniy_shaxs">
                                         Jismoniy shaxs
                                     </label>
                                 </li>
@@ -366,14 +404,15 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' checked name="yes_or_no_answer" value="all">
+                                        <input type="radio" onclick='myFunction()' checked name="yes_or_no_answer"
+                                               value="all">
                                         Umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="radio" onclick='myFunction()' name="yes_or_no_answer" value="yes">
-                                        Bor 
+                                        Bor
                                     </label>
                                 </li>
                                 <li>
@@ -392,7 +431,8 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()'  checked name="appeal_status" value="all">
+                                        <input type="radio" onclick='myFunction()' checked name="appeal_status"
+                                               value="all">
                                         Umumiy
                                     </label>
                                 </li>
@@ -410,13 +450,15 @@
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="appeal_status" value="completed">
+                                        <input type="radio" onclick='myFunction()' name="appeal_status"
+                                               value="done">
                                         Bajarilgan
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="appeal_status" value="rejected">
+                                        <input type="radio" onclick='myFunction()' name="appeal_status"
+                                               value="rejected">
                                         Rad etilgan
                                     </label>
                                 </li>
@@ -427,37 +469,43 @@
                             <ul>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' checked name="applicant_position" value="all">
+                                        <input type="radio" onclick='myFunction()' checked name="applicant_position"
+                                               value="all">
                                         Umumiy
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="talaba">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position"
+                                               value="talaba">
                                         Talaba
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="ota_ona">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position"
+                                               value="ota_ona">
                                         Ota ona
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="oqituvchi">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position"
+                                               value="oqituvchi">
                                         O'qituvchi
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="universitet_xodimi">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position"
+                                               value="universitet_xodimi">
                                         universitet_xodimi
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="applicant_position" value="tashkilot">
+                                        <input type="radio" onclick='myFunction()' name="applicant_position"
+                                               value="tashkilot">
                                         tashkilot
                                     </label>
                                 </li>
@@ -486,7 +534,7 @@
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="radio" onclick='myFunction()' name="date" value="month"> 
+                                        <input type="radio" onclick='myFunction()' name="date" value="month">
                                         oxirgi oy
                                     </label>
                                 </li>
@@ -502,35 +550,47 @@
                     </form>
                     <div class="row">
                         <div class="col-md-8 mx-auto">
-                            <h2 class="title-1 m-b-25" id="appeals_cnt">Murojaatlar <small class="appeals_cnt">{{ appeals_cnt }} ta</small></h2>
-                            
+                            <h2 class="title-1 m-b-25" id="appeals_cnt">Murojaatlar <small
+                                    class="appeals_cnt">{{ appeals_cnt }} ta</small></h2>
+
                             <div class="table-responsive table--no-card m-b-40">
                                 <table class="table table-fixed table-borderless table-striped table-earning">
                                     <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th style="text-align: center">F I O</th>
-                                            <th>Muojaat turi</th>
-                                            <th>Kim tomonidan</th>
-                                            <th>file</th>
-                                        </tr>
+                                    <tr>
+                                        <th>No</th>
+                                        <th style="text-align: center">F I O</th>
+                                        <th>Muojaat turi</th>
+                                        <th>Kim tomonidan</th>
+                                        <th>file</th>
+                                    </tr>
                                     </thead>
                                     <tbody id="appealsList">
-                                        {% for appeal in appeals %}
-                                            <tr>
-                                                <th>{{ forloop.counter }}</th>
-                                                <td onclick="openSingleAppeal({{appeal.id}})" data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">{{ appeal.applicant_name }}</td>
-                                                <td>{{ appeal.get_appeal_type_display }}</td>
-                                                <td>{{ appeal.get_applicant_position_display }}</td>
-                                                {% if appeal.appeal_file %}
-                                                    <td>
-                                                        <a href="{% url 'download-appealFile' appeal.id %}" target="_blank" style="color: #4272d7">{{ appeal.filename }}</a>
-                                                    </td>
+                                    {% for appeal in appeals %}
+                                        <tr>
+                                            <th>
+                                                {{ forloop.counter }}
+                                            </th>
+                                            <td onclick="openSingleAppeal({{ appeal.id }})" data-toggle="modal"
+                                                data-target="#scrollmodal"
+                                                style="word-break: break-all;">
+                                                {% if appeal.appeal_status == 'new' %}
+                                                    <span id="new_appeal{{ appeal.id }}" style="color: red">{{ appeal.applicant_name }}</span>
                                                 {% else %}
-                                                    <td>-</td>
+                                                    {{ appeal.applicant_name }}
                                                 {% endif %}
-                                            </tr>
-                                        {% endfor %}
+                                            </td>
+                                            <td>{{ appeal.get_appeal_type_display }}</td>
+                                            <td>{{ appeal.get_applicant_position_display }}</td>
+                                            {% if appeal.appeal_file %}
+                                                <td>
+                                                    <a href="{% url 'download-appealFile' appeal.id %}" target="_blank"
+                                                       style="color: #4272d7; word-break: break-all; max-width: 200px">{{ appeal.filename }}</a>
+                                                </td>
+                                            {% else %}
+                                                <td>-</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -541,11 +601,13 @@
                 {% endif %}
             </div>
         </div>
-</div>
+    </div>
 {% endblock content %}
+
 {% block modal %}
     <!-- <div id="single_appeal"></div> -->
-    <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel" aria-hidden="true">
+    <div class="modal fade" id="scrollmodal" tabindex="-1" role="dialog" aria-labelledby="scrollmodalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content" id="single-appeal">
                 <div class="modal-header">
@@ -555,14 +617,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                     <div id="appeal_detail"></div>
 
                     <div id="appeal_answers">
                         <div class="appeal_answers_header">
                             <h5 style="margin-bottom: 20px">Murojaat javoblari:</h5>
                         </div>
-                        <div id="appeal_answers_main" style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
+                        <div id="appeal_answers_main"
+                             style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
 
                         </div>
                     </div>
@@ -575,7 +638,8 @@
                                 <li style="padding: 5px 0;">
                                     <hr style="height: 15px; background-color: #ccc; border-radius: 300%;">
                                     <h4 style="margin-bottom: 20px">Javob yozish:</h4>
-                                    <textarea id="answer_text" name="text" class="modal-answer-textarea" style="border: 1px solid #ccc; width: 100%;"></textarea>
+                                    <textarea id="answer_text" name="text" class="modal-answer-textarea"
+                                              style="border: 1px solid #ccc; width: 100%;"></textarea>
                                 </li>
                                 <li>
                                     <hr>
@@ -626,6 +690,7 @@
         </div>
     </div>
 {% endblock modal %}
+
 {% block scripts %}
     <script>
         function myFunction() {
@@ -637,7 +702,6 @@
             var applicant_position_optionValue = document.querySelector("input[name='applicant_position']:checked").value;
             var yes_or_no_answer_optionValue = document.querySelector("input[name='yes_or_no_answer']:checked").value;
             var date_optionValue = document.querySelector("input[name='date']:checked").value;
-            
             // Search
             var search_optionValue = document.getElementById("search").value;
             var search_in_date_optionValue = document.getElementById("search_in_date").value;
@@ -646,7 +710,7 @@
                 url: '',
                 datatype: 'json',
                 data: {
-                    'applicant_province': country_optionValue, 
+                    'applicant_province': country_optionValue,
                     'appeal_direction': direction_optionValue,
                     'appeal_type': appeal_type_optionValue,
                     'applicant_type': applicant_type_optionValue,
@@ -659,12 +723,12 @@
                     'search_in_date': search_in_date_optionValue,
                 },
                 type: 'GET',
-                success: function(data) {
+                success: function (data) {
                     const appealList = document.getElementById("appealsList");
                     const appeals_cnt = document.getElementById("appeals_cnt");
 
                     appeals_cnt.innerHTML = "";
-                    const appeals_cntHTMLElement = `Murojaatlar <small class="appeals_cnt">${ data.appeals_cnt } ta</small>`
+                    const appeals_cntHTMLElement = `Murojaatlar <small class="appeals_cnt">${data.appeals_cnt} ta</small>`
                     appeals_cnt.innerHTML += appeals_cntHTMLElement;
 
                     appealList.innerHTML = "";
@@ -672,20 +736,26 @@
                     (data.appeals).forEach(appeal => {
                         var appealHTMLElement = `
                         <tr>
-                            <th>${ counter }</th>
-                            <td onclick="openSingleAppeal(${appeal.id})" data-toggle="modal" data-target="#scrollmodal" style="word-break: break-all;">${ appeal.applicant_name }</td>
-                            <td>${ appeal.appeal_type }</td>
-                            <td>${ appeal.applicant_position }</td>`
+                            <th>${counter}</th>
+                            <td onclick="openSingleAppeal(${ appeal.id })" data-toggle="modal"
+                                data-target="#scrollmodal"
+                                style="word-break: break-all;">`
+                        if (appeal.appeal_status == 'new') {
+                            appealHTMLElement +=  `<span id="new_appeal${appeal.id}" style="color: red">${ appeal.applicant_name }</span>`
+                        }
+                        else {
+                            appealHTMLElement += `${ appeal.applicant_name }`
+                        }
+                            appealHTMLElement +=  `</td>
+                            <td>${appeal.appeal_type}</td>
+                            <td>${appeal.applicant_position}</td>`
 
-                        console.log(appeal.appeal_file);
                         if (appeal.appeal_file) {
                             appealHTMLElement += `
                             <td>
-                                <a href="/admin/appeals/download-appealfile/${appeal.id}/" target="_blank" style="color: #4272d7">${ appeal.appeal_file }</a>
+                                <a href="/admin/appeals/download-appealfile/${appeal.id}/" target="_blank" style="color: #4272d7; word-break: break-all; max-width: 200px">${appeal.appeal_file}</a>
                             </td>`
-                        }
-
-                        else {
+                        } else {
                             appealHTMLElement += `<td>-</td>`
                         }
 
@@ -694,7 +764,7 @@
                     });
                 }
             });
-            
+
         }
 
         function openSingleAppeal(id) {
@@ -706,33 +776,33 @@
                     'id': id,
                 },
                 type: 'GET',
-                success: function(data) {
-                    if (data.new_appeals_cnt > 1) {
+                success: function (data) {
+                    appeal = data.appeal;
+                    if (appeal.appeal_status == 'Yangi') {
+                        if (data.new_appeals_cnt > 1) {
 
-                        const new_appeals_cnt = document.getElementById('quantity')
-                        new_appeals_cnt.innerHTML = "";
-                        new_appeals_cnt.innerHTML += `${data.new_appeals_cnt}`;
-                    }
-                    
-                    else if (data.new_appeals_cnt == 1) {
-                        
-                        const new_appeals_cnt = document.getElementById('quantity');
-                        new_appeals_cnt.classList.add('d-none');
-                    }
-                    
+                            const new_appeals_cnt = document.getElementById('quantity');
+                            new_appeals_cnt.innerHTML = "";
+                            new_appeals_cnt.innerHTML += `${data.new_appeals_cnt - 1}`;
+                        } else if (data.new_appeals_cnt == 1) {
 
-                    appeal = data.appeal
+                            const new_appeals_cnt = document.getElementById('quantity');
+                            new_appeals_cnt.classList.add('d-none');
+                        }
+
+                        $(`#new_appeal${appeal.id}`).css("color", "");
+                    }
+
+
 
                     const answer_text = document.getElementById("answer_text");
                     answer_text.value = "";
-
-                    
 
                     const answer_appeal = document.getElementById("answer_appeal");
                     answer_appeal.value = appeal.id;
 
                     const answer_address = document.getElementById("answer_address");
-                    
+
                     if (appeal.applicant_email) {
                         answer_address.innerHTML = "";
                         answer_address.innerHTML += `
@@ -752,9 +822,7 @@
                         <label for="in_site_and_email">
                             <i class='fab fa-chrome'></i> Sayt va<span style="margin-left: 10px;"><i class="fas fa-envelope"></i> Email</span>
                         </label>`
-                    }
-
-                    else {
+                    } else {
                         answer_address.innerHTML = `
                         <input type="hidden" name="answer_address" value="site" id="in_site">
                         `
@@ -762,7 +830,7 @@
 
                     const appeal_name = document.getElementById("scrollmodalLabel");
                     appeal_name.innerHTML = `<span>${appeal.applicant_name} murojaati</span><span id="appeal_status" style="color: #bbbb05;">${appeal.appeal_status}</span>`;
-                    
+
                     const appeal_detail = document.getElementById("appeal_detail");
                     appeal_detail.innerHTML = "";
                     appeal_detail.innerHTML += `
@@ -776,27 +844,25 @@
                             <p style="margin-left: 20px"><a href="tel:${appeal.applicant_tel_num}">${appeal.applicant_tel_num}</a></p>
                         </li>`
 
-                        if (appeal.applicant_email) {
+                    if (appeal.applicant_email) {
 
-                            appeal_detail.innerHTML += `
+                        appeal_detail.innerHTML += `
                             <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                                 <h5 style="margin-bottom: 5px">Email:</h5>
                                     <p style="margin-left: 20px"><a href="mailto:${appeal.applicant_email}">${appeal.applicant_email}</a></p>
                             </li>`
-                        
-                        }
-                        
-                        else {
 
-                            appeal_detail.innerHTML += `
+                    } else {
+
+                        appeal_detail.innerHTML += `
                             <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                                 <h5 style="margin-bottom: 5px">Email:</h5>
                                     <p style="margin-left: 20px">-</p>
                             </li>`
-                        
-                        }
-                    
-                        appeal_detail.innerHTML += `
+
+                    }
+
+                    appeal_detail.innerHTML += `
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Yuborilgan sana:</h5>
                             <p style="margin-left: 20px">${appeal.created_date}</p>
@@ -822,26 +888,24 @@
                             <p style="margin-left: 20px">${appeal.applicant_position}</p>
                         </li>`
 
-                        if ( appeal.appeal_file ) {
-                            appeal_detail.innerHTML += `
+                    if (appeal.appeal_file) {
+                        appeal_detail.innerHTML += `
                             <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                                 <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
                                 <p style="margin-left: 20px">
-                                    <a href="/admin/appeals/download-appealfile/${appeal.id}/" style="color: #4272d7">${ appeal.appeal_file }</a>
+                                    <a href="/admin/appeals/download-appealfile/${appeal.id}/" style="color: #4272d7">${appeal.appeal_file}</a>
                                 </p>
                             </li>`
-                            
-                        }
-                        
-                        else {
-                            appeal_detail.innerHTML += `
+
+                    } else {
+                        appeal_detail.innerHTML += `
                             <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                                 <h5 style="margin-bottom: 5px">Murojaat fayl ko'rinishi:</h5>
                                 <p style="margin-left: 20px">-</p>
                             </li>`
-                        } 
-                        
-                        appeal_detail.innerHTML += `
+                    }
+
+                    appeal_detail.innerHTML += `
                         <li style="padding: 5px 0; border-bottom: 1px solid #ccc; margin-bottom: 10px">
                             <h5 style="margin-bottom: 5px">Murojaat mavzusi:</h5>
                             <p style="margin-left: 20px">${appeal.appeal_subject}</p>
@@ -853,10 +917,10 @@
                             </p>
                         </li>
                     </ul>`
-                    
+
                     const appeal_answers = document.getElementById('appeal_answers');
 
-                    
+
                     if (data.appeal_answers != false) {
                         appeal_answers.innerHTML = `
                         <div class="appeal_answers_header">
@@ -867,9 +931,9 @@
                             style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
                         </div>`
 
-                        
+
                         const appeal_answers_main = document.getElementById('appeal_answers_main');
-                        appeal_answers_main.innerHTML = "";                                                                                                     
+                        appeal_answers_main.innerHTML = "";
                         appeal_answers_main.innerHTML = `
                         <p class="">
                             <span>No</span>
@@ -880,9 +944,9 @@
                         </p>`;
                         var index = 1;
                         (data.appeal_answers).forEach(answer => {
-                            
+
                             if (answer.active == 'send') {
-                                
+
                                 appeal_answers_main.innerHTML += `
                                 <p class="">
                                     <span class="">${index}.</span>
@@ -891,9 +955,7 @@
                                     <a class="" href="#" style="margin-left: 26px">${answer.answer_address}</a>
                                     <a class="" href="#" style="margin-left: 86px">${answer.created_date}</a>
                                 </p>`;
-                            }
-
-                            else {
+                            } else {
 
                                 appeal_answers_main.innerHTML += `
                                 <p class="">
@@ -904,35 +966,36 @@
                                     <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.created_date}</a>
                                 </p>`;
                             }
-                            
-                            index ++;
-                        });
-                        
-                    }
 
-                    else {
+                            index++;
+                        });
+
+                    } else {
                         appeal_answers.innerHTML = "";
                     }
                 }
             });
         }
-   
+
         $(document).ready(function () {
-            
-            
-            
+
+
             $('#answerForm').submit(function () {
-                const answer_file = document.getElementById("answer_file");
-                
+                {#const answer_file = document.getElementById("answer_file").value;#}
+                {#const answer_text = document.getElementById("answer_file").value;#}
+                {#const answer_type = document.getElementById("answer_file").value;#}
+                {#const answer_address = document.getElementById("answer_file").value;#}
+                {#const answer_status = document.getElementById("answer_file").value;#}
+
                 $.ajax({
                     data: $(this).serialize(),
                     type: $(this).attr('method'),
                     url: "{% url 'send-answer' %}",
                     success: function (response) {
-                        
+
                         const appeal_answers = document.getElementById('appeal_answers');
                         document.getElementById('appeal_status').innerHTML = `${response.appeal_status}`;
-                    
+
                         if (response.appeal_answers != false) {
                             document.getElementById('answerForm').reset();
 
@@ -945,9 +1008,9 @@
                                 style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
                             </div>`
 
-                            
+
                             const appeal_answers_main = document.getElementById('appeal_answers_main');
-                            appeal_answers_main.innerHTML = "";                                                                                                     
+                            appeal_answers_main.innerHTML = "";
                             appeal_answers_main.innerHTML = `
                             <p class="">
                                 <span>No</span>
@@ -958,9 +1021,9 @@
                             </p>`;
                             var index = 1;
                             (response.appeal_answers).forEach(answer => {
-                                
+
                                 if (answer.active == 'send') {
-                                    
+
                                     appeal_answers_main.innerHTML += `
                                     <p class="">
                                         <span class="">${index}.</span>
@@ -969,9 +1032,7 @@
                                         <a class="" href="#" style="margin-left: 26px">${answer.answer_address}</a>
                                         <a class="" href="#" style="margin-left: 86px">${answer.created_date}</a>
                                     </p>`;
-                                }
-
-                                else {
+                                } else {
 
                                     appeal_answers_main.innerHTML += `
                                     <p class="">
@@ -982,10 +1043,10 @@
                                         <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.created_date}</a>
                                     </p>`;
                                 }
-                                
-                                index ++;
+
+                                index++;
                             });
-                            
+
                         }
 
                         alert(response.result);
@@ -996,5 +1057,6 @@
                 return false;
             });
         })
+
     </script>
 {% endblock scripts %}

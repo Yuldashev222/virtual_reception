@@ -1,59 +1,93 @@
-from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from django.http import JsonResponse
+
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.urls import reverse
 
 from .forms import AppealForm
 from .models import *
 
 
 def home(request):
+    # STATISTICS
     all_appeals_cnt = Appeal.objects.all().count()
     process_appeals_cnt = Appeal.objects.filter(appeal_status='process').count()
     rejected_appeals_cnt = Appeal.objects.filter(appeal_status='rejected').count()
-    completed_appeals_cnt = Appeal.objects.filter(appeal_status='completed').count()
+    completed_appeals_cnt = Appeal.objects.filter(appeal_status='done').count()
     new_appeals_cnt = Appeal.objects.filter(appeal_status='new').count()
-    
-    
+
     applicants_panel_info = Applicants_panel.objects.first()
     socials = Social.objects.all()
     appealForm = AppealForm()
-        
 
     context = {
         'appealForm': appealForm,
         'applicants_panel_info': applicants_panel_info,
         'socials': socials,
 
-        
+        # STATISTICS
         'all_appeals_cnt': all_appeals_cnt,
         'process_appeals_cnt': process_appeals_cnt,
         'rejected_appeals_cnt': rejected_appeals_cnt,
         'completed_appeals_cnt': completed_appeals_cnt,
         'new_appeals_cnt': new_appeals_cnt,
     }
-    
-    code = request.POST.get('answer_code')
-    
-    if code:
 
+    if request.GET:
+        code = request.GET['appeal_code']
         try:
             appeal = Appeal.objects.get(code=code)
-            answers = Answer.objects.filter(appeal=appeal)
-            context['answers'] = answers
+            answers = list(Answer.objects.filter(appeal_id=appeal.id).order_by("-updated_date").values())
+            for answer in answers:
+                answer['updated_date_format'] = str(Answer.objects.get(id=answer["id"]).updated_date_format())
+                answer['answer_type_display'] = str(Answer.objects.get(id=answer["id"]).get_answer_type_display())
+                answer['file'] = str(Answer.objects.get(id=answer["id"]).filename())
+
+            message = f"{appeal.applicant_name} javobi:"
+            appeal_date = str(appeal.created_date.strftime("%d.%m.%Y || %H:%M"))
+
+            last_answer_date = Answer.objects.filter(appeal_id=appeal.id).order_by(
+                "-updated_date").first().updated_date_format()
+            return JsonResponse({'answers': answers, 'message': message, "last_answer_date": last_answer_date,
+                                 "appeal_date": appeal_date}, status=200)
 
         except:
-            messages.error(request, 'Javob yoq')
-            return redirect('home')
-        
-    if request.POST:
-        
-            appealForm = AppealForm(request.POST, request.FILES)
-            if appealForm.is_valid():
-                obj = appealForm.save(commit=False)
-                obj.save()
+            message = "Xato id kiritdingiz..."
+            response = JsonResponse({"error": message})
+            response.status_code = 403
+            return response
 
-                messages.success(request, f"{obj.code}")
-                return redirect('home')
-            
-    return render(request, 'index.html')
+    return render(request, 'index.html', context)
+
+
+def post_appeal(request):
+    print(request.POST)
+    print(request.FILES)
+    appealForm = AppealForm(request.POST, request.FILES)
+    if appealForm.is_valid():
+        text = appealForm.cleaned_data["appeal_text"]
+        file = appealForm.cleaned_data["appeal_file"]
+        print()
+        print()
+        print()
+        print()
+        print(file)
+        print(request.FILES.getlist("appeal_file"))
+        print()
+        print()
+        print()
+        # if text or file:
+        obj = appealForm.save(commit=False)
+        obj.save()
+        return JsonResponse({"applicant_name": obj.applicant_name, "appeal_code": obj.code}, status=200)
+        # else:
+        #     return JsonResponse({"errors": ""}, status=200)
+    else:
+        errors = appealForm.errors.as_json()
+        return JsonResponse({"errors": errors}, status=400)
+
+
+def test(request):
+    if request.POST:
+        pass
+    return render(request, "test.html")

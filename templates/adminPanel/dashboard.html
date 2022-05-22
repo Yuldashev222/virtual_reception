@@ -7,18 +7,22 @@
         body {
             overflow: unset;
         }
+
         .menu-sidebar {
             overflow: hidden;
         }
+
         .navbar-sidebar .navbar__list .noti__item i {
-            font-size: 20px ;
+            font-size: 20px;
             color: inherit;
         }
+
         .navbar-sidebar .navbar__list .noti__item .quantity {
             left: 11px;
             top: 11px;
             right: unset;
         }
+
         .header-wrap {
             justify-content: end;
         }
@@ -35,6 +39,19 @@
             display: block;
         }
 
+    </style>
+    <style>
+        #mapa-container {
+            height: 800px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .loading {
+            margin-top: 10em;
+            text-align: center;
+            color: gray;
+        }
     </style>
 {% endblock style %}
 {% block header_mobile_nav %}
@@ -53,10 +70,6 @@
                     <a href="{% url 'answers' %}">
                         <i class="fas fa-reply"></i>Javoblar</a>
                 </li>
-                <li>
-                    <a href="form.html">
-                        <i class="far fa-comments"></i>Chat</a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -71,17 +84,15 @@
             <li class="noti__item">
                 <a href="{% url 'appeals' %}">
                     <i class="fas fa-envelope"></i>
-                    <span class="quantity">{{ new_appeals_cnt }}</span>
+                    {% if new_appeals_cnt %}
+                        <span class="quantity">{{ new_appeals_cnt }}</span>
+                    {% endif %}
                     Murojaatlar
                 </a>
             </li>
             <li>
                 <a href="{% url 'answers' %}">
                     <i class="fas fa-reply"></i>Javoblar</a>
-            </li>
-            <li>
-                <a href="form.html">
-                    <i class="fas fa-comments"></i>Chat</a>
             </li>
             <li>
                 <a href="{% url 'applicants-view' %}">
@@ -102,10 +113,145 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="margin: 100px 0;">
-                    <div class="col-md-8 d-flex">
-                        <div id="map"></div>
-                        <!-- <div id="country_info" class="country_info">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem, ad!</div> -->
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="table-responsive table--no-card m-b-30">
+                            <table class="table table-borderless table-striped table-earning">
+                                <thead>
+                                <tr>
+                                    <th>date</th>
+                                    <th>order ID</th>
+                                    <th>name</th>
+                                    <th class="text-right">price</th>
+                                    <th class="text-right">quantity</th>
+                                    <th class="text-right">total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>2018-09-29 05:57</td>
+                                    <td>100398</td>
+                                    <td>iPhone X 64Gb Grey</td>
+                                    <td class="text-right">$999.00</td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right">$999.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-28 01:22</td>
+                                    <td>100397</td>
+                                    <td>Samsung S8 Black</td>
+                                    <td class="text-right">$756.00</td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right">$756.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-27 02:12</td>
+                                    <td>100396</td>
+                                    <td>Game Console Controller</td>
+                                    <td class="text-right">$22.00</td>
+                                    <td class="text-right">2</td>
+                                    <td class="text-right">$44.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-26 23:06</td>
+                                    <td>100395</td>
+                                    <td>iPhone X 256Gb Black</td>
+                                    <td class="text-right">$1199.00</td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right">$1199.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-25 19:03</td>
+                                    <td>100393</td>
+                                    <td>USB 3.0 Cable</td>
+                                    <td class="text-right">$10.00</td>
+                                    <td class="text-right">3</td>
+                                    <td class="text-right">$30.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-29 05:57</td>
+                                    <td>100392</td>
+                                    <td>Smartwatch 4.0 LTE Wifi</td>
+                                    <td class="text-right">$199.00</td>
+                                    <td class="text-right">6</td>
+                                    <td class="text-right">$1494.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-24 19:10</td>
+                                    <td>100391</td>
+                                    <td>Camera C430W 4k</td>
+                                    <td class="text-right">$699.00</td>
+                                    <td class="text-right">1</td>
+                                    <td class="text-right">$699.00</td>
+                                </tr>
+                                <tr>
+                                    <td>2018-09-22 00:43</td>
+                                    <td>100393</td>
+                                    <td>USB 3.0 Cable</td>
+                                    <td class="text-right">$10.00</td>
+                                    <td class="text-right">3</td>
+                                    <td class="text-right">$30.00</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
+                            <div class="au-card-inner">
+                                <div class="table-responsive">
+                                    <table class="table table-top-countries">
+                                        <tbody>
+                                        <tr>
+                                            <td>United States</td>
+                                            <td class="text-right">$119,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Australia</td>
+                                            <td class="text-right">$70,261.65</td>
+                                        </tr>
+                                        <tr>
+                                            <td>United Kingdom</td>
+                                            <td class="text-right">$46,399.22</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Turkey</td>
+                                            <td class="text-right">$35,364.90</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Germany</td>
+                                            <td class="text-right">$20,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>France</td>
+                                            <td class="text-right">$10,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Australia</td>
+                                            <td class="text-right">$5,366.96</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Italy</td>
+                                            <td class="text-right">$1639.32</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-around" style="margin: 100px 0;">
+                    <div id="container"></div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Murojaatlar holati</h4>
+                            </div>
+                            <div class="au-card">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -119,24 +265,34 @@
 
                                 </p> {% endcomment %}
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
-                                     aria-valuemin="0" aria-valuemax="100">Ariza 25%</div>
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 25%" aria-valuenow="25"
+                                         aria-valuemin="0" aria-valuemax="100">Ariza 25%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                     aria-valuemin="0" aria-valuemax="100">Taklif 50%</div>
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 50%" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100">Taklif 50%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%" aria-valuenow="90"
-                                    aria-valuemin="0" aria-valuemax="100">Shikoyat 90%</div>
+                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 90%" aria-valuenow="90"
+                                         aria-valuemin="0" aria-valuemax="100">Shikoyat 90%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
-                                     aria-valuemin="0" aria-valuemax="100">boshqa 75%</div>
+                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 75%" aria-valuenow="75"
+                                         aria-valuemin="0" aria-valuemax="100">boshqa 75%
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- /# card -->
+                    </div>
+                    <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Murojatchi turi</h4>
@@ -146,50 +302,20 @@
 
                                 </p> {% endcomment %}
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
-                                     aria-valuemin="0" aria-valuemax="100">Yuridik shaxs 25%</div>
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 25%" aria-valuenow="25"
+                                         aria-valuemin="0" aria-valuemax="100">Yuridik shaxs 25%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                     aria-valuemin="0" aria-valuemax="100">Jismoniy shaxs 50%</div>
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 50%" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100">Jismoniy shaxs 50%
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <!-- /# card -->
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="au-card chart-percent-card">
-                            <div class="au-card-inner">
-                                <h3 class="title-2 tm-b-5">Murojaatlar holati</h3>
-                                <div class="row no-gutters">
-                                    <div class="col-xl-6">
-                                        <div class="chart-note-wrap">
-                                            <div class="chart-note mr-0 d-block">
-                                                <span class="dot dot--blue"></span>
-                                                <span>Yangi</span>
-                                            </div>
-                                            <div class="chart-note mr-0 d-block">
-                                                <span class="dot dot--green"></span>
-                                                <span>Bajarilgan</span>
-                                            </div>
-                                            <div class="chart-note mr-0 d-block">
-                                                <span class="dot dot--blue" style="background-color: #ffca2c !important"></span>
-                                                <span>ko'rib chiqilmoqda</span>
-                                            </div>
-                                            <div class="chart-note mr-0 d-block">
-                                                <span class="dot dot--red"></span>
-                                                <span>Rad etilgan</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="percent-chart">
-                                            <canvas id="percent-chart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -200,20 +326,28 @@
                             </div>
                             <div class="card-body">
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
-                                     aria-valuemin="0" aria-valuemax="100">Talaba 25%</div>
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 25%" aria-valuenow="25"
+                                         aria-valuemin="0" aria-valuemax="100">Talaba 25%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                     aria-valuemin="0" aria-valuemax="100">O'qituvchi 50%</div>
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 50%" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100">O'qituvchi 50%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" style="width: 90%" aria-valuenow="90"
-                                    aria-valuemin="0" aria-valuemax="100">Ota ona 90%</div>
+                                    <div class="progress-bar bg-danger progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 90%" aria-valuenow="90"
+                                         aria-valuemin="0" aria-valuemax="100">Ota ona 90%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
-                                     aria-valuemin="0" aria-valuemax="100">boshqa 75%</div>
+                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 75%" aria-valuenow="75"
+                                         aria-valuemin="0" aria-valuemax="100">boshqa 75%
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -223,16 +357,22 @@
                             </div>
                             <div class="card-body">
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="25"
-                                     aria-valuemin="0" aria-valuemax="100">Admin1 25%</div>
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 25%" aria-valuenow="25"
+                                         aria-valuemin="0" aria-valuemax="100">Admin1 25%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" role="progressbar" style="width: 50%" aria-valuenow="50"
-                                     aria-valuemin="0" aria-valuemax="100">Admin2 50%</div>
+                                    <div class="progress-bar bg-info progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 50%" aria-valuenow="50"
+                                         aria-valuemin="0" aria-valuemax="100">Admin2 50%
+                                    </div>
                                 </div>
                                 <div class="progress mb-2">
-                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%" aria-valuenow="75"
-                                     aria-valuemin="0" aria-valuemax="100">Admin3 75%</div>
+                                    <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                                         role="progressbar" style="width: 75%" aria-valuenow="75"
+                                         aria-valuemin="0" aria-valuemax="100">Admin3 75%
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -243,102 +383,7 @@
                                 <h4>Murojaat yo'nalishi</h4>
                             </div>
                             <div class="card-body">
-                                1. Diplom olish masalalari
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                2. Ishga joylash, ishdagi tortishuv, oylik maoshi
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                3. Kontrakt to'lovi to'g'risida
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                4. Magistratura masalalari
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                5. Fuqarolar murojaatlari to'g'risida
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                6. Moliyaviy masalalar
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                7. Talaba ustidan shikoyat
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                8. Rahbar faoliyatidan norozilik arizasi
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                9. Stipendiya masalalari
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                10. O'qishga kirish to'g'risida
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                11. O'qishni ko'chirish to'g'risida
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                12. O'qishni tiklash to'g'risida
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                13. Ijodiy imtihondan norozilik to'g'risida
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                14. Diplom xaqqoniyligini tasdiqlab berish to'g'risida
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                15. Nafaqa masalalari
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                16. Arxiv ma'lumotlarini olish to'grisida
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                17. Ikkinchi mutaxasislik
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                18. Kitob nashr qilish
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                19. Ixtiro qilish taklifi
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                20. Taklif va minnatdorchilik
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                21. Sirtqi o'qish masalalari
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                22. Yotoqxona masalalari bo'yicha
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                23. Olimpiada masalasi bo'yicha
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                24. Boshqa savollar
-                                <div class="progress mb-2" style="height: 5px;">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
+                                <canvas id="directionChart" height="450"></canvas>
                             </div>
                         </div>
                     </div>
@@ -350,12 +395,160 @@
 {% endblock content %}
 {% block scripts %}
     <script>
-        const country = document.querySelector(".sm_state_UZB356");
-        const country_info = document.querySelector(".country_info");
-        console.log(country);
-        country.addEventListener("click", function(){
-            country_info.classList.add("active");
-            console.log('asdasdasdasd');
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: {{ appeal_types|safe }},
+                datasets: [{
+                    label: 'soni',
+                    data: {{ appeal_types_cnt|safe }},
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(40, 167, 69, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
+    </script>
+    <script>
+        const direction_ctx = document.getElementById('directionChart').getContext('2d');
+        const directionChart = new Chart(direction_ctx, {
+
+                type: 'horizontalBar',
+                data: {
+                    labels: {{ appeal_direction|safe }},
+                    datasets: [{
+                        indexAxis: 'y',
+                        label: 'soni',
+                        data: {{ appeal_direction_cnt|safe }},
+                        backgroundColor: [
+                            '#82bc5b',
+                            '#25a335',
+                            '#2d766e',
+                            '#769240',
+                            '#c2e358',
+                            '#09e43b',
+                            '#da3bbc',
+                            '#78ca91',
+                            '#3c3ef7',
+                            '#14b8fc',
+                            '#c37358',
+                            '#fb9786',
+                            '#a280c1',
+                            '#a15762',
+                            '#21bd4a',
+                            '#6d24d3',
+                            '#e39739',
+                            '#82bc5b',
+                            '#25a335',
+                            '#2d766e',
+                            '#769240',
+                            '#c2e358',
+                            '#09e43b',
+                            '#da3bbc',
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                }
+            })
+        ;
+    </script>
+
+    {#    MAP ================ #}
+    <script>
+        (async () => {
+
+            const topology = await fetch(
+                'https://code.highcharts.com/mapdata/countries/uz/uz-all.topo.json'
+            ).then(response => response.json());
+
+            var data = [
+                ['uz-ta', {{ appeal_country.0 }}], ['uz-sa', {{ appeal_country.1 }}],
+                ['uz-an', {{ appeal_country.2 }}], ['uz-fa', {{ appeal_country.3 }}],
+                ['uz-ng', {{ appeal_country.4 }}], ['uz-qa', {{ appeal_country.5 }}],
+                ['uz-su', {{ appeal_country.6 }}], ['uz-bu', {{ appeal_country.7 }}],
+                ['uz-nw', {{ appeal_country.8 }}], ['uz-kh', {{ appeal_country.9 }}],
+                ['uz-si', {{ appeal_country.10 }}], ['uz-ji', {{ appeal_country.11 }}],
+                ['uz-qr', {{ appeal_country.12 }}]
+
+
+            ];
+
+            // Create the chart
+            Highcharts.mapChart('container', {
+                chart: {
+                    map: topology
+                },
+
+                title: {
+                    text: "Xarita bo'yicha murojaatlar soni"
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+
+                colorAxis: {
+                    min: 0
+                },
+
+                series: [{
+                    data: data,
+                    name: 'viloyat',
+                    states: {
+                        hover: {
+                            color: '#28a74590'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false,
+                        format: '{point.name}'
+                    }
+                }]
+            });
+
+        })();
     </script>
 {% endblock scripts %}

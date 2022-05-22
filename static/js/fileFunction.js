@@ -10,11 +10,13 @@ function ready ()
         {
             console.log(this.files);
             var fileName = '';
-            if( this.files && this.files.length > 1 )
-                fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
-            else
-                fileName = this.files[0].name;
-            
+            if (this.files.length > 0) {
+                if (this.files.length > 1)
+                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                else
+                    fileName = this.files[0].name;
+            }
+
             if( fileName )
                 label.querySelector( 'span' ).innerHTML = fileName;
             else

@@ -10,6 +10,7 @@ urlpatterns = [
     path('answers/', answers, name='answers'),
     path('answer_detail/', single_answer, name='single-answer'),
     path('edit-answer/', edit_answer, name='edit-answer'),
+    path('delete-answer/', delete_answer, name='delete-answer'),
     path('send-answer/', send_answer, name='send-answer'),
     path('applicants-view/', applicants_view, name='applicants-view'),
     path('chat/', chat, name='chat'),
