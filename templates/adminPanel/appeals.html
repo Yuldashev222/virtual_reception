@@ -248,7 +248,8 @@
                     <i class="fas fa-envelope"></i>
                     {% if new_appeals_cnt > 0 %}
                         {% if new_appeals_cnt > 9 %}
-                            <span class="quantity" id="quantity" style="width: unset; height: unset; padding: 1px">{{ new_appeals_cnt }}</span>
+                            <span class="quantity" id="quantity"
+                                  style="width: unset; height: unset; padding: 1px">{{ new_appeals_cnt }}</span>
                         {% else %}
                             <span class="quantity" id="quantity">{{ new_appeals_cnt }}</span>
                         {% endif %}
@@ -574,7 +575,8 @@
                                                 data-target="#scrollmodal"
                                                 style="word-break: break-all;">
                                                 {% if appeal.appeal_status == 'new' %}
-                                                    <span id="new_appeal{{ appeal.id }}" style="color: red">{{ appeal.applicant_name }}</span>
+                                                    <span id="new_appeal{{ appeal.id }}"
+                                                          style="color: red">{{ appeal.applicant_name }}</span>
                                                 {% else %}
                                                     {{ appeal.applicant_name }}
                                                 {% endif %}
@@ -737,16 +739,15 @@
                         var appealHTMLElement = `
                         <tr>
                             <th>${counter}</th>
-                            <td onclick="openSingleAppeal(${ appeal.id })" data-toggle="modal"
+                            <td onclick="openSingleAppeal(${appeal.id})" data-toggle="modal"
                                 data-target="#scrollmodal"
                                 style="word-break: break-all;">`
                         if (appeal.appeal_status == 'new') {
-                            appealHTMLElement +=  `<span id="new_appeal${appeal.id}" style="color: red">${ appeal.applicant_name }</span>`
+                            appealHTMLElement += `<span id="new_appeal${appeal.id}" style="color: red">${appeal.applicant_name}</span>`
+                        } else {
+                            appealHTMLElement += `${appeal.applicant_name}`
                         }
-                        else {
-                            appealHTMLElement += `${ appeal.applicant_name }`
-                        }
-                            appealHTMLElement +=  `</td>
+                        appealHTMLElement += `</td>
                             <td>${appeal.appeal_type}</td>
                             <td>${appeal.applicant_position}</td>`
 
@@ -792,7 +793,6 @@
 
                         $(`#new_appeal${appeal.id}`).css("color", "");
                     }
-
 
 
                     const answer_text = document.getElementById("answer_text");
@@ -977,86 +977,86 @@
             });
         }
 
-        $(document).ready(function () {
+        function upload(event) {
+            event.preventDefault();
+            var data = new FormData($("#answerForm").get(0));
+
+            $.ajax({
+                data: data,
+                type: $(this).attr('method'),
+                url: "{% url 'send-answer' %}",
+                cache: false,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+
+                    const appeal_answers = document.getElementById('appeal_answers');
+                    document.getElementById('appeal_status').innerHTML = `${response.appeal_status}`;
+
+                    if (response.appeal_answers != false) {
+                        document.getElementById('answerForm').reset();
+
+                        appeal_answers.innerHTML = `
+                        <div class="appeal_answers_header">
+                            <h5 style="margin-bottom: 20px">Murojaat javoblari:</h5>
+                        </div>
+                        <div
+                            id="appeal_answers_main"
+                            style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
+                        </div>`
 
 
-            $('#answerForm').submit(function () {
-                {#const answer_file = document.getElementById("answer_file").value;#}
-                {#const answer_text = document.getElementById("answer_file").value;#}
-                {#const answer_type = document.getElementById("answer_file").value;#}
-                {#const answer_address = document.getElementById("answer_file").value;#}
-                {#const answer_status = document.getElementById("answer_file").value;#}
+                        const appeal_answers_main = document.getElementById('appeal_answers_main');
+                        appeal_answers_main.innerHTML = "";
+                        appeal_answers_main.innerHTML = `
+                        <p class="">
+                            <span>No</span>
+                            <span class="ml-3">kim tomonidan</span>
+                            <span class="ml-3">javob turi</span>
+                            <span class="ml-3">javob manzili</span>
+                            <span class="ml-3">sana</span>
+                        </p>`;
+                        var index = 1;
+                        (response.appeal_answers).forEach(answer => {
 
-                $.ajax({
-                    data: $(this).serialize(),
-                    type: $(this).attr('method'),
-                    url: "{% url 'send-answer' %}",
-                    success: function (response) {
+                            if (answer.active == 'send') {
 
-                        const appeal_answers = document.getElementById('appeal_answers');
-                        document.getElementById('appeal_status').innerHTML = `${response.appeal_status}`;
+                                appeal_answers_main.innerHTML += `
+                                <p class="">
+                                    <span class="">${index}.</span>
+                                    <a class="" href="#" style="margin-left: 30px">${answer.author}</a>
+                                    <a class="" href="#" style="margin-left: 86px">${answer.answer_type}</a>
+                                    <a class="" href="#" style="margin-left: 26px">${answer.answer_address}</a>
+                                    <a class="" href="#" style="margin-left: 86px">${answer.created_date}</a>
+                                </p>`;
+                            } else {
 
-                        if (response.appeal_answers != false) {
-                            document.getElementById('answerForm').reset();
+                                appeal_answers_main.innerHTML += `
+                                <p class="">
+                                    <span class="">${index}.</span>
+                                    <a class="" href="#" style="margin-left: 30px; color: #bbbb05">${answer.author}</a>
+                                    <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.answer_type}</a>
+                                    <a class="" href="#" style="margin-left: 26px; color: #bbbb05">${answer.answer_address}</a>
+                                    <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.created_date}</a>
+                                </p>`;
+                            }
 
-                            appeal_answers.innerHTML = `
-                            <div class="appeal_answers_header">
-                                <h5 style="margin-bottom: 20px">Murojaat javoblari:</h5>
-                            </div>
-                            <div 
-                                id="appeal_answers_main" 
-                                style="max-height: 300px; padding: 15px 10px; overflow-y: scroll; border: 1px solid #ccc">
-                            </div>`
+                            index++;
+                        });
 
+                    }
 
-                            const appeal_answers_main = document.getElementById('appeal_answers_main');
-                            appeal_answers_main.innerHTML = "";
-                            appeal_answers_main.innerHTML = `
-                            <p class="">
-                                <span>No</span>
-                                <span class="ml-3">kim tomonidan</span>
-                                <span class="ml-3">javob turi</span>
-                                <span class="ml-3">javob manzili</span>
-                                <span class="ml-3">sana</span>
-                            </p>`;
-                            var index = 1;
-                            (response.appeal_answers).forEach(answer => {
+                    alert(response.result);
+                },
 
-                                if (answer.active == 'send') {
-
-                                    appeal_answers_main.innerHTML += `
-                                    <p class="">
-                                        <span class="">${index}.</span>
-                                        <a class="" href="#" style="margin-left: 30px">${answer.author}</a>
-                                        <a class="" href="#" style="margin-left: 86px">${answer.answer_type}</a>
-                                        <a class="" href="#" style="margin-left: 26px">${answer.answer_address}</a>
-                                        <a class="" href="#" style="margin-left: 86px">${answer.created_date}</a>
-                                    </p>`;
-                                } else {
-
-                                    appeal_answers_main.innerHTML += `
-                                    <p class="">
-                                        <span class="">${index}.</span>
-                                        <a class="" href="#" style="margin-left: 30px; color: #bbbb05">${answer.author}</a>
-                                        <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.answer_type}</a>
-                                        <a class="" href="#" style="margin-left: 26px; color: #bbbb05">${answer.answer_address}</a>
-                                        <a class="" href="#" style="margin-left: 86px; color: #bbbb05">${answer.created_date}</a>
-                                    </p>`;
-                                }
-
-                                index++;
-                            });
-
-                        }
-
-                        alert(response.result);
-                    },
-
-                });
-
-                return false;
             });
-        })
+            return false;
+        }
+
+        $(function () {
+            $("#answerForm").submit(upload);
+        });
 
     </script>
 {% endblock scripts %}

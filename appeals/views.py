@@ -37,19 +37,24 @@ def home(request):
         code = request.GET['appeal_code']
         try:
             appeal = Appeal.objects.get(code=code)
-            answers = list(Answer.objects.filter(appeal_id=appeal.id).order_by("-updated_date").values())
-            for answer in answers:
-                answer['updated_date_format'] = str(Answer.objects.get(id=answer["id"]).updated_date_format())
-                answer['answer_type_display'] = str(Answer.objects.get(id=answer["id"]).get_answer_type_display())
-                answer['file'] = str(Answer.objects.get(id=answer["id"]).filename())
+            try:
+                answers = list(Answer.objects.filter(appeal_id=appeal.id).order_by("updated_date").values())
+                for answer in answers:
+                    answer['updated_date_format'] = str(Answer.objects.get(id=answer["id"]).updated_date_format())
+                    answer['answer_type_display'] = str(Answer.objects.get(id=answer["id"]).get_answer_type_display())
+                    answer['file'] = str(Answer.objects.get(id=answer["id"]).filename())
 
-            message = f"{appeal.applicant_name} javobi:"
-            appeal_date = str(appeal.created_date.strftime("%d.%m.%Y || %H:%M"))
+                message = f"{appeal.applicant_name} javobi:"
+                appeal_date = str(appeal.created_date.strftime("%d.%m.%Y || %H:%M"))
+                last_answer_date = Answer.objects.filter(appeal_id=appeal.id).order_by("-updated_date").first().updated_date_format()
+                last_answer_type = Answer.objects.filter(appeal_id=appeal.id).order_by("-updated_date").first().get_answer_type_display()
+                return JsonResponse({'answers': answers, "last_answer_type": last_answer_type, 'message': message, "last_answer_date": last_answer_date, "appeal_date": appeal_date}, status=200)
 
-            last_answer_date = Answer.objects.filter(appeal_id=appeal.id).order_by(
-                "-updated_date").first().updated_date_format()
-            return JsonResponse({'answers': answers, 'message': message, "last_answer_date": last_answer_date,
-                                 "appeal_date": appeal_date}, status=200)
+            except:
+                message = "{}. Sizning murojaatingiz ko'rib chiqilmoqda".format(appeal.applicant_name)
+                response = JsonResponse({"error": message})
+                response.status_code = 403
+                return response
 
         except:
             message = "Xato id kiritdingiz..."
@@ -61,25 +66,16 @@ def home(request):
 
 
 def post_appeal(request):
-    print(request.POST)
-    print(request.FILES)
     appealForm = AppealForm(request.POST, request.FILES)
     if appealForm.is_valid():
-        text = appealForm.cleaned_data["appeal_text"]
-        file = appealForm.cleaned_data["appeal_file"]
-        print()
-        print()
-        print()
-        print()
-        print(file)
-        print(request.FILES.getlist("appeal_file"))
-        print()
-        print()
-        print()
+        # text = appealForm.cleaned_data["appeal_text"]
+        # file = appealForm.cleaned_data["appeal_file"]
         # if text or file:
         obj = appealForm.save(commit=False)
         obj.save()
-        return JsonResponse({"applicant_name": obj.applicant_name, "appeal_code": obj.code}, status=200)
+        print(obj.applicant_email)
+        new_appeals_cnt = Appeal.objects.filter(appeal_status="new").count()
+        return JsonResponse({"applicant_name": obj.applicant_name.title(), "applicant_email": obj.applicant_email, "appeal_code": obj.code, "new_appeals_cnt": new_appeals_cnt}, status=200)
         # else:
         #     return JsonResponse({"errors": ""}, status=200)
     else:

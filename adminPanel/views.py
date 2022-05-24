@@ -12,6 +12,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.core.mail import send_mail
 
 from appeals.models import Answer, Appeal, Applicants_panel
+from django.conf import settings
+from config.settings import EMAIL_HOST, EMAIL_HOST_USER
 from .forms import AddUserForm, EditUserForm
 from appeals.forms import AnswerForm, ApplicantsPanelForm
 
@@ -233,9 +235,7 @@ def single_appeal(request):
 
 
 def send_answer(request):
-    data = request.body
     form = AnswerForm(request.POST, request.FILES)
-
     answer = form.save(commit=False)
     appeal = Appeal.objects.get(id=answer.appeal.id)
 
@@ -245,6 +245,12 @@ def send_answer(request):
         appeal.appeal_status = answer.answer_type
         appeal.save()
         answer.save()
+        # subject = "TSTU: murojaat javobi"
+        # message = answer.text
+        # my_email = settings.EMAIL_HOST_USER
+        # recepient_email = answer.appeal.applicant_email
+        # recepient_email = "test2@maxsoft.uz"
+        # send_mail(subject=subject, message=message, from_email=my_email, recipient_list=[recepient_email], fail_silently=False)
 
         appeal_answers = list(Answer.objects.filter(appeal=answer.appeal.id).values())
         for answer in appeal_answers:
@@ -252,7 +258,6 @@ def send_answer(request):
             answer['answer_type'] = Answer.objects.get(id=answer['id']).get_answer_type_display()
             answer['answer_address'] = Answer.objects.get(id=answer['id']).get_answer_address_display()
             answer['created_date'] = answer['created_date'].strftime('%Y-%m-%d || %H:%M')
-            continue
 
         return JsonResponse({
             'result': 'javob yuborildi',

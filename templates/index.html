@@ -25,7 +25,19 @@
     {% endif %}
 
     <style>
-
+        .copy_btn {
+            background: none;
+            border: 1px solid #fff;
+            padding: 4px 13px;
+            border-radius: 7px;
+            margin-left: 21px;
+            cursor: pointer;
+            font-style: inherit;
+            transition: .1s linear;
+        }
+        .copy_btn:hover {
+            background-color: #e2e2e2;
+        }
         .error_full_border {
             border-color: #f00;
         }
@@ -429,7 +441,8 @@
                         </div>
 
                         <div class="form__outher">
-                            <form id="appealForm" class="form" method="post" enctype="multipart/form-data">{% csrf_token %}
+                            <form id="appealForm" class="form" method="post"
+                                  enctype="multipart/form-data">{% csrf_token %}
 
                                 <div class="form__page slidepage selects">
                                     <div class="form__field">
@@ -669,7 +682,7 @@
                 <ul class="statistics__list">
                     <li class="rektor__info__item_span statistics__item">
                         <p>Yangi</p>
-                        <span class="statistics__count">{{ new_appeals_cnt }}</span>
+                        <span class="statistics__count" id="new_appeals_cnt">{{ new_appeals_cnt }}</span>
                     </li>
                     <li class="rektor__info__item_span statistics__item">
                         <p>Ko'rib chiqilmoqda</p>
@@ -710,11 +723,11 @@
             </div>
         </div>
     </div>
-
 </div>
 
 <div id="modal_answer" class="modal">
-    <div id="modal_consent_answer" class="modal__consent">
+    <div id="modal_consent_answer" class="modal__consent"
+         style="width: 1000px; max-height: 700px; overflow-y: auto; word-break: break-word">
         <ul class="modal__consent_list" id="answers_info">
             {% if applicants_panel_info.accept_text %}
                 <h2 class="form__header statistics__title">{{ applicants_panel_info.accept_text | safe }}</h2>
@@ -754,9 +767,18 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
+    function copyID() {
+        /* Get the text field */
+        var appeal_code = document.getElementById("appeal_code");
+        var copy_btn = document.querySelector(".copy_btn");
+        copy_btn.innerHTML = "ko'chirildi";
+        /* Copy the text inside the text field */
+        navigator.clipboard.writeText(appeal_code.innerHTML.trim());
+    }
     var appeal_files = false;
 
     function ready() {
@@ -784,25 +806,55 @@
         });
     }
 
-
     document.addEventListener("DOMContentLoaded", ready);
 
 
     $(document).ready(function () {
         $("#appealForm").submit(function () {
-            console.log($(this).serialize());
+            var modal__consent_close = document.querySelector(".modal__consent_close");
+            const modal_answer = document.getElementById("modal_answer");
+            const modal_consent_answer = document.getElementById("modal_consent_answer");
             $.ajax({
                 data: $(this).serialize(),
                 type: $(this).attr("method"),
                 url: "{% url 'post-appeal' %}",
                 success: function (response) {
-                    alert(`Thank you for appeal ${response.applicant_name}, you code ${response.appeal_code}`);
-                },
+                    const answers_info = document.getElementById('answers_info');
+                    modal_answer.classList.add("before");
+                    modal_consent_answer.classList.add("active");
 
-                error: function (response) {
-                    alert(response.responseJSON.errors);
-                }
+
+
+                    answers_info.innerHTML = `
+                        <li class="modal__consent_item">${response.applicant_name} sizning murojaatingiz qabul qilindi
+                        </li>`;
+
+                    answers_info.innerHTML += `<hr>
+                        <li class="modal__consent_item">
+                            <span>Murojaat ID: </span>
+                            <code id="appeal_code"> ${response.appeal_code}</code>
+                            <button class="copy_btn" onclick="copyID()">ko'chirib olish</button>
+                        </li>`
+                    answers_info.innerHTML += `<hr>
+                        <li class="modal__consent_item">
+                            <span>Eslatma: </span>
+                            Hurmatli murojaatchi murojaat javobini yuqorida keltirilgan ID orqali ko'rishingiz mumkin.
+                        </li>`
+
+                    {#alert(`Thank you for appeal ${response.applicant_name}, you code ${response.appeal_code}`);#}
+
+                    const new_appeals_cnt = document.getElementById("new_appeals_cnt");
+                    new_appeals_cnt.innerHTML = response.new_appeals_cnt;
+                },
             });
+                modal__consent_close.addEventListener("click", function () {
+                    modal_answer.classList.remove("before");
+                    modal_consent_answer.classList.remove("active");
+                    const timeout = setTimeout(removeModal, 100);
+                    function removeModal() {
+                        window.location.href = "/";
+                    }
+                });
             return false;
         });
     })
@@ -827,22 +879,41 @@
                 modal_consent_answer.classList.add("active");
 
                 answers_info.innerHTML = `<li class="modal__consent_item">${data.message}</li>`;
+                var index = false;
 
-                (data.answers).forEach(answer => {
-                    if (!answer.file) {
-                        answer.file = '-';
-                    }
-                    var html = `
-                        <li class="modal__consent_item"><span>Javob matni:</span> ${answer.text}</li>
-                        <li class="modal__consent_item"><span>Javob fayl ko'rinishi:</span><a href="/admin/answers/download-answerfile/${answer.id}">${answer.file}</a></li>
-                        <li class="modal__consent_item"><span>Sizning murojaatingiz:</span> ${answer.answer_type_display}</li>`
-
-                    answers_info.innerHTML += html;
-                });
-
+                if (data.answers.length > 1) {
+                    index = 1;
+                }
                 answers_info.innerHTML += `
                         <li class="modal__consent_item"><span>Murojaat yo'llangan sana:</span> ${data.appeal_date}</li>
-                        <li class="modal__consent_item"><span>Javob qaytarilgan sana:</span> ${data.last_answer_date}</li>`;
+                        <li class="modal__consent_item"><span>Javob qaytarilgan sana:</span> ${data.last_answer_date}</li>
+                        <li class="modal__consent_item"><span>Sizning murojaatingiz:</span> ${data.last_answer_type}</li>`;
+                if (index) {
+                    answers_info.innerHTML += `<li class="modal__consent_item"><span>Javoblar soni:</span> ${data.answers.length} ta</li>`;
+                }
+
+                (data.answers).forEach(answer => {
+                    var html = "";
+                    if (index) {
+                        html += `<hr>${index} - javob`;
+                    }
+                    if (answer.text) {
+                        html += `
+                        <li class="modal__consent_item" style="margin-top: 20px; margin-bottom: 10px"><span>Javob matni:</span></li>
+                        <li class="modal__consent_item" style="border: 1px solid #fff; padding: 15px 10px; max-height: 300px; overflow-y: scroll; word-break: break-all">${answer.text}</li>`
+                    }
+
+                    if (answer.file) {
+                        html += `
+                            <li class="modal__consent_item" style="margin-top: 20px; margin-bottom: 10px">
+                                <span>Javob fayl ko'rinishi: </span><a href="/admin/answers/download-answerfile/${answer.id}"> ${answer.file}</a>
+                            </li>`
+                    }
+
+                    answers_info.innerHTML += html;
+                    index++;
+
+                });
 
             },
 
@@ -900,12 +971,15 @@
         var currentValue = e.target.value;
         valid_name = pattern.test(currentValue);
 
+        if (currentValue.length > 40) {
+            valid_name = false;
+        }
+
         if (valid_name) {
             appeal_name.classList.remove("error_border")
         } else {
             appeal_name.classList.add("error_border")
         }
-
     });
 
     var appeal_tel = document.querySelector('#appeal_tel');
@@ -939,7 +1013,6 @@
         if (!currentValue) {
             appeal_email.classList.remove("error_border");
         }
-
     });
 
     nextBtnSecond.addEventListener("click", function () {
@@ -1042,10 +1115,10 @@
         var pattern = /^[а-яА-ЯёЁa-zA-Z0-9 ]{100,10000}$/;
         var currentValue = e.target.value.trim();
         valid_text = pattern.test(currentValue);
+        appeal_file_label.classList.remove("error_full_border");
 
         if (valid_text || appeal_text.value.trim().length < 1) {
             appeal_text.classList.remove("error_full_border");
-            appeal_file_label.classList.remove("error_full_border");
             valid_file = true;
         } else {
             appeal_text.classList.add("error_full_border");
@@ -1053,11 +1126,12 @@
     });
 
     submitBtn.addEventListener("click", function (e) {
-        if (valid_text && valid_file && (appeal_text.value.trim().length >= 100 || appeal_file.value)) {
+        if (valid_text && valid_file && (appeal_text.value.trim().length >= 100 || appeal_file.value) || valid_text && appeal_file.value) {
             bullet[current - 1].classList.add("active");
             progressText[current - 1].classList.add("active");
             progressCheck[current - 1].classList.add("active");
             current += 1;
+
         } else {
             e.preventDefault();
         }
@@ -1067,12 +1141,14 @@
             valid_text = false;
             valid_file = false;
         }
-        if (!valid_text) {
-            appeal_text.classList.add("error_full_border");
-
-        }
         if (!valid_file) {
             appeal_file_label.classList.add("error_full_border");
+        }
+        if (!valid_text) {
+            appeal_text.classList.add("error_full_border");
+            if (appeal_text.value.length > 0) {
+                appeal_file_label.classList.remove("error_full_border");
+            }
         }
 
     });
@@ -1096,9 +1172,13 @@
     });
 
     $('.nav__item').hover(
-       function(){ document.getElementById("content").classList.add('before') },
-       function(){ document.getElementById("content").classList.remove('before') },
-)
+        function () {
+            document.getElementById("content").classList.add('before')
+        },
+        function () {
+            document.getElementById("content").classList.remove('before')
+        },
+    )
 
 </script>
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>

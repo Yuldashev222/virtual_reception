@@ -8,6 +8,7 @@ from .models import *
 
 
 class AppealForm(forms.ModelForm):
+
     class Meta:
         model = Appeal
         fields = [
