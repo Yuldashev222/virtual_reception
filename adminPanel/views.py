@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import FileResponse, Http404, HttpResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.core.mail import send_mail
+from django.utils import timezone
 
 from appeals.models import Answer, Appeal, Applicants_panel
 from django.conf import settings
@@ -19,7 +20,6 @@ from appeals.forms import AnswerForm, ApplicantsPanelForm
 
 # app imports
 from .models import User
-
 
 
 def admin_login(request):
@@ -47,9 +47,13 @@ def admin_login(request):
 
 def dashboard(request, username):
     user = get_object_or_404(User, username=username)
+
+    if request.user.username != user.username:
+        return HttpResponse('Error')
+
     new_appeals_cnt = Appeal.objects.filter(appeal_status='new').count()
 
-    # APPEAL TYPES
+    # APPEAL STATUSES
     appeal_status = {}
     for status in Appeal.APPEAL_STATUS:
         appeal_status[status[0]] = Appeal.get_cnt_status(status[0])
@@ -58,6 +62,26 @@ def dashboard(request, username):
     appeal_direction = {}
     for direction in Appeal.APPEAL_DIRECTION:
         appeal_direction[direction[0]] = Appeal.get_cnt_direction(direction[0])
+
+    # APPEAL TYPES
+    appeal_type = {}
+    for type in Appeal.APPEAL_TYPE:
+        appeal_type[type[0]] = Appeal.get_cnt_type(type[0])
+
+    # ANSWER AUTHOR
+    admins = {}
+    for user in User.objects.all():
+        admins[user.username] = Answer.get_cnt_appeals_admin(user)
+
+    # APPLICANT TYPES
+    applicant_type = {}
+    for type in Appeal.APPLICANT_TYPE:
+        applicant_type[type[0]] = Appeal.get_cnt_applicant_type(type[0])
+
+    # APPLICANT POSITION
+    applicant_position = {}
+    for position in Appeal.APPLICANT_POSITION:
+        applicant_position[position[0]] = Appeal.get_cnt_applicant_position(position[0])
 
     # APPEAL COUNTRIES
     appeal_country = {}
@@ -69,15 +93,28 @@ def dashboard(request, username):
     for address in Answer.ANSWER_ADDRESS:
         answer_address[address[0]] = Answer.get_cnt_answer_address(address[0])
 
-    if request.user.username != user.username:
-        return HttpResponse('Error')
-
     context = {
         'new_appeals_cnt': new_appeals_cnt,
 
-        # APPEAL TYPES
-        'appeal_types': Appeal.APPEAL_STATUS,
-        'appeal_types_cnt': list(appeal_status.values()),
+        # APPEAL TYPE
+        'appeal_type': Appeal.APPEAL_TYPE,
+        'appeal_type_cnt': list(appeal_type.values()),
+
+        # ANSWER AUTHOR
+        'admin_names': list(admins.keys()),
+        'admin_cnt': list(admins.values()),
+
+        # APPLICANT TYPE
+        'applicant_type': Appeal.APPLICANT_TYPE,
+        'applicant_type_cnt': list(applicant_type.values()),
+
+        # APPLICANT POSITION
+        'applicant_position': Appeal.APPLICANT_POSITION,
+        'applicant_position_cnt': list(applicant_position.values()),
+
+        # APPEAL STATUS
+        'appeal_status': Appeal.APPEAL_STATUS,
+        'appeal_status_cnt': list(appeal_status.values()),
 
         # APPEAL DIRECTION
         'appeal_direction': Appeal.APPEAL_DIRECTION,
@@ -89,7 +126,6 @@ def dashboard(request, username):
 
         # APPEAL COUNTRIES
         'appeal_country': list(appeal_country.values()),
-
     }
 
     return render(request, 'adminPanel/dashboard.html', context)
@@ -100,7 +136,12 @@ def appeals(request):
     form = AnswerForm()
     appeals = Appeal.objects.all().order_by('-created_date')
     appeals_cnt = Appeal.objects.all().count()
-
+    # print(list(map(lambda elem: elem["created_date"].day, appeals.values("created_date"))))
+    # print()
+    # print()
+    # print()
+    # print()
+    # print()
     context = {
         'answer_form': form,
         'appeals': appeals,
@@ -130,11 +171,6 @@ def appeals(request):
                 appeals = appeals.filter(Q(applicant_type=d['applicant_type']))
 
             if 'appeal_status' in d:
-                print()
-                print()
-                print()
-                print()
-                print(d['appeal_status'])
                 appeals = appeals.filter(Q(appeal_status=d['appeal_status']))
 
             if 'applicant_position' in d:
@@ -182,7 +218,15 @@ def appeals(request):
 
         for obj in appeals:
             obj['appeal_file'] = str(Appeal.objects.get(id=obj['id']).filename())
-            continue
+
+            if obj["created_date"] + timedelta(days=1) + timedelta(minutes=60 * 24 * 3) <= timezone.now():
+                obj["set_date"] = 3
+            elif obj["created_date"] + timedelta(days=1) + timedelta(minutes=60 * 24 * 2) <= timezone.now():
+                obj["set_date"] = 2
+            elif obj["created_date"] + timedelta(days=1) + timedelta(minutes=60 * 24) <= timezone.now():
+                obj["set_date"] = 1
+            else:
+                obj["set_date"] = 0
 
         data = {'appeals': appeals, 'appeals_cnt': len(appeals)}
 

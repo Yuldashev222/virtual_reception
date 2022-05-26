@@ -148,6 +148,23 @@ class Appeal(models.Model):
     def get_cnt_direction(direction):
         return Appeal.objects.filter(appeal_direction=direction).count()
 
+    def get_cnt_applicant_position(position):
+        return Appeal.objects.filter(applicant_position=position).count()
+
+    def get_cnt_type(type):
+        return Appeal.objects.filter(appeal_type=type).count()
+
+    def get_cnt_applicant_type(type):
+        return Appeal.objects.filter(applicant_type=type).count()
+
+
+# class AppealFile(models.Model):
+#     appeal = models.ForeignKey(Appeal, on_delete=models.CASCADE)
+#     appeal_file = models.FileField(
+#         upload_to='Appeal_Files/',
+#         blank=True,
+#         validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt", "xlsx", "xls"])])
+
 
 class Answer(models.Model):
     ACTIVE = [
@@ -183,6 +200,9 @@ class Answer(models.Model):
 
     def get_cnt_answer_address(address):
         return Answer.objects.filter(answer_address=address).count()
+
+    def get_cnt_appeals_admin(admin):
+        return Answer.objects.filter(author_id=admin.id).count()
 
     def filename(self):
         return os.path.basename(self.file.name)

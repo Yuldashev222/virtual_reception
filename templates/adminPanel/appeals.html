@@ -576,7 +576,8 @@
                                                 style="word-break: break-all;">
                                                 {% if appeal.appeal_status == 'new' %}
                                                     <span id="new_appeal{{ appeal.id }}"
-                                                          style="color: red">{{ appeal.applicant_name }}</span>
+                                                          style="color: limegreen">{{ appeal.applicant_name }}</span>
+
                                                 {% else %}
                                                     {{ appeal.applicant_name }}
                                                 {% endif %}
@@ -743,7 +744,17 @@
                                 data-target="#scrollmodal"
                                 style="word-break: break-all;">`
                         if (appeal.appeal_status == 'new') {
-                            appealHTMLElement += `<span id="new_appeal${appeal.id}" style="color: red">${appeal.applicant_name}</span>`
+                            appealHTMLElement += `<span id="new_appeal${appeal.id}" style="color: greenyellow">${appeal.applicant_name}</span>`
+                        } else if (appeal.appeal_status == "process") {
+                            if (appeal.set_date == 3) {
+                                appealHTMLElement += `<span id="new_appeal${appeal.id}" style="color: yellow">${appeal.applicant_name}</span>`
+                            } else if (appeal.set_date == 2) {
+                                appealHTMLElement += `<span id="new_appeal${appeal.id}" style="color: indianred">${appeal.applicant_name}</span>`
+                            } else if (appeal.set_date == 1) {
+                                appealHTMLElement += `<span id="new_appeal${appeal.id}" style="color: darkred">${appeal.applicant_name}</span>`
+                            } else {
+                                appealHTMLElement += `${appeal.applicant_name}`
+                            }
                         } else {
                             appealHTMLElement += `${appeal.applicant_name}`
                         }

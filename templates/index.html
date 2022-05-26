@@ -633,7 +633,7 @@
                                     </div>
                                     <div class="form__field form__file">
                                         <div class="form__label">Fayl ko'rinishi</div>
-                                        <input type="file" name="appeal_file[]" class="inputfile" id="form__file"
+                                        <input type="file" name="appeal_file" class="inputfile" id="form__file"
                                                data-multiple-caption="{count} ta fayl tanlandi" multiple>
                                         <label id="appeal_file" for="form__file"
                                                class="form__file_label"><span>Faylni tanlang</span></label>
@@ -771,6 +771,8 @@
         crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
+    const answers_info = document.getElementById('answers_info');
+    answers_info.classList.remove("answer_info");
     function copyID() {
         /* Get the text field */
         var appeal_code = document.getElementById("appeal_code");
@@ -809,55 +811,68 @@
     document.addEventListener("DOMContentLoaded", ready);
 
 
-    $(document).ready(function () {
-        $("#appealForm").submit(function () {
-            var modal__consent_close = document.querySelector(".modal__consent_close");
-            const modal_answer = document.getElementById("modal_answer");
-            const modal_consent_answer = document.getElementById("modal_consent_answer");
-            $.ajax({
-                data: $(this).serialize(),
-                type: $(this).attr("method"),
-                url: "{% url 'post-appeal' %}",
-                success: function (response) {
-                    const answers_info = document.getElementById('answers_info');
-                    modal_answer.classList.add("before");
-                    modal_consent_answer.classList.add("active");
+    function upload(event) {
+        event.preventDefault();
+        var data = new FormData($("#appealForm").get(0));
+        const modal_answer = document.getElementById("modal_answer");
+        const modal_consent_answer = document.getElementById("modal_consent_answer");
+        const answers_info = document.getElementById('answers_info');
 
-
-
-                    answers_info.innerHTML = `
-                        <li class="modal__consent_item">${response.applicant_name} sizning murojaatingiz qabul qilindi
-                        </li>`;
-
-                    answers_info.innerHTML += `<hr>
-                        <li class="modal__consent_item">
-                            <span>Murojaat ID: </span>
-                            <code id="appeal_code"> ${response.appeal_code}</code>
-                            <button class="copy_btn" onclick="copyID()">ko'chirib olish</button>
-                        </li>`
-                    answers_info.innerHTML += `<hr>
-                        <li class="modal__consent_item">
-                            <span>Eslatma: </span>
-                            Hurmatli murojaatchi murojaat javobini yuqorida keltirilgan ID orqali ko'rishingiz mumkin.
-                        </li>`
-
-                    {#alert(`Thank you for appeal ${response.applicant_name}, you code ${response.appeal_code}`);#}
-
-                    const new_appeals_cnt = document.getElementById("new_appeals_cnt");
-                    new_appeals_cnt.innerHTML = response.new_appeals_cnt;
-                },
+        var modal__consent_close = document.querySelector(".modal__consent_close");
+            modal__consent_close.addEventListener("click", function () {
+                modal_answer.classList.remove("before");
+                modal_consent_answer.classList.remove("active");
+                const timeout = setTimeout(removeModal, 100);
+                function removeModal() {
+                    window.location.href = "/";
+                }
             });
-                modal__consent_close.addEventListener("click", function () {
-                    modal_answer.classList.remove("before");
-                    modal_consent_answer.classList.remove("active");
-                    const timeout = setTimeout(removeModal, 100);
-                    function removeModal() {
-                        window.location.href = "/";
-                    }
-                });
-            return false;
+
+        $.ajax({
+            data: data,
+            type: $(this).attr("method"),
+            url: "{% url 'post-appeal' %}",
+            cache: false,
+            processData: false,
+            contentType: false,
+
+            success: function (response) {
+                modal_answer.classList.add("before");
+                modal_consent_answer.classList.add("active");
+
+
+
+                answers_info.innerHTML = `
+                    <li class="modal__consent_item">${response.applicant_name} sizning murojaatingiz qabul qilindi
+                    </li>`;
+
+                answers_info.innerHTML += `<hr>
+                    <li class="modal__consent_item">
+                        <span>Murojaat ID: </span>
+                        <code id="appeal_code"> ${response.appeal_code}</code>
+                        <button class="copy_btn" onclick="copyID()">ko'chirib olish</button>
+                    </li>`
+                answers_info.innerHTML += `<hr>
+                    <li class="modal__consent_item">Sizning murojaatingiz 3 ish kunida ko'rib chiqiladi va javob yuboriladi.
+                    </li>
+                    <li class="modal__consent_item">
+                        <span>Eslatma: </span>
+                        Hurmatli murojaatchi murojaat javobini yuqorida keltirilgan ID orqali ko'rishingiz mumkin.
+                    </li>`
+
+
+                const new_appeals_cnt = document.getElementById("new_appeals_cnt");
+                new_appeals_cnt.innerHTML = response.new_appeals_cnt;
+            },
         });
-    })
+        return false;
+    }
+
+        $(function () {
+
+            $("#appealForm").submit(upload);
+        });
+
 </script>
 <script>
     function getAnswerInfo() {

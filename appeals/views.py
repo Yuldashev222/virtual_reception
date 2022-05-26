@@ -68,22 +68,22 @@ def home(request):
 def post_appeal(request):
     appealForm = AppealForm(request.POST, request.FILES)
     if appealForm.is_valid():
-        # text = appealForm.cleaned_data["appeal_text"]
-        # file = appealForm.cleaned_data["appeal_file"]
-        # if text or file:
-        obj = appealForm.save(commit=False)
-        obj.save()
-        print(obj.applicant_email)
-        new_appeals_cnt = Appeal.objects.filter(appeal_status="new").count()
-        return JsonResponse({"applicant_name": obj.applicant_name.title(), "applicant_email": obj.applicant_email, "appeal_code": obj.code, "new_appeals_cnt": new_appeals_cnt}, status=200)
-        # else:
-        #     return JsonResponse({"errors": ""}, status=200)
+        text = appealForm.cleaned_data["appeal_text"]
+        file = appealForm.cleaned_data["appeal_file"]
+        if text or file:
+            obj = appealForm.save(commit=False)
+            obj.save()
+            new_appeals_cnt = Appeal.objects.filter(appeal_status="new").count()
+            return JsonResponse({"applicant_name": obj.applicant_name.title(), "applicant_email": obj.applicant_email, "appeal_code": obj.code, "new_appeals_cnt": new_appeals_cnt}, status=200)
+        else:
+            return JsonResponse({"errors": "hello guys"}, status=200)
     else:
         errors = appealForm.errors.as_json()
         return JsonResponse({"errors": errors}, status=400)
 
 
 def test(request):
-    if request.POST:
-        pass
-    return render(request, "test.html")
+    ctx = {
+        "appeals": Appeal.objects.all().last()
+    }
+    return render(request, "test.html", ctx)

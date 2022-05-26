@@ -7,10 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <input type="checkbox" name="category" value="done">
-        <input type="file" name="ccc" multiple>
-        <input type="submit">
-    </form>
+    {{ appeals.file }}
+
 </body>
 </html>

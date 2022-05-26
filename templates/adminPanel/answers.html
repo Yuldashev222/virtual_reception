@@ -542,7 +542,7 @@
 
                     <div class="text-right mt-2" id="edit_answer">
                         <button id="back" type="button" class="btn btn-secondary" data-dismiss="modal">ortga</button>
-                        <button id="delete_answer" type="button" class="btn btn-danger">o'chirish</button>
+{#                        <button id="delete_answer" type="button" class="btn btn-danger">o'chirish</button>#}
                         <button onclick="editAnswer()" type="button" class="btn btn-primary" id="edit_btn">O'zgartirish</button>
                     </div>
                 </div>
@@ -658,7 +658,7 @@
 
 
                     const answer_name = document.getElementById("scrollmodalLabel");
-                    answer_name.innerHTML = `<span><span id="appeal_view" onclick="appealView(${id})" class="mr-2" style="color: #4272d7; cursor: pointer;">${answer.appeal}</span> javobi</span><span id="appeal_status" style="color: #bbbb05;">${answer.answer_type}</span>`;
+                    answer_name.innerHTML = `<span><span id="appeal_view" class="mr-2" style="color: #4272d7; cursor: pointer;">${answer.appeal}</span> javobi</span><span id="appeal_status" style="color: #bbbb05;">${answer.answer_type}</span>`;
 
                     const answer_detail = document.getElementById("appeal_detail");
                     answer_detail.innerHTML = "";
