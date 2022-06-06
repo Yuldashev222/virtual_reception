@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'captcha',
     'ckeditor',
+    'django_extensions',
 
     # apps
     'adminPanel',
@@ -130,3 +131,8 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 25
 EMAIL_HOST_USER = 'test1@maxsoft.uz'
 EMAIL_HOST_PASSWORD = 'root1234'
+
+GRAPH_MODELS = {
+    "all_applications": True,
+    "group_models": True
+}

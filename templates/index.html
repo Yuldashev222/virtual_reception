@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
@@ -981,7 +981,7 @@
     var appeal_name = document.querySelector('#appeal_name');
     var valid_name = false;
     appeal_name.addEventListener('input', function (e) {
-        var pattern = /^[а-яА-ЯёЁa-zA-Z]+ [а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+ ?[а-яА-ЯёЁa-zA-Z]+$/;
+        var pattern = /^[а-яА-ЯёЁa-zA-Z'`]+ [а-яА-ЯёЁa-zA-Z'`]+ ?[а-яА-ЯёЁa-zA-Z'`]+ ?[а-яА-ЯёЁa-zA-Z'`]+$/;
 
         var currentValue = e.target.value;
         valid_name = pattern.test(currentValue);

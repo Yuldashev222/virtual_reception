@@ -74,7 +74,7 @@ def post_appeal(request):
             obj = appealForm.save(commit=False)
             obj.save()
             new_appeals_cnt = Appeal.objects.filter(appeal_status="new").count()
-            return JsonResponse({"applicant_name": obj.applicant_name.title(), "applicant_email": obj.applicant_email, "appeal_code": obj.code, "new_appeals_cnt": new_appeals_cnt}, status=200)
+            return JsonResponse({"applicant_name": obj.applicant_name, "applicant_email": obj.applicant_email, "appeal_code": obj.code, "new_appeals_cnt": new_appeals_cnt}, status=200)
         else:
             return JsonResponse({"errors": "hello guys"}, status=200)
     else:
@@ -82,8 +82,3 @@ def post_appeal(request):
         return JsonResponse({"errors": errors}, status=400)
 
 
-def test(request):
-    ctx = {
-        "appeals": Appeal.objects.all().last()
-    }
-    return render(request, "test.html", ctx)
