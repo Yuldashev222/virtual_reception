@@ -2,7 +2,6 @@ import time
 import json
 from datetime import datetime, timedelta
 
-import pandas
 from django.http import FileResponse, JsonResponse
 from django.contrib import messages
 from django.db.models import Q
