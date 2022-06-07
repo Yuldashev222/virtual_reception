@@ -557,10 +557,6 @@ def applicants_view(request):
     return render(request, 'adminPanel/applicants_panel.html', context)
 
 
-def chat(request):
-    return render(request, 'adminPanel/chat.html')
-
-
 def profile(request, username):
     user = User.objects.get(username=username)
     new_appeals_cnt = Appeal.objects.filter(appeal_status='new').count()

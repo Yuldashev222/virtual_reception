@@ -13,7 +13,6 @@ urlpatterns = [
     path('delete-answer/', delete_answer, name='delete-answer'),
     path('send-answer/', send_answer, name='send-answer'),
     path('applicants-view/', applicants_view, name='applicants-view'),
-    path('chat/', chat, name='chat'),
     path('profile/<str:username>/', profile, name='profile'),
     path('add-admin/', add_admin, name='add-admin'),
     path('logout/<str:username>/', logout_admin, name='logout'),

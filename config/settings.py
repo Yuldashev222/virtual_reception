@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hy1o2)nj3fh6t-8m(#aqry5_m_a7qt9&54!2qj%hn21(0(tsto'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'captcha',
     'ckeditor',
-    'django_extensions',
 
     # apps
     'adminPanel',
