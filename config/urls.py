@@ -1,15 +1,16 @@
+from django.contrib import admin
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from django.contrib import admin
-
-from django.urls import path, include
-
 urlpatterns = [
-    path('main-admin/', admin.site.urls),
-    # path('captcha/', include('captcha.urls')),
-    path('', include('appeals.urls')),
-    path('admin/', include('adminPanel.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
+
+    path('admin/dev/', admin.site.urls),
+    path('admin/', include('general.urls')),
+    path('appeals/', include('appeals.urls')),
+    path('answers/', include('answers.urls')),
+    path('', include('general.urls'))
 ]
 
 if settings.DEBUG:

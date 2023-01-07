@@ -35,9 +35,11 @@
             font-style: inherit;
             transition: .1s linear;
         }
+
         .copy_btn:hover {
             background-color: #e2e2e2;
         }
+
         .error_full_border {
             border-color: #f00;
         }
@@ -441,18 +443,18 @@
                         </div>
 
                         <div class="form__outher">
-                            <form id="appealForm" class="form" method="post"
-                                  enctype="multipart/form-data">{% csrf_token %}
+                            <form id="appealForm" class="form" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
 
                                 <div class="form__page slidepage selects">
                                     <div class="form__field">
                                         <div class="select_container">
                                             <select class="form__select" name="appeal_type">
-                                                <option class="form__select_option" value="ariza" selected>Ariza
-                                                </option>
-                                                <option class="form__select_option" value="shikoyat">Shikoyat</option>
-                                                <option class="form__select_option" value="taklif">Taklif</option>
-                                                <option class="form__select_option" value="boshqa">boshqa</option>
+                                                {% for form_appeal_type in appeal_form.appeal_type %}
+{#                                                    <option class="form__select_option" value="asdasd">#}
+                                                        {{ form_appeal_type }}
+{#                                                    </option>#}
+                                                {% endfor %}
                                             </select>
                                             <div class="form__label">Murojaat turi</div>
                                         </div>
@@ -460,78 +462,11 @@
                                     <div class="form__field form__category">
                                         <div class="select_container">
                                             <select class="form__select" name="appeal_direction">
-                                                <option class="form__select_option" value="diplom_olish" selected>Diplom
-                                                    olish masalalari
-                                                </option>
-                                                <option class="form__select_option" value="ishga_joylash">Ishga joylash,
-                                                    ishdagi tortishuv, oylik maoshi
-                                                </option>
-                                                <option class="form__select_option" value="kontrakt_tolovi">Kontrakt
-                                                    to'lovi to'g'risida
-                                                </option>
-                                                <option class="form__select_option" value="mag_masalalari">Magistratura
-                                                    masalalari
-                                                </option>
-                                                <option class="form__select_option" value="fuqarolar_murojaatlari">
-                                                    Fuqarolar murojaatlari to'g'risida
-                                                </option>
-                                                <option class="form__select_option" value="moliyaviy_masalalar">
-                                                    Moliyaviy masalalar
-                                                </option>
-                                                <option class="form__select_option" value="talaba_ustidan">Talaba
-                                                    ustidan shikoyat
-                                                </option>
-                                                <option class="form__select_option" value="rahbar_faoliyatidan">Rahbar
-                                                    faoliyatidan norozilik arizasi
-                                                </option>
-                                                <option class="form__select_option" value="stipendiya_masalalari">
-                                                    Stipendiya masalalari
-                                                </option>
-                                                <option class="form__select_option" value="oqishga_kirish">O'qishga
-                                                    kirish to'g'risida
-                                                </option>
-                                                <option class="form__select_option" value="oqishni_kochirish">O'qishni
-                                                    ko'chirish to'g'risida
-                                                </option>
-                                                <option class="form__select_option" value="oqishni_tiklash">O'qishni
-                                                    tiklash to'g'risida
-                                                </option>
-                                                <option class="form__select_option" value="ijodiy_imtihondan">Ijodiy
-                                                    imtihondan norozilik to'g'risida
-                                                </option>
-                                                <option class="form__select_option" value="diplom_xaqqoniyligini">Diplom
-                                                    xaqqoniyligini tasdiqlab berish to'g'risida
-                                                </option>
-                                                <option class="form__select_option" value="nafaqa_masalalari">Nafaqa
-                                                    masalalari
-                                                </option>
-                                                <option class="form__select_option" value="arxiv_malumotlarini">Arxiv
-                                                    ma'lumotlarini olish to'grisida
-                                                </option>
-                                                <option class="form__select_option" value="ikkinchi_mutaxasislik">
-                                                    Ikkinchi mutaxasislik
-                                                </option>
-                                                <option class="form__select_option" value="kitob_nashr">Kitob nashr
-                                                    qilish
-                                                </option>
-                                                <option class="form__select_option" value="ixtiro_qilish">Ixtiro qilish
-                                                    taklifi
-                                                </option>
-                                                <option class="form__select_option" value="taklif_va">Taklif va
-                                                    minnatdorchilik
-                                                </option>
-                                                <option class="form__select_option" value="sirtqi_oqish">Sirtqi o'qish
-                                                    masalalari
-                                                </option>
-                                                <option class="form__select_option" value="yotoqxona_masalalari">
-                                                    Yotoqxona masalalari bo'yicha
-                                                </option>
-                                                <option class="form__select_option" value="olimpiada_masalasi">Olimpiada
-                                                    masalasi bo'yicha
-                                                </option>
-                                                <option class="form__select_option" value="boshqa_yo">Boshqa
-                                                    yo'nalishlar
-                                                </option>
+                                                {% for form_appeal_direction in appeal_form.appeal_direction %}
+                                                    {{ form_appeal_direction }}
+                                                {% endfor %}
+{#                                                <option class="form__select_option" value="boshqa_yo">Boshqa#}
+{#                                                </option>#}
                                             </select>
                                             <div class="form__label">Murojaat yo'nalishi</div>
                                         </div>
@@ -540,15 +475,10 @@
                                         <div class="select_container">
                                             <select id="not_tab_app_type" class="form__select"
                                                     name="applicant_position">
-                                                <option class="form__select_option" value="talaba">Talaba</option>
-                                                <option class="form__select_option" value="ota_ona">Ota ona</option>
-                                                <option class="form__select_option" value="universitet_xodimi">
-                                                    Universitet xodimi
-                                                </option>
-                                                <option class="form__select_option" value="oqituvchi">O'qituvchi
-                                                </option>
-                                                <option class="form__select_option" value="tashkilot">Tashkilot</option>
-                                                <option class="form__select_option" value="boshqa">Boshqa</option>
+                                                {% for form_applicant_position in appeal_form.applicant_position %}
+                                                    {{ form_applicant_position }}
+                                                {% endfor %}
+{#                                                <option class="form__select_option" value="talaba">Talaba</option>#}
                                             </select>
                                             <div class="form__label">Kim tomonidan</div>
                                         </div>
@@ -578,12 +508,12 @@
                                     <div class="form__field">
                                         <div class="select_container">
                                             <select class="form__select" name="applicant_type">
-                                                <option class="form__select_option" value="yuridik_shaxs" selected>
-                                                    Jismoniy shaxs
-                                                </option>
-                                                <option class="form__select_option" value="jismoniy_shaxs">Yuridik
-                                                    shaxs
-                                                </option>
+                                                {% for form_applicant_type in appeal_form.applicant_type %}
+                                                        {{ form_applicant_type }}
+                                                {% endfor %}
+{#                                                <option class="form__select_option" value="yuridik_shaxs" selected>#}
+{#                                                    Jismoniy shaxs#}
+{#                                                </option>#}
                                             </select>
                                             <div class="form__label">Shaxsingiz</div>
                                         </div>
@@ -592,23 +522,10 @@
                                         <div class="select_container">
                                             <select id="not_tab_province" class="form__select"
                                                     name="applicant_province">
-                                                <option class="form__select_option" value="toshkent">Toshkent</option>
-                                                <option class="form__select_option" value="samarqand">Samarqand</option>
-                                                <option class="form__select_option" value="andijon">Andijon</option>
-                                                <option class="form__select_option" value="fargona">Fargona</option>
-                                                <option class="form__select_option" value="namangan">Namangan</option>
-                                                <option class="form__select_option" value="qashqadaryo">Qashqadaryo
-                                                </option>
-                                                <option class="form__select_option" value="surxondaryo">Surxondaryo
-                                                </option>
-                                                <option class="form__select_option" value="buxoro">Buxoro</option>
-                                                <option class="form__select_option" value="navoiy">Navoiy</option>
-                                                <option class="form__select_option" value="xorazm">Xorazm</option>
-                                                <option class="form__select_option" value="sirdaryo">Sirdaryo</option>
-                                                <option class="form__select_option" value="jizzax">Jizzax</option>
-                                                <option class="form__select_option" value="qoraqalpoq">Qoraqalpog'iston
-                                                    Respublikasi
-                                                </option>
+                                                {% for form_applicant_province in appeal_form.applicant_province %}
+                                                        {{ form_applicant_province }}
+                                                {% endfor %}
+{#                                                <option class="form__select_option" value="toshkent">Toshkent</option>#}
                                             </select>
                                             <div class="form__label">Viloyat</div>
                                         </div>
@@ -682,19 +599,20 @@
                 <ul class="statistics__list">
                     <li class="rektor__info__item_span statistics__item">
                         <p>Yangi</p>
-                        <span class="statistics__count" id="new_appeals_cnt">{{ new_appeals_cnt }}</span>
+                        <span class="statistics__count"
+                              id="new_appeals_cnt">{{ appeal_count_by_status.new_appeals_cnt }}</span>
                     </li>
                     <li class="rektor__info__item_span statistics__item">
                         <p>Ko'rib chiqilmoqda</p>
-                        <span class="statistics__count">{{ process_appeals_cnt }}</span>
+                        <span class="statistics__count">{{ appeal_count_by_status.process_appeals_cnt }}</span>
                     </li>
                     <li class="rektor__info__item_span statistics__item">
                         <p>Rad etilgan</p>
-                        <span class="statistics__count">{{ rejected_appeals_cnt }}</span>
+                        <span class="statistics__count">{{ appeal_count_by_status.rejected_appeals_cnt }}</span>
                     </li>
                     <li class="rektor__info__item_span statistics__item">
                         <p>Bajarilgan</p>
-                        <span class="statistics__count">{{ completed_appeals_cnt }}</span>
+                        <span class="statistics__count">{{ appeal_count_by_status.completed_appeals_cnt }}</span>
                     </li>
                     <li class="rektor__info__item_span statistics__item">
                         <p>Umumiy</p>
@@ -773,6 +691,7 @@
 <script>
     const answers_info = document.getElementById('answers_info');
     answers_info.classList.remove("answer_info");
+
     function copyID() {
         /* Get the text field */
         var appeal_code = document.getElementById("appeal_code");
@@ -781,6 +700,7 @@
         /* Copy the text inside the text field */
         navigator.clipboard.writeText(appeal_code.innerHTML.trim());
     }
+
     var appeal_files = false;
 
     function ready() {
@@ -819,14 +739,15 @@
         const answers_info = document.getElementById('answers_info');
 
         var modal__consent_close = document.querySelector(".modal__consent_close");
-            modal__consent_close.addEventListener("click", function () {
-                modal_answer.classList.remove("before");
-                modal_consent_answer.classList.remove("active");
-                const timeout = setTimeout(removeModal, 100);
-                function removeModal() {
-                    window.location.href = "/";
-                }
-            });
+        modal__consent_close.addEventListener("click", function () {
+            modal_answer.classList.remove("before");
+            modal_consent_answer.classList.remove("active");
+            const timeout = setTimeout(removeModal, 100);
+
+            function removeModal() {
+                window.location.href = "/";
+            }
+        });
 
         $.ajax({
             data: data,
@@ -839,7 +760,6 @@
             success: function (response) {
                 modal_answer.classList.add("before");
                 modal_consent_answer.classList.add("active");
-
 
 
                 answers_info.innerHTML = `
@@ -868,10 +788,10 @@
         return false;
     }
 
-        $(function () {
+    $(function () {
 
-            $("#appealForm").submit(upload);
-        });
+        $("#appealForm").submit(upload);
+    });
 
 </script>
 <script>

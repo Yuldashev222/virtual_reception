@@ -1,5 +1,3 @@
-import math
-from smtplib import SMTP_PORT
 import os
 from pathlib import Path
 
@@ -13,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hy1o2)nj3fh6t-8m(#aqry5_m_a7qt9&54!2qj%hn21(0(tsto'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -29,12 +27,14 @@ INSTALLED_APPS = [
 
     # Libs
     'phonenumber_field',
-    'captcha',
     'ckeditor',
+    'debug_toolbar',
 
     # apps
-    'adminPanel',
+    'accounts',
+    'general',
     'appeals',
+    'answers',
 
 ]
 
@@ -46,6 +46,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1"
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -73,12 +78,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'reception_db',
-        'USER': 'oybek_db_user',
-        'PASSWORD': 'yuldashev222',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -115,27 +116,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-# STATIC_DIR = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [STATIC_DIR]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'adminPanel.User'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = '192.168.0.116'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'test1@maxsoft.uz'
-EMAIL_HOST_PASSWORD = 'root1234'
-
-GRAPH_MODELS = {
-    "all_applications": True,
-    "group_models": True
-}
+# GRAPH_MODELS = {
+#     "all_applications": True,
+#     "group_models": True
+# }

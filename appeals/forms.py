@@ -1,14 +1,9 @@
 from django import forms
-from captcha.fields import CaptchaField
 
-from .models import *
-
-
-# captcha = CaptchaField()
+from .models import Appeal
 
 
 class AppealForm(forms.ModelForm):
-
     class Meta:
         model = Appeal
         fields = [
@@ -18,36 +13,10 @@ class AppealForm(forms.ModelForm):
             'appeal_type',
             'appeal_direction',
             'privacy',
-            'applicant_name',
+            'applicant_full_name',
             'applicant_tel_num',
             'applicant_email',
             'applicant_province',
             'applicant_type',
             'applicant_position',
-        ]
-
-
-class AnswerForm(forms.ModelForm):
-    class Meta:
-        model = Answer
-        fields = ["text", "file", "appeal", "answer_type", "answer_address", "active"]
-
-
-class ApplicantsPanelForm(forms.ModelForm):
-    class Meta:
-        model = Applicants_panel
-        fields = [
-            'background',
-            'logo',
-            'back_logo',
-            'title',
-            'tel',
-            'email',
-            'step_title_1',
-            'step_title_2',
-            'step_title_3',
-            'rector_name',
-            'rector_avatar',
-            'rector_position',
-            'rector_reception_time',
         ]
