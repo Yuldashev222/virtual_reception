@@ -6,6 +6,10 @@ class BaseChoiceMixin(Enum):
     def choices(cls):
         return ((i.name, i.value) for i in cls)
 
+    @classmethod
+    def get_values(cls):
+        return [_.value for _ in cls]
+
 
 class Provinces(BaseChoiceMixin):
     tas = "Toshkent"
@@ -30,6 +34,13 @@ class AppealType(BaseChoiceMixin):
     b = "boshqa"
 
 
+class AppealStatus(BaseChoiceMixin):
+    n = "Yangi"
+    p = "Ko\'rib chiqilmoqda"
+    r = "Rad etilgan"
+    d = "Bajarilgan"
+
+
 class ApplicantPosition(BaseChoiceMixin):
     tal = "Talaba"
     oon = "Ota ona"
@@ -42,37 +53,3 @@ class ApplicantPosition(BaseChoiceMixin):
 class ApplicantType(BaseChoiceMixin):
     y = "Yuridik shaxs"
     j = "Jismoniy shaxs"
-
-
-class AppealDirection(BaseChoiceMixin):
-    dip = "Diplom olish masalalari"
-    ish = "Ishga joylash, ishdagi tortishuv, oylik maoshi"
-    kon = "Kontrakt to'lovi to'g'risida"
-    mag = "Magistratura masalalari"
-    fuq = "Fuqarolar murojaatlari to'g'risida"
-    mol = "Moliyaviy masalalar"
-    tal = "Talaba ustidan shikoyat"
-    rah = "Rahbar faoliyatidan norozilik arizasi"
-    sti = "Stipendiya masalalari"
-    oqk = "O'qishga kirish to'g'risida"
-    oqc = "O'qishni ko'chirish to'g'risida"
-    oqt = "O'qishni tiklash to'g'risida"
-    ijo = "Ijodiy imtihondan norozilik to'g'risida"
-    dix = "Diplom xaqqoniyligini tasdiqlab berish to'g'risida"
-    naf = "Nafaqa masalalari"
-    arx = "Arxiv ma'lumotlarini olish to'grisida"
-    ikk = "Ikkinchi mutaxasislik"
-    kit = "Kitob nashr qilish"
-    ixt = "Ixtiro qilish taklifi"
-    tak = "Taklif va minnatdorchilik"
-    sir = "Sirtqi o'qish masalalari"
-    yot = "Yotoqxona masalalari bo'yicha"
-    oli = "Olimpiada masalasi bo'yicha"
-    bos = "Boshqa yo'nalishlar"
-
-
-class AppealStatus(BaseChoiceMixin):
-    n = "Yangi"
-    p = "Ko\'rib chiqilmoqda"
-    r = "Rad etilgan"
-    d = "Bajarilgan"

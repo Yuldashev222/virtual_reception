@@ -22,7 +22,7 @@
         <div class="header-mobile__bar">
             <div class="container-fluid">
                 <div class="header-mobile-inner">
-                    <a class="logo" href="{% url 'dashboard' request.user.username %}">
+                    <a class="logo" href="{% url 'dashboard' %}">
                         <img src="{% static 'images/blue-logo.png' %}" alt="CoolAdmin"/>
                     </a>
                     <button class="hamburger hamburger--slider" type="button">
@@ -40,7 +40,7 @@
     <!-- MENU SIDEBAR-->
     <aside class="menu-sidebar d-none d-lg-block" style="overflow: hidden;">
         <div class="logo">
-            <a href="{% url 'dashboard' request.user.username %}">
+            <a href="{% url 'dashboard' %}">
                 <img src="{% static 'images/blue-logo.png' %}" alt="Cool Admin"/>
             </a>
         </div>

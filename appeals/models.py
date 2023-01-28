@@ -5,8 +5,38 @@ from django.db import models
 
 from accounts.models import CustomUser
 from .enums import (
-    ApplicantType, AppealDirection, AppealStatus, AppealType, ApplicantPosition, Provinces
+    ApplicantType, AppealStatus, AppealType, ApplicantPosition, Provinces
 )
+
+
+class AppealDirection(models.Model):
+    dip = "Diplom olish masalalari"
+    ish = "Ishga joylash, ishdagi tortishuv, oylik maoshi"
+    kon = "Kontrakt to'lovi to'g'risida"
+    mag = "Magistratura masalalari"
+    fuq = "Fuqarolar murojaatlari to'g'risida"
+    mol = "Moliyaviy masalalar"
+    tal = "Talaba ustidan shikoyat"
+    rah = "Rahbar faoliyatidan norozilik arizasi"
+    sti = "Stipendiya masalalari"
+    oqk = "O'qishga kirish to'g'risida"
+    oqc = "O'qishni ko'chirish to'g'risida"
+    oqt = "O'qishni tiklash to'g'risida"
+    ijo = "Ijodiy imtihondan norozilik to'g'risida"
+    dix = "Diplom xaqqoniyligini tasdiqlab berish to'g'risida"
+    naf = "Nafaqa masalalari"
+    arx = "Arxiv ma'lumotlarini olish to'grisida"
+    ikk = "Ikkinchi mutaxasislik"
+    kit = "Kitob nashr qilish"
+    ixt = "Ixtiro qilish taklifi"
+    tak = "Taklif va minnatdorchilik"
+    sir = "Sirtqi o'qish masalalari"
+    yot = "Yotoqxona masalalari bo'yicha"
+    oli = "Olimpiada masalasi bo'yicha"
+    bos = "Boshqa yo'nalishlar"
+    direction = models.CharField(max_length=200, unique=True)
+    creator = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True)
+    date_created = models.DateTimeField(auto_now_add=True)
 
 
 class Appeal(models.Model):
@@ -17,7 +47,7 @@ class Appeal(models.Model):
         validators=[FileExtensionValidator(allowed_extensions=["pdf", "txt", "doc", "docx", "ppt", "xlsx", "xls"])]
     )
     appeal_type = models.CharField(max_length=1, choices=AppealType.choices())
-    appeal_direction = models.CharField(max_length=3, choices=AppealDirection.choices())
+    appeal_direction = models.ForeignKey(AppealDirection, on_delete=models.PROTECT)
     privacy = models.BooleanField(default=False)
     code = models.UUIDField(default=uuid.uuid4)
     appeal_status = models.CharField(max_length=1, choices=AppealStatus.choices(), default=AppealStatus.n.name)
@@ -35,7 +65,7 @@ class Appeal(models.Model):
     is_deleted = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.applicant_name
+        return self.applicant_full_name
 
     def filename(self):
         return os.path.basename(self.appeal_file.name)
